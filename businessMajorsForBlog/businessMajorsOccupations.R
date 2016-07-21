@@ -2,11 +2,12 @@
 library(dplyr); library(googleVis)
 
 #Load data
-kyPums <- read.csv("../../rData/100peopleData/pumsKY.csv")
-socNames <- read.csv("../../rData/SOCdescriptionsData/socCodeTitleCrosswalk.csv")
+kyPums <- read.csv("pumsKY.csv")
+socNames <- read.csv("socCodeTitleCrosswalk.csv")
 
 #Louisville PUMA's
 pums14 <- c(1701, 1702, 1703, 1704, 1705, 1800)
+
 
 ###########################################Functions##############################################
 #Weigthed Count Function
@@ -32,6 +33,7 @@ majorToOccupationData <- function(majorCode, majorName){
        workforce <- (kyPums %>%
                             filter(PUMA %in% pums14) %>% ## filter to Louisville MSA (approximate)
                             filter(FOD1P == majorCode) %>% ## filter to pop 16 and over
+                            filter(SCHL >= 21) %>%
                             select(PUMA, FOD1P, OCCP, SOCP, PWGTP)) ## Select variables of interest 
        
        workforce <- merge(workforce, socNames, by= "SOCP")
