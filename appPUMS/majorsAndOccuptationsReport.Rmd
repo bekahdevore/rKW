@@ -1,0 +1,53 @@
+---
+title: "Majors & Occupations"
+author: "Bekah"
+date: "June 29, 2016"
+output: html_document
+---
+
+```{r echo=FALSE, include=FALSE}
+library(dplyr)
+
+ky <- read.csv("ss14pky.csv")
+ind <- read.csv("ss14pin.csv")
+oh <- read.csv("ss14poh.csv")
+tn <- read.csv("ss14ptn.csv")
+socDescriptions <- read.csv("SOCdescriptions.csv")
+
+
+regionalPUMS <- rbind(ky, ind, oh, tn)
+regionalPUMSwithDescriptions <- merge(regionalPUMS, socDescriptions, by="SOCP")
+
+
+
+schoolFilter <- function(schoolCode, majorCode){history <- (regionalPUMSwithDescriptions %>%
+                                                        filter(FOD1P == majorCode) %>% 
+                                                        filter(SCHL == schoolCode)%>%
+                                                        select(PUMA, SOCP, Description, SCHL, PWGTP, FOD1P))
+              y <- count(major, Description, wt=PWGTP, sort=TRUE)
+              y        ## Select variables of interest 
+}
+
+schoolFilterGreaterThan <- function(schoolCode, majorCode){major <- (regionalPUMSwithDescriptions %>%
+                                                                   filter(FOD1P == majorCode) %>% 
+                                                                   filter(SCHL >= schoolCode)%>%
+                                                                   select(PUMA, SOCP, Description,SCHL, PWGTP, FOD1P))
+              y <- count(major, Description, wt=PWGTP, sort=TRUE)
+              y         ## Select variables of interest 
+}
+```
+
+
+#Humanities Majors
+```{r, echo=FALSE}
+humanitiesBachelorsPlus <- schoolFilterGreaterThan(21, 3402)
+humanitiesBachelorsPlus
+```
+
+#Chemical Engineering Majors
+```{r, echo=FALSE}
+chemicalEngineeringBachelorsPlus <- schoolFilterGreaterThan(21, 2405)
+chemicalEngineeringBachelorsPlus
+```
+
+

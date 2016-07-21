@@ -1,0 +1,8 @@
+name: trainingOccupations
+account: kwlmi
+server: shinyapps.io
+bundleId: 510867
+url: https://kwlmi.shinyapps.io/trainingOccupations/
+when: 1469050797.80052
+asMultiple: FALSE
+asStatic: FALSE

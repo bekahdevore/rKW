@@ -1,0 +1,7 @@
+name: Publish Document
+account: rpubs
+server: rpubs.com
+bundleId:
+        https://api.rpubs.com/api/v1/document/195649/780f7c9d0428421996c7b5ac286df50f
+url: http://rpubs.com/bekahdevore/195649
+when: 1468437335.99284
