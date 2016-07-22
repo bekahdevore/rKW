@@ -13,8 +13,10 @@ pums14 <- c(1701, 1702, 1703, 1704, 1705, 1800)
 #Weigthed Count Function
 majorToOccupationDataCount <- function(majorCode, majorName){
        workforce <- (kyPums %>%
-                            filter(PUMA %in% pums14) %>% ## filter to Louisville MSA (approximate)
+                            filter(PUMA %in% pums14)   %>% ## filter to Louisville MSA (approximate)
+                            filter(SOCP != 395012)     %>%
                             filter(FOD1P == majorCode) %>% ## filter to pop 16 and over
+                            
                             select(PUMA, FOD1P, OCCP, SOCP, PWGTP)) ## Select variables of interest 
        
        workforce <- merge(workforce, socNames, by= "SOCP")
@@ -31,9 +33,9 @@ percent <- function(data){
 #Data clean and visualize function
 majorToOccupationData <- function(majorCode, majorName){
        workforce <- (kyPums %>%
-                            filter(PUMA %in% pums14) %>% ## filter to Louisville MSA (approximate)
+                            filter(PUMA %in% pums14)   %>% ## filter to Louisville MSA (approximate)
                             filter(FOD1P == majorCode) %>% ## filter to pop 16 and over
-                            filter(SCHL >= 21) %>%
+                            filter(SOCP != 395012)     %>%
                             select(PUMA, FOD1P, OCCP, SOCP, PWGTP)) ## Select variables of interest 
        
        workforce <- merge(workforce, socNames, by= "SOCP")
