@@ -3,11 +3,12 @@ library(dplyr)
 library(matrixStats)
 library(cwhmisc)
 
-ky       <- read.csv("ss14pky.csv") 
-oh       <- read.csv("ss14poh.csv")
-ind      <- read.csv("ss14pin.csv")
-tn       <- read.csv("ss14ptn.csv")
-socNames <- read.csv("socCodeTitleCrosswalk.csv")
+ky         <- read.csv("ss14pky.csv") 
+oh         <- read.csv("ss14poh.csv")
+ind        <- read.csv("ss14pin.csv")
+tn         <- read.csv("ss14ptn.csv")
+socNames   <- read.csv("socCodeTitleCrosswalk.csv")
+majorNames <- read.csv("fod1pNames.csv")
 
 regionalAreaData <- rbind(ky, oh, ind, tn)
 
@@ -22,13 +23,17 @@ regionalData <- merge(regionalAreaData, socNames, by="SOCP")
 regionalData$FOD1P <- as.factor(regionalData$FOD1P)
 
 
-occupationMedians <- ddply(test, .(title), summarize, wMedian=w.median(WAGP, PWGTP))
-majorsMedians <- ddply(test, .(FOD1P), summarize, wMedian=w.median(WAGP, PWGTP))
+occupationMedians <- ddply(regionalData, .(title), summarize, wMedian=w.median(WAGP, PWGTP))
+majorsMedians <- ddply(regionalData, .(FOD1P), summarize, wMedian=w.median(WAGP, PWGTP))
 
 dataWithMajorMedians <- merge(regionalData, majorsMedians, by="FOD1P")
+majorsData <- merge(dataWithMajorMedians, majorNames, by="FOD1P")
 
+majorsData <- majorsData %>%
+                     select(wMedian, majorName, PWGTP)
 
-
+write.csv(majorsData, file = "majorsData.csv")
+count(majorsData, majorName, wt=PWGTP)
 
 
 
