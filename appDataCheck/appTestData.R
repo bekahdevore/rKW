@@ -1,7 +1,7 @@
 library(plyr)
 library(dplyr)
 library(matrixStats)
-
+library(cwhmisc)
 
 ky       <- read.csv("ss14pky.csv") 
 oh       <- read.csv("ss14poh.csv")
@@ -17,12 +17,29 @@ regionalAreaData <- regionalAreaData %>%
                             filter(WAGP  >   0)     %>%
                             select(FOD1P, SOCP, WAGP, PWGTP)
 
-test <- merge(regionalAreaData, socNames, by="SOCP")
+regionalData <- merge(regionalAreaData, socNames, by="SOCP")
 #test2 <- summaryBy(WAGP ~ title, data = test, FUN = median)
+regionalData$FOD1P <- as.factor(regionalData$FOD1P)
 
 
-test3 <- weightedMedian(test$WAGP, w=test$PWGTP, idxs=test$title, na.rm = TRUE)
+occupationMedians <- ddply(test, .(title), summarize, wMedian=w.median(WAGP, PWGTP))
+majorsMedians <- ddply(test, .(FOD1P), summarize, wMedian=w.median(WAGP, PWGTP))
 
-testing <- ddply(test, .(title), summarize, wMedian=weightedMedian(WAGP, title))
+dataWithMajorMedians <- merge(regionalData, majorsMedians, by="FOD1P")
 
+
+
+
+
+
+wage <- c(100, 300, 550, 400, 571, 682)
+weight <- c(2, 2, 2, 7, 5, 8)
+factor <- c("One", "One", "Two", "Two", "One", "Two")
+dataTest <- as.data.frame(cbind(wage, weight, factor))
+
+dataTest$weight <- as.numeric(as.character(dataTest$weight))
+dataTest$wage <- as.numeric(as.character(dataTest$wage))
+
+
+weightedMedianTest <- ddply(dataTest, .(factor), summarise, wMedian=w.median(wage, weight))
 
