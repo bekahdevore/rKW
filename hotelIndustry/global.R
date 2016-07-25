@@ -1,10 +1,10 @@
 #load packages
 library(dplyr)
-library(tm)
 library(wordcloud)
 
+
 #load data
-hotelData <- read.csv("hotelIndustryData.csv")
+hotelData <- read.csv("hotelDataAll.csv")
 
 cleanData <- function(dataName){
        dataName <- as.data.frame(lapply(dataName, function(x) {
@@ -24,7 +24,7 @@ hotelData <- cleanData(hotelData)
 hotelData$Frequency <- as.numeric(as.character(hotelData$Frequency))
 hotelData$Occupation <- as.character(hotelData$Occupation)
 hotelData <- hotelData %>%
-                     filter(Frequency>0)
+       filter(Frequency>0)
 
 
 percent <- function(data, n){
@@ -41,8 +41,8 @@ sum(hotelSubset$percentage)
 #Learning about wordcloud
 pal <- brewer.pal(8,"Dark2")
 #hotelData$Employed.in.Industry..2016. <- as.numeric(as.character(hotelData$Employed.in.Industry..2016.))
-wordcloud(hotelData$Occupation, hotelData$Frequency, scale=c(2.2,.8), min.freq = 10, max.words = 100, random.color = TRUE,
-              colors=pal, random.order = FALSE, rot.per=.1)
+wordcloud(hotelData$Occupation, hotelData$Frequency, scale=c(2.1,.5), min.freq = 10, max.words = 50, random.color = TRUE,
+          colors=pal, random.order = FALSE, rot.per=.1)
 
 #wordcloud(words,freq,scale=c(3,2.5),min.freq=3,max.words=Inf,
 #          random.order=TRUE, random.color=FALSE, rot.per=.1,
