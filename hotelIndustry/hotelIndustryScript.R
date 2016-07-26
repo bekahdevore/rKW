@@ -56,7 +56,7 @@ pieData$n
 pieData$Typical.Entry.Level.Education <-  as.character(pieData$Typical.Entry.Level.Education)
 x <- pieData$n
 y <- pieData$Typical.Entry.Level.Education
-pie(x, y, col=rainbow(length(lbls)) )
+pie(x, y, col=heat.colors(length(lbls)) )
 
 #http://www.statmethods.net/graphs/pie.html
 
