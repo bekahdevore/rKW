@@ -46,5 +46,4 @@ dataTest$weight <- as.numeric(as.character(dataTest$weight))
 dataTest$wage <- as.numeric(as.character(dataTest$wage))
 
 
-weightedMedianTest <- ddply(dataTest, .(factor), summarise, wMedian=w.median(wage, weight))
 
