@@ -54,11 +54,11 @@ anovaTests <- function(dataInput){
                      p <- ggplot(test1, aes(factor(State.Capital), Annual.Median.Wage))
                      p + geom_boxplot(aes(fill=factor(State.Capital)))
                      
-                     p <- ggplot(test2, aes(factor(State.Capital), Annual.Median.Wage))
-                     p + geom_boxplot(aes(fill=factor(State.Capital)))
+                     r <- ggplot(test2, aes(factor(State.Capital), Annual.Median.Wage))
+                     r + geom_boxplot(aes(fill=factor(State.Capital)))
                      
-                     p <- ggplot(test3, aes(factor(State.Capital), Annual.Median.Wage))
-                     p + geom_boxplot(aes(fill=factor(State.Capital)))
+                     t <- ggplot(test3, aes(factor(State.Capital), Annual.Median.Wage))
+                     t + geom_boxplot(aes(fill=factor(State.Capital))) +scale_x_discrete(labels=c("Not A State Capitol", "State Capitol"))
                      
 }
 
@@ -68,6 +68,7 @@ anovaTests <- function(dataInput){
 
 #Run with data
 anovaTests(abridgedMedian)
+anovaTests(nashvilleData)
 
 
 
