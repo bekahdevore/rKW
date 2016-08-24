@@ -10,6 +10,8 @@ tn         <- read.csv("ss14ptn.csv")
 socNames   <- read.csv("socCodeTitleCrosswalk.csv")
 majorNames <- read.csv("fod1pNames.csv")
 
+
+
 regionalAreaData <- rbind(ky, oh, ind, tn)
 
 regionalAreaData <- regionalAreaData %>%
@@ -19,6 +21,7 @@ regionalAreaData <- regionalAreaData %>%
                             select(FOD1P, SOCP, WAGP, PWGTP)
 
 regionalData <- merge(regionalAreaData, socNames, by="SOCP")
+
 #test2 <- summaryBy(WAGP ~ title, data = test, FUN = median)
 regionalData$FOD1P <- as.factor(regionalData$FOD1P)
 
