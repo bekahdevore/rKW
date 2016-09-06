@@ -77,6 +77,7 @@ skillsSankey      <- plot(gvisSankey(
                                   
                              )
                      ))
+
 filterAndCount <- function(majorShortName){
                      data <- regionalData %>%
                                    filter(majorShort == majorShortName)
