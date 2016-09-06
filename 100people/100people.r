@@ -38,7 +38,7 @@ percent <- function(data){
 ################################################################################
 
 ## vector to approximate Louisville MSA with full PUMA (State + Puma Code, excludes Washington, IN)
-pums14 <- c(2101701, 2101702, 2101703, 2101704, 2101705, 2101800, 1803400, 1803300)
+pums14    <- c(2101701, 2101702, 2101703, 2101704, 2101705, 2101800, 1803400, 1803300)
 
 workforce <- (kyIn %>%
                       filter(FPUMA %in% pums14) %>% ## filter to Louisville MSA (approximate)
@@ -46,8 +46,8 @@ workforce <- (kyIn %>%
                       select(FPUMA, ESR, AGEP, PWGTP, WAGP, SCHL, SCHG, WKL, JWTR, MANU,
                              SEX, AGEP, DIS, ENG, NATIVITY)) ## Select variables of interest 
 
-dd <- is.na(workforce)
-workforce[dd] <- 0 ##change NA to 0, move to top
+dd        <- is.na(workforce)
+                     workforce[dd] <- 0 ##change NA to 0, move to top
 
 ####################################################################################
 ############################ 100 PEOPLE COUNTDOWN BEGINS ###########################

@@ -84,10 +84,10 @@ filterAndCount <- function(majorShortName){
                      count(data, wageRange, wt = PWGTP)
 }
 
-percent <- function(data){
-       data <-  data %>% mutate(per=n/sum(n))
-       print(data)
-}
+percent       <- function(data){
+                     data <-  data %>% mutate(per=n/sum(n))
+                     print(data)
+              }
 
 social    <- filterAndCount("Social Science")
 arts      <- filterAndCount("Arts")
