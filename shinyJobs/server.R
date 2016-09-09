@@ -7,6 +7,7 @@
 
 library(shiny)
 library(dplyr)
+library(DT)
 
 techJobs <- read.csv("techJobs.csv")
 
