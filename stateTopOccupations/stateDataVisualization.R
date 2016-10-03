@@ -5,6 +5,7 @@ library(scales)
 library(treemap)
 library(googleVis)
 library(RColorBrewer)
+library(ggthemes)
 
 
 kentuckyTopOccupationsData <- read.csv("kentuckyStateTopOccupations.csv")
@@ -17,11 +18,11 @@ kentuckyTopOccupationsData$Sector.Occupation <- as.character(kentuckyTopOccupati
 
 
 ###################################################### FUNCTIONS
-filterAndPlot <- function(occupationOrSector) {
+filterAndPlot <- function(occupationOrSector, whiteNumber) {
               topOccupationsData <- kentuckyTopOccupationsData %>% 
                                                  filter(Type == occupationOrSector)
               
-              outlier <- ifelse(topOccupationsData$Openings.in.Top.Occupations > 2000, '#D6D8DE', '#36454f')
+              outlier <- ifelse(topOccupationsData$Openings.in.Top.Occupations > whiteNumber, '#D6D8DE', '#36454f')
               
               ggplot(topOccupationsData,     aes(x = reorder(Sector.Occupation, Openings.in.Top.Occupations), 
                                                  y     = Openings.in.Top.Occupations, 
@@ -52,40 +53,43 @@ filterAndPlot <- function(occupationOrSector) {
                            axis.text.x      = element_text(size  = 17, 
                                                            color = '#333333'),
                            axis.ticks.y     = element_blank(), 
-                           #panel.background = element_blank(),
-                           legend.position  = "none")
+                           panel.background = element_rect(fill = 0),
+                           legend.position  = "none") 
+              
        }
 
-filterAndPlot('Healthcare')
-filterAndPlot('Advanced Manufacturing')
-filterAndPlot('Construction')
-filterAndPlot('Transportation & Logistics')
-filterAndPlot('Business & IT Services')
-
 ######################################################### TREEMAP #########################################################
-
-kentuckyTopOccupationsData$numberLabel <- format(kentuckyTopOccupationsData$Openings.in.Top.Occupations,
-                                                 big.mark   = ",", 
-                                                 scientific = FALSE)
-
-kentuckyTopOccupationsData$label       <- paste(kentuckyTopOccupationsData$Sector.Occupation, 
-                                                 kentuckyTopOccupationsData$numberLabel, 
-                                                 sep = "\n")
-
-
 treemapMaker <- function(occupationSector) {
-       kentuckyTopOccupationsData <- kentuckyTopOccupationsData %>% 
-                                          filter(Type == occupationSector) %>%
+       kentuckyTopOccupationsData$numberLabel <- format(kentuckyTopOccupationsData$Openings.in.Top.Occupations,
+                                                        big.mark   = ",", 
+                                                        scientific = FALSE)
        
-       treemap(kentuckyTopOccupationsData, index = c('label'), vSize = 'Openings.in.Top.Occupations', 
+       kentuckyTopOccupationsData$label       <- paste(kentuckyTopOccupationsData$Sector.Occupation, 
+                                                       kentuckyTopOccupationsData$numberLabel, 
+                                                       sep = "\n")
+       
+       kentuckyTopOccupationsData <- kentuckyTopOccupationsData %>% 
+              filter(Type == occupationSector) %>%
+              
+              treemap(kentuckyTopOccupationsData, index = c('label'), vSize = 'Openings.in.Top.Occupations', 
                       fontsize.labels = 25,
                       border.col = 0,
                       title = "",
                       fontface.labels = 1,
                       fontfamily.labels = "sans")
-       }
+}
 
 
-
+###### OUTPUT 
 treemapMaker('Total')
+filterAndPlot('Healthcare', 2000)
+filterAndPlot('Advanced Manufacturing', 2000)
+filterAndPlot('Construction', 2000)
+filterAndPlot('Transportation & Logistics', 2000)
+filterAndPlot('Business & IT Services', 700)
+
+
+
+
+
 
