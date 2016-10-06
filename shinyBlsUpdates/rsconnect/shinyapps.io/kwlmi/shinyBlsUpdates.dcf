@@ -1,8 +1,8 @@
 name: shinyBlsUpdates
 account: kwlmi
 server: shinyapps.io
-bundleId: 572238
+bundleId: 577527
 url: https://kwlmi.shinyapps.io/shinyBlsUpdates/
-when: 1475170463.60558
+when: 1475681364.78794
 asMultiple: FALSE
 asStatic: FALSE
