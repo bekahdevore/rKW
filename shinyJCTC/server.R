@@ -39,6 +39,13 @@ jctcData$`2018 Jobs`               <-as.numeric(as.character(str_replace_all(jct
 jctcData$`2021 Jobs`               <-as.numeric(as.character(str_replace_all(jctcData$`2021 Jobs`, 
                                                                 '\\,', '')))
 
+colnames(jctcData)[3] <- "Number of Job Postings (Oct. 2015 - Sept. 2016)"
+colnames(jctcData)[5] <- "2018 Jobs (Projected)"
+colnames(jctcData)[6] <- "2021 Jobs (Projected)"
+
+
+
+
 shinyServer(function(input, output) {
 
   output$dataTable <- DT::renderDataTable({
@@ -46,5 +53,14 @@ shinyServer(function(input, output) {
                        options = list(
                               pageLength = 10))
   })
+  
+  output$downloadData <- downloadHandler(
+         filename = function() {
+                paste('jctcData.csv', sep = '')
+         },
+         content = function(file) {
+                write.csv(jctcData, file)
+         }
+  )
 
 })
