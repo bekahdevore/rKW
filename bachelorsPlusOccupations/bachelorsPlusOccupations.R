@@ -1,6 +1,7 @@
 library(dplyr)
 library(plotly)
 library(treemap)
+library(ggplot2)
 
 
 allOccupations       <- read.csv('last90daysAll.csv')
@@ -43,12 +44,13 @@ pieChart      <- function(dataName, chartTitle) {
                      dataName <- filterPercent(dataName)
                      
                      plot_ly(dataName, labels = Occupation, values = n, type = "pie") %>%
-                     layout(title = chartTitle)}
+                     layout(title = chartTitle)
+}
 
 treeMapMaker  <- function(dataName) {
-                     dataName <- filterPercent(dataName)              
+                     dataName <- filterPercent(dataName)     
        
-                     treemap(dataName, index = c('Occupation'), vSize = 'n', 
+                     treemap(dataName, index = c('label'), vSize = 'n', 
                      fontsize.labels = 18,
                      border.col = 0,
                      title = "",
@@ -65,6 +67,22 @@ business$Number.of.Job.Postings <- as.numeric(as.character(business$Number.of.Jo
 
 all      <- countPercent(all)
 business <- countPercent(business)
+
+all$numberLabel <- format(all$n,
+                     big.mark   = ",", 
+                     scientific = FALSE)
+
+all$label       <- paste(all$Occupation, 
+                     all$numberLabel,
+                     sep = "\n")
+
+business$numberLabel <- format(business$n,
+                            big.mark   = ",", 
+                            scientific = FALSE)
+
+business$label       <- paste(business$Occupation, 
+                            business$numberLabel,
+                            sep = "\n")
 
 
 ######################################### OUTPUT ####################################################
