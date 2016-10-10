@@ -37,16 +37,16 @@ percent       <- function(data){
 }
 
 removeCommas <- function(dataName) {as.data.frame(lapply(dataName, function(x) {
-       gsub(",", "", x)}))
+                     gsub(",", "", x)}))
 }
 
 countPercent <- function(dataName) {count(dataName, wt = Number.of.Job.Postings)
-       x <- count(dataName, Occupation, wt= Number.of.Job.Postings, sort = TRUE) #weight by Job Postings
-       percent(x)}
+                     x <- count(dataName, Occupation, wt= Number.of.Job.Postings, sort = TRUE) #weight by Job Postings
+                     percent(x)}
 
 cleanData <- function(dataName) {
-       selectFilter(dataName)
-       removeCommas(dataName)
+                     selectFilter(dataName)
+                     removeCommas(dataName)
 }
 #############################################################################################################################
 
