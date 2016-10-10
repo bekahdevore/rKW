@@ -8,10 +8,17 @@ allOccupations       <- read.csv('last90daysAll.csv')
 businessOccupations  <- read.csv('last90daysBusiness.csv')
 majorSocCodeNames    <- read.csv('socMajorOccupationGroupsBLS_2010.csv')
 
+businessThreeToFive <- read.csv('business3to5yearsExperienceLast90days.csv')
+allThreeToFive      <- read.csv('all3to5yearsExperienceLast90days.csv')
+
+
+
 #majorSocCodeNames$SOC <- as.numeric(as.character(majorSocCodeNames$SOC))
 
 business <- right_join(businessOccupations, majorSocCodeNames, by = 'SOC')
 all      <- right_join(allOccupations, majorSocCodeNames, by = 'SOC') 
+
+
 
 
 ################################## FUNCTIONS ###########################################
@@ -84,6 +91,9 @@ business$label       <- paste(business$Occupation,
                             business$numberLabel,
                             sep = "\n")
 
+
+########################################## 3 to 5 year Stacked Bar Graph Data Manipulation ####################################
+businessThreeToFive <- selectFilter(businessThreeToFive)
 
 ######################################### OUTPUT ####################################################
 write.csv(all, file = 'all.csv')
