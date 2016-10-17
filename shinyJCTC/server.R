@@ -23,25 +23,44 @@ burningGlassDataJCTC <- burningGlassDataJCTC %>%
        filter(SOC %in% socCodes) 
 
 jctcData <- left_join(emsiDataJCTC, burningGlassDataJCTC, by = 'SOC')
+jctcData <- left_join(emsiDataJCTC, burningGlassDataJCTC, by = 'SOC')
 jctcData <- jctcData %>%
-       select(SOC, `Description`, `Number of Job Postings`, 
-              `2016 Jobs`, `2018 Jobs`, `2021 Jobs`, `Median Hourly Earnings`)
+       select(1:10, 12)
 
 
-jctcData$`Median Hourly Earnings`  <- as.numeric(as.character(str_replace_all(jctcData$`Median Hourly Earnings`, 
-                                                      '\\$', '')))
-jctcData$`Number of Job Postings`  <-as.numeric(as.character(str_replace_all(jctcData$`Number of Job Postings`, 
-                                                                '\\,', '')))
-jctcData$`2016 Jobs`               <-as.numeric(as.character(str_replace_all(jctcData$`2016 Jobs`, 
-                                                                '\\,', '')))
-jctcData$`2018 Jobs`               <-as.numeric(as.character(str_replace_all(jctcData$`2018 Jobs`, 
-                                                                '\\,', '')))
-jctcData$`2021 Jobs`               <-as.numeric(as.character(str_replace_all(jctcData$`2021 Jobs`, 
-                                                                '\\,', '')))
+
+
+jctcData$`Age 55-64`  <-str_replace_all(jctcData$`Age 55-64`, 
+                                        '<10', '5')
+jctcData$`Age 65+`    <-str_replace_all(jctcData$`Age 65+`, 
+                                        '<10', '5')
+jctcData$`Median Hourly Earnings`  <- str_replace_all(jctcData$`Median Hourly Earnings`, 
+                                                      '\\$', '')
+jctcData$`Age 55-64`  <-as.numeric(str_replace_all(jctcData$`Age 55-64`, 
+                                                   '\\,', ''))
+jctcData$`Age 65+`    <-as.numeric(str_replace_all(jctcData$`Age 65+`, 
+                                                   '\\,', ''))
+jctcData$`2016 Jobs`               <-as.numeric(str_replace_all(jctcData$`2016 Jobs`, 
+                                                                '\\,', ''))
+jctcData$`2018 Jobs`               <-as.numeric(str_replace_all(jctcData$`2018 Jobs`, 
+                                                                '\\,', ''))
+jctcData$`2021 Jobs`               <-as.numeric(str_replace_all(jctcData$`2021 Jobs`, 
+                                                                '\\,', ''))
+jctcData$`Number of Job Postings`  <-as.numeric(str_replace_all(jctcData$`Number of Job Postings`, 
+                                                                '\\,', ''))
+
+jctcData$retirement <- (jctcData$`Age 55-64`) + (jctcData$`Age 65+`)
+jctcData$retirement <- as.numeric(as.character(jctcData$retirement))
+jctcData$`2016 - 2021 Change` <- as.numeric(as.character(jctcData$`2016 - 2021 Change`))
+jctcData$jobsAdded <- (jctcData$`2016 - 2021 Change`) + (jctcData$retirement)
+jctcData <- jctcData %>%
+       select(1:2, 11, 3:6, 13)
 
 colnames(jctcData)[3] <- "Number of Job Postings (Oct. 2015 - Sept. 2016)"
 colnames(jctcData)[5] <- "2018 Jobs (Projected)"
 colnames(jctcData)[6] <- "2021 Jobs (Projected)"
+colnames(jctcData)[8] <- "Jobs Added + Possible Retirements (projected 2021)"
+
 
 
 
