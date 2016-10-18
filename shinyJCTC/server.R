@@ -18,8 +18,8 @@ emsiDataJCTC         <- read.csv(textConnection(emsiDataConnection), check.names
 
 
 jctcData <- left_join(emsiDataJCTC, burningGlassDataJCTC, by = 'SOC')
-jctcData <- jctcData %>%
-              select(1:10, 12)
+#jctcData <- jctcData %>%
+#              select(1:10, 12)
 
 #Remove commas, dollar signs, and make replacements
 jctcData <- as.data.frame(lapply(jctcData, function(x) {
@@ -30,18 +30,21 @@ jctcData <- as.data.frame(lapply(jctcData, function(x) {
                      gsub('<10', '5', x)
               }))
 
+cols.num            <- c("Age.55.64","Age.65.", "X2016...2026.Change")
+jctcData[cols.num]  <- sapply(jctcData[cols.num], as.character)
+jctcData[cols.num]  <- sapply(jctcData[cols.num], as.numeric)
+jctcData$retirement <- (jctcData$Age.55.64) + (jctcData$Age.65.)
 
-jctcData$retirement <- (jctcData$`Age 55-64`) + (jctcData$`Age 65+`)
 jctcData$retirement <- as.numeric(as.character(jctcData$retirement))
-jctcData$`2016 - 2021 Change` <- as.numeric(as.character(jctcData$`2016 - 2021 Change`))
-jctcData$jobsAdded <- (jctcData$`2016 - 2021 Change`) + (jctcData$retirement)
+jctcData$jobsAdded  <- (jctcData$X2016...2026.Change) + (jctcData$retirement)
+
 jctcData <- jctcData %>%
-       select(1:2, 11, 3:7, 13)
+                     select(1:2, 11, 3:7, 13)
 
 colnames(jctcData)[3] <- "Number of Job Postings (Oct. 2015 - Sept. 2016)"
 colnames(jctcData)[5] <- "2018 Jobs (Projected)"
 colnames(jctcData)[6] <- "2021 Jobs (Projected)"
-colnames(jctcData)[9] <- "Jobs Added + Possible Retirements (projected 2021)"
+colnames(jctcData)[9] <- "Jobs Added + Possible Retirements (projected 2026)"
 
 
 
