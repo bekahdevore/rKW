@@ -1,8 +1,8 @@
 name: shinyJCTC
 account: kwlmi
 server: shinyapps.io
-bundleId: 588987
+bundleId: 589848
 url: https://kwlmi.shinyapps.io/shinyJCTC/
-when: 1476736653.62172
+when: 1476803913.99555
 asMultiple: FALSE
 asStatic: FALSE
