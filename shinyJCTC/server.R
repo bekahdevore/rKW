@@ -30,21 +30,27 @@ jctcData <- as.data.frame(lapply(jctcData, function(x) {
                      gsub('<10', '5', x)
               }))
 
-cols.num            <- c("Age.55.64","Age.65.", "X2016...2026.Change")
+cols.num            <- c("Number.of.Job.Postings", "X2016.Jobs", "X2018.Jobs", "X2021.Jobs", "Age.55.64","Age.65.", "X2016...2021.Change", "X2016...2026.Change")
 jctcData[cols.num]  <- sapply(jctcData[cols.num], as.character)
 jctcData[cols.num]  <- sapply(jctcData[cols.num], as.numeric)
 jctcData$retirement <- (jctcData$Age.55.64) + (jctcData$Age.65.)
 
 jctcData$retirement <- as.numeric(as.character(jctcData$retirement))
 jctcData$jobsAdded  <- (jctcData$X2016...2026.Change) + (jctcData$retirement)
+jctcData$jobsAdded  <- as.numeric(as.character(jctcData$jobsAdded))
 
 jctcData <- jctcData %>%
-                     select(1:2, 11, 3:7, 13)
+                     select(1:2, 14, 3:7, 11:12, 16)
 
 colnames(jctcData)[3] <- "Number of Job Postings (Oct. 2015 - Sept. 2016)"
+colnames(jctcData)[4] <- "2016 Jobs"
 colnames(jctcData)[5] <- "2018 Jobs (Projected)"
 colnames(jctcData)[6] <- "2021 Jobs (Projected)"
-colnames(jctcData)[9] <- "Jobs Added + Possible Retirements (projected 2026)"
+colnames(jctcData)[7] <- "2016 - 2021 Change"
+colnames(jctcData)[8] <- "2016 - 2021 Percent Change"
+colnames(jctcData)[9] <- "2016 - 2026 Change"
+colnames(jctcData)[10] <- "2016 - 2026 Percent Change"
+colnames(jctcData)[11] <- "Jobs Added + Possible Retirements (projected 2026)"
 
 
 
