@@ -4,7 +4,7 @@ library(ggplot2)
 library(plotly)
 library(scales)
 library(RCurl)
-library(ggth)
+library(ggthemes)
 
 #Load data, upgrade to pull from google sheets
 zeroTo2   <- getURL('https://docs.google.com/spreadsheets/d/1c_FBfXw_Oq-p5ocYx5wnHqnA-7dTI01tx7J7YszytsI/pub?gid=0&single=true&output=csv')
@@ -43,9 +43,9 @@ all <- full_join(all, splitSOC, by = 'SOC')
 
 #Count by Soc group for each level of experience
 socGroup0to2 <- count(all, socGroup, wt = zeroTo2yearsExperience)
-       colnames(socGroup0to2)[2] <- "0-2"
+       colnames(socGroup0to2)[2] <- "0-2 years"
 socGroup3to5 <- count(all, socGroup, wt = threeToFiveYearsExperience)
-       colnames(socGroup3to5)[2] <- "3-5"
+       colnames(socGroup3to5)[2] <- "3-5 years"
 socGroupOther <- count(all, socGroup, wt = Other)
        colnames(socGroupOther)[2] <- "Other"
  
@@ -60,17 +60,22 @@ xy$socGroup <- as.factor(xy$socGroup)
 #Join to SOC code names 
 xy <- left_join(xy, majorSocCodeNames, by = 'socGroup')
 
+xy <- xy %>%
+       filter(socGroup != 27 & socGroup != 53 & socGroup != 19 
+              & socGroup != 23 & socGroup != 35 & socGroup != 33
+              & socGroup != 25 & socGroup != 25 & socGroup != 21)
+
 #change to numeric 
-xy$`0-2` <- as.numeric(as.character(xy$`0-2`))
-xy$`3-5` <- as.numeric(as.character(xy$`3-5`))
+xy$`0-2 years` <- as.numeric(as.character(xy$`0-2 years`))
+xy$`3-5 years` <- as.numeric(as.character(xy$`3-5 years`))
 xy$Other <- as.numeric(as.character(xy$Other))
 
 
 
 #Add calculation for percentages
-xy$zeroTo2percent  <- (xy$`0-2`)/(xy$`0-2` + xy$`3-5` + xy$Other)
-xy$threeTo5percent <- (xy$`3-5`)/(xy$`0-2` + xy$`3-5` + xy$Other)
-xy$otherPercent    <- (xy$Other)/(xy$`0-2` + xy$`3-5` + xy$Other)
+xy$zeroTo2percent  <- (xy$`0-2 years`)/(xy$`0-2 years` + xy$`3-5 years` + xy$Other)
+xy$threeTo5percent <- (xy$`3-5 years`)/(xy$`0-2 years` + xy$`3-5 years` + xy$Other)
+xy$otherPercent    <- (xy$Other)/(xy$`0-2 years` + xy$`3-5 years` + xy$Other)
 
 
 rawData     <- xy %>%
@@ -85,25 +90,31 @@ percentData <- melt(percentData)
 allData <- cbind(percentData, rawData)
 
 colnames(allData)[1] <- 'SOC'
+colnames(allData)[2] <- 'Occupations'
 colnames(allData)[3] <- 'Percent Type'
 colnames(allData)[4] <- 'Percent'
 colnames(allData)[6] <- 'occ'
 colnames(allData)[7] <- 'Experience'
-colnames(allData)[8] <- 'Number'
+colnames(allData)[8] <- 'Jobs'
 
 allData <- allData %>%
        select(1:4, 7:8)
-totals <- count(allData, Occupation, wt = Number, sort = TRUE)
-allData <- full_join(allData, totals, by = 'Occupation')
+totals <- count(allData, Occupations, wt = Jobs, sort = TRUE)
+allData <- full_join(allData, totals, by = 'Occupations')
 allData <- allData %>%
               arrange(n)
 
+Occupation <- reorder(allData$Occupations, allData$n)
 #Visualize
-g <- ggplot(allData, aes(x = reorder(Occupation, n), 
-                            y = Number, 
+g <- ggplot(allData, aes(x = Occupation, 
+                            y = Jobs, 
                             fill = Experience, 
                             label = Percent)) +      
-              geom_bar(stat = 'identity') + coord_flip()
+              geom_bar(stat = 'identity') +
+              labs(x = '', 
+                   y = 'Number of Job Postings') +
+              coord_flip() +
+              theme_minimal()
 ggplotly(g)
 
 
