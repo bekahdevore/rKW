@@ -11,10 +11,10 @@ library(ggthemes)
 kentuckyTopOccupationsData <- read.csv("kentuckyStateTopOccupations.csv")
 
 kentuckyTopOccupationsData$Openings.in.Top.Occupations <- str_replace_all(
-       kentuckyTopOccupationsData$Openings.in.Top.Occupations, 
-       ",","")
+                                                           kentuckyTopOccupationsData$Openings.in.Top.Occupations, 
+                                                           ",","")
 kentuckyTopOccupationsData$Openings.in.Top.Occupations <- as.numeric(as.character(kentuckyTopOccupationsData$Openings.in.Top.Occupations))
-kentuckyTopOccupationsData$Sector.Occupation <- as.character(kentuckyTopOccupationsData$Sector.Occupation)
+kentuckyTopOccupationsData$Sector.Occupation           <- as.character(kentuckyTopOccupationsData$Sector.Occupation)
 
 
 ###################################################### FUNCTIONS

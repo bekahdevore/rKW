@@ -5,6 +5,7 @@ library(plotly)
 library(scales)
 library(RCurl)
 library(ggthemes)
+library(treemap)
 
 #Load data, upgrade to pull from google sheets
 zeroTo2   <- getURL('https://docs.google.com/spreadsheets/d/1c_FBfXw_Oq-p5ocYx5wnHqnA-7dTI01tx7J7YszytsI/pub?gid=0&single=true&output=csv')
@@ -123,5 +124,8 @@ ggplotly(g)
 #plot_ly(all,  x = ~zeroTo2yearsExperience, y = ~Occupation.Title.x, type = 'bar', name = '0 - 2 years experience') %>%
 #       add_trace(x = ~threeToFiveYearsExperience, name = '3 - 5 years experience') %>%
 #       layout(yaxis = list(title = 'Count'), barmode = 'stack') + 
+
+#treemap(all, index = 'Occupation.Title.x', vSize = 'Other')
+
 
 write.csv(xy, file = 'businessExperienceRatio.csv')
