@@ -6,37 +6,43 @@
 #
 
 library(shiny)
-
+library(shinythemes)
 
 shinyUI(fluidPage(
-
+  
+  theme = shinytheme('united'),
   # Application title
   titlePanel("Careeer Pathways Louisville MSA"),
   mainPanel(
     tabsetPanel(
       tabPanel(
-          'Manufacturing',
-          htmlOutput('manufacturing')),
+          'Manufacturing'#,
+          #htmlOutput('manufacturing')
+          ),
       
       tabPanel(
-          'Healthcare',
-            htmlOutput('healthcare')),
+          'Healthcare'#,
+          # htmlOutput('healthcare')
+          ),
       
       tabPanel(
-        'Logistics',
-        htmlOutput('logistics')),
+        'Logistics'#,
+        #htmlOutput('logistics')
+        ),
       
       tabPanel(
         'IT',
         htmlOutput('it')),
       
       tabPanel(
-        'Food & Beverage',
-        htmlOutput('foodAndBeverage')),
+        'Food & Beverage'#,
+        #htmlOutput('foodAndBeverage')
+        ),
       
       tabPanel(
-        'Business',
-        htmlOutput('business'))
+        'Business'#,
+        # htmlOutput('business')
+        )
   ))
   # Sidebar with a slider input for number of bins
 ))

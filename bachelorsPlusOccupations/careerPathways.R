@@ -43,5 +43,18 @@ mainDataFile$socGroup           <- as.factor(mainDataFile$socGroup)
 #Join data to add major soc group names
 mainDataFile                    <- full_join(mainDataFile, majorSocCodeNames, by = 'socGroup')
                 
-                
+  
+
+#Explore
+itJobNamesBachelors <-as.vector(mainDataFile %>%
+                                  filter(Sector == "IT" & mainDataFile$`Typical Entry Level Education` == "Bachelor's degree") %>%
+                                  select(2))
+
+itJobNamesAssociates <-as.vector(mainDataFile %>%
+                                   filter(Sector == "IT" & mainDataFile$`Typical Entry Level Education` == "Associate's degree") %>%
+                                   select(2))
+
+itJobNamesByEducationLevel <-as.vector(mainDataFile %>%
+                                   filter(Sector == "IT") %>%
+                                   select(1, 2, 6, 3))
               
