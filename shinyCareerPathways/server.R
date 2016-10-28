@@ -74,49 +74,155 @@ mainDataFile$deduplicatedPostings <- round(mainDataFile$deduplicatedPostings, di
 #Join data to add major soc group names
 #mainDataFile                    <- full_join(mainDataFile, majorSocCodeNames, by = 'socGroup')
 
+###################################### IT SECTOR #######################################
+
+######################## DATA FILTERS ########################################
 techJobs <- mainDataFile %>%
-              filter(Sector == "IT")
+               filter(Sector == "IT")
 
-informationSupportBA <- techJobs %>%
-                                filter(Category                      == 'informationSupport' &
-                                       Typical.Entry.Level.Education == "Bachelor's degree")
+###### EDUCATION LEVEL DATA 
+  ###### TOTALS BY EDUCATION LEVEL 
+  techJobsBa <- techJobs %>% 
+                  filter(Typical.Entry.Level.Education == "Bachelor's degree")
+  
+  techJobsAs <- techJobs %>%
+                  filter(Typical.Entry.Level.Education == "Associate's degree"  |
+                         Typical.Entry.Level.Education == 'Some college no degree')
 
-totalJobsIt <- sum(techJobs$Number.of.Job.Postings)
-totalJobsManufacturing <- sum(mainDataFile$Number.of.Job.Postings)
 
-degreeName1 <- "High School or GED"
-degreeName2 <- "Certificate or Diploma"
-degreeName2.5 <- "Some College, No degree"
-degreeName3 <- "Associate Degree (2 yrs)"
-degreeName4 <- "BA/BS (4 yrs)"
-degreeName5 <- "Master's Degree"
-degreeName6 <- "Doctoral or Professional Degree"
+      ##### INFORMATION SUPPORT COLUMN 
+      infoBa <- techJobs %>%
+                  filter(Category                      == 'informationSupport' &
+                         Typical.Entry.Level.Education == "Bachelor's degree")
+      
+      infoAs <- techJobs %>% 
+                  filter(Category                      == 'informationSupport' &
+                         Typical.Entry.Level.Education == "Associate's degree" |
+                         Typical.Entry.Level.Education == 'Some college no degree')             
+      
+      ##### PROGRAMMING & SOFTWARE DEV
+      progBa <- techJobs %>%
+                filter(Category                      == 'programmingSoftware' &
+                       Typical.Entry.Level.Education == "Bachelor's degree")
+      
+      progAs <- techJobs %>% 
+                filter(Category                      == 'programmingSoftware' &
+                       Typical.Entry.Level.Education == "Associate's degree" |
+                       Typical.Entry.Level.Education == 'Some college no degree')             
+      
+      
+      ##### NETWORK SYSTEMS 
+      netBa <- techJobs %>%
+                filter(Category                       == 'networkSystems' &
+                       Typical.Entry.Level.Education  == "Bachelor's degree")
+      
+      netAs <- techJobs %>% 
+                filter(Category                       == 'networkSystems' &
+                       Typical.Entry.Level.Education  == "Associate's degree" |
+                       Typical.Entry.Level.Education  == 'Some college no degree')             
+      
+      #### WEB AND DIGITAL COMMUNICATIONS COLUMN
+      webBa <- techJobs %>%
+                filter(Category                      == 'webCommunications' &
+                       Typical.Entry.Level.Education == "Bachelor's degree")
+      webAs <- techJobs %>% 
+                filter(Category                      == 'webCommunications' &
+                       Typical.Entry.Level.Education == "Associate's degree")             
 
-## IT 
-itBachelorsColumn1 <- "Information Technology Managers; Systems Analysts; Operations Analysts"
-itBachelorsColumn2 <- "Software Engineers, Systems Engineers"
-itBachelorsColumn3 <- "Network Specialists"
-itBachelorsColumn4 <- "Computer Programmers"
+##################################################################################################################################################
+##################################################################################################################################################
+      degreeName1   <- "High School or GED"
+      degreeName2   <- "Certificate (1-2 yrs)"
+      degreeName2.5 <- "Associate Degree (2 yrs) or Some College, no degree"
+      degreeName3   <- "Associate Degree (2 yrs)"
+      degreeName4   <- "BA/BS"
+      degreeName5   <- "Master's Degree"
+      degreeName6   <- "Doctoral or Professional Degree"
+      
+########################################### COLUMN ENTRY ###########################################       
+################ JOB NAMES 
+      ########## BACHELORS
+      itBachelorsInfo    <- " Information Technology Managers; 
+                              Systems Analysts; 
+                              Operations Analysts"
+      itBachelorsProg    <- " Software Engineers, 
+                              Systems Engineers"
+      itBachelorsNet     <- " Network Specialists;
+                              Database Administrators;
+                              Information Security Analysts;
+                              Systems Administrators"
+      itBachelorsWeb     <- " Computer Programmers;
+                              Graphic Designers"
+      ###### ASSOCIATES
+      itAssociatesInfo   <- " Technical Support Analysts;
+                              Information Technology Support Technicians"
+      
+      itAssociatesProg   <- noJobsMessage
+      itAssociatesNet    <- " Computer Network Support Specialists"
+      itAssociatesWeb    <- " Web Developers"
+      
+      itSomeCollegeInfo  <- noJobsMessage
+      itSomeCollegeProg  <- noJobsMessage
+      itSomeCollegeNet   <- noJobsMessage
+      itSomeCollegeWeb   <- noJobsMessage
+      
+      itCertificateInfo  <- noJobsMessage
+      itCertificateProg  <- noJobsMessage
+      itCertificateNet   <- noJobsMessage
+      itCertificateWeb   <- noJobsMessage
+      
+      itHighSchoolInfo   <- noJobsMessage
+      itHighSchoolProg   <- noJobsMessage
+      itHighSchoolNet    <- noJobsMessage
+      itHighSchoolWeb    <- noJobsMessage
 
-itAssociatesColumn1 <- sum(informationSupportBA$Number.of.Job.Postings)
-itAssociatesColumn2 <- "No high-demand jobs at this time"
-itAssociatesColumn3 <- "Computer Network Support Specialists"
-itAssociatesColumn4 <- "Web Developers"
+######################## JOB POSTINGS 
 
-itSomeCollegeColumn1 <- "No"
-itSomeCollegeColumn2 <- "No"
-itSomeCollegeColumn3 <- "No"
-itSomeCollegeColumn4 <- "No"
+      ##### TOTALS             
+      totalJobsIt           <-  sum(techJobs$Number.of.Job.Postings)
+      totalJobPostingsItBa  <-  sum(techJobsBa$Number.of.Job.Postings)
+      totalJobPostingsItAs  <-  sum(techJobsAs$Number.of.Job.Postings)
+      totalJobPostingsItSo  <-  sum(techJobsSo$Number.of.Job.Postings)
 
-itCertificateColumn1 <- "No"
-itCertificateColumn2 <- ""
-itCertificateColumn3 <- "No"
-itCertificateColumn4 <- "No"
+      ##### BACHELORS               
+      itPostingsBaInfo      <-  sum(informationSupportBa$Number.of.Job.Postings)
+      itPostingsBaProg      <-  sum(programmingBa$Number.of.Job.Postings) 
+      itPostingsBaNet       <-  sum(networkBa$Number.of.Job.Postings)
+      itPostingsBaWeb       <-  sum(webBa$Number.of.Job.Postings)
+      
+      ##### ASSOCIATES/SOME   
+      itPostingsAsInfo      <-  sum(informationSupportAs$Number.of.Job.Postings)
+      itPostingsAsProg      <-  sum(programmingAs$Number.of.Job.Postings) 
+      itPostingsAsNet       <-  sum(networkAs$Number.of.Job.Postings)
+      itPostingsAsWeb       <-  sum(weAs$Number.of.Job.Postings)
 
-itHighSchoolColumn1 <- "No"
-itHighSchoolColumn2 <- "No"
-itHighSchoolColumn3 <- "No"
-itHighSchoolColumn4 <- "No"
+
+
+## IT Wage Ranges
+## 25th Percentile      
+itWagesBaInfo <- round(mean(infoBa$Pct..25.Hourly.Earnings), digits = 2)
+itWagesBaProg <- round(mean(progBa$Pct..25.Hourly.Earnings), digits = 2)
+itWagesBaNet  <- round(mean(progBa$Pct..25.Hourly.Earnings), digits = 2)
+itWagesBaWeb  <- round(mean(progBa$Pct..25.Hourly.Earnings), digits = 2)
+
+itWagesAsInfo <- round(mean(infoAs$Pct..25.Hourly.Earnings), digits = 2)
+itWagesAsProg <- round(mean(progAs$Pct..25.Hourly.Earnings), digits = 2)
+itWagesAsNet  <- round(mean(progAs$Pct..25.Hourly.Earnings), digits = 2)
+itWagesAsWeb  <- round(mean(progAs$Pct..25.Hourly.Earnings), digits = 2)
+
+## 75th Percentile
+itWagesBaInfo <- round(mean(infoBa$Pct..75.Hourly.Earnings), digits = 2)
+itWagesBaProg <- round(mean(progBa$Pct..75.Hourly.Earnings), digits = 2)
+itWagesBaNet  <- round(mean(progBa$Pct..75.Hourly.Earnings), digits = 2)
+itWagesBaWeb  <- round(mean(progBa$Pct..75.Hourly.Earnings), digits = 2)
+
+itWagesAsInfo <- round(mean(infoAs$Pct..75.Hourly.Earnings), digits = 2)
+itWagesAsProg <- round(mean(progAs$Pct..75.Hourly.Earnings), digits = 2)
+itWagesAsNet  <- round(mean(progAs$Pct..75.Hourly.Earnings), digits = 2)
+itWagesAsWeb  <- round(mean(progAs$Pct..75.Hourly.Earnings), digits = 2)
+
+
+########### STOPPED HERE, NEED TO CHANGE NAMES ON SERVER OUTPUTS AND ON THE ITTEMPLATE.HTML
 
 shinyServer(function(input, output) {
   #     output$healthcare <- renderUI(
