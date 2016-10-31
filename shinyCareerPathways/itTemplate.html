@@ -7,61 +7,73 @@
   <body>
     <div>
 	<TABLE>
+     <col class = 'column1'>
+     <col class = 'column2'>
+     <col class = 'column3'>
+     <col class = 'column4'>
+     <col class = 'column5'>
 	   <TR>
-        <TD> <h3> {{ totalJobs }}                </h3> </TD>
-        <TD> <h3> Information Support/Services   </h3> </TD>
-        <TD> <h3> Programming and Software Dev   </h3> </TD>
-        <TD> <h3> Network Systems                </h3> </TD>
-        <TD> <h3> Web and Digital Communications </h3> </TD>
+        <TH class = 'totalJobNumber'> {{ totalJobs }} <br> <h5>TOTAL JOB POSTINGS </h5> </TD>
+        <TH class = 'mainTitle'> <h3> Information Support/Services   </h3> </TH>
+        <TH class = 'mainTitle'> <h3> Programming and  <br> Software Dev   </h3> </TH>
+        <TH class = 'mainTitle'> <h3> Network Systems                </h3> </TH>
+        <TH class = 'mainTitle'> <h3> Web and Digital Communications </h3> </TH>
 	   </TR>
-	   <TR >
-        <TD> <h5> {{ degreeName4   }}            </h5></TD>
+	   <TR>
+        <TD class = "edTitle"> {{ degreeName4   }}      </TD>
         <TD> {{ itBachelorsInfo    }} </TD>
         <TD> {{ itBachelorsProg    }} </TD>
         <TD> {{ itBachelorsNet     }} </TD>
         <TD> {{ itBachelorsWeb     }} </TD>
 	   </TR>
-     <TR >
-        <TD> {{ totalPostingsItBa  }} </TD>
-        <TD> {{ itPostingsBaInfo }} JOB POSTINGS in the last 3 months</TD>
-        <TD> {{ itPostingsBaProg }} JOB POSTINGS in the last 3 months</TD>
-        <TD> {{ itPostingsBaNet  }} JOB POSTINGS in the last 3 months</TD>
-        <TD> {{ itPostingsBaWeb  }} JOB POSTINGS in the last 3 months</TD>
+     <TR>
+        <TD> {{ totalJobPostingsItBa  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+        <TD> {{ itPostingsBaInfo }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+        <TD> {{ itPostingsBaProg }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+        <TD> {{ itPostingsBaNet  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+        <TD> {{ itPostingsBaWeb  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
      </TR>
-     <TR >
+     <TR>
         <TD>  </TD>
-        <TD> ${{ itWagesBaInfoLOW }} to ${{ itWagesBaInfoHigh }} HOURLY RATE </TD>
-        <TD> {{ itWagesBaProg }} </TD>
-        <TD> {{ itWagesBaNet  }} </TD>
-        <TD> {{ itWagesBaWeb  }} </TD>
+        <TD> ${{ itWagesBaInfoLOW }} to ${{ itWagesBaInfoHIGH }} <br> HOURLY RATE </TD>
+        <TD> ${{ itWagesBaProgLOW }} to ${{ itWagesBaProgHIGH }} <br> HOURLY RATE </TD>
+        <TD> ${{ itWagesBaNetLOW  }} to ${{ itWagesBaNetHIGH  }} <br> HOURLY RATE </TD>
+        <TD> ${{ itWagesBaWebLOW  }} to ${{ itWagesBaWebHIGH  }} <br> HOURLY RATE </TD>
      </TR>       
 	   <TR>
-        <TD> {{ degreeName3 }}         </TD>
-        <TD> {{ itAssociatesColumn1 }} </TD>
-        <TD> {{ itAssociatesColumn2 }} </TD>
-        <TD> {{ itAssociatesColumn3 }} </TD>
-        <TD> {{ itAssociatesColumn4 }} </TD>
+        <TD class = "edTitle itAssociates"> Associate Degree <br><h5>(2 yrs) or </h5>Some College, <h5>no degree</h5>  </TD>
+        <TD> {{ itAssociatesInfo }} </TD>
+        <TD> {{ itAssociatesProg }} </TD>
+        <TD> {{ itAssociatesNet  }} </TD>
+        <TD> {{ itAssociatesWeb  }} </TD>
 	   </TR>
      <TR>
-        <TD> {{ degreeName2.5 }}        </TD>
-        <TD> {{ itSomeCollegeColumn1 }} </TD>
-        <TD> {{ itSomeCollegeColumn2 }} </TD>
-        <TD> {{ itSomeCollegeColumn3 }} </TD>
-        <TD> {{ itSomeCollegeColumn4 }} </TD>
+        <TD> {{ totalJobPostingsItAs  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+        <TD> {{ itPostingsAsInfo }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+        <TD> {{ itPostingsAsProg }} <br> </TD>
+        <TD> {{ itPostingsAsNet  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+        <TD> {{ itPostingsAsWeb  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
      </TR>
      <TR>
-        <TD> {{ degreeName2 }}          </TD>
-        <TD> {{ itCertificateColumn1 }} </TD>
-        <TD> {{ itCertificateColumn2 }} </TD>
-        <TD> {{ itCertificateColumn3 }} </TD>
-        <TD> {{ itCertificateColumn4 }} </TD>
+        <TD>  </TD>
+        <TD> ${{ itWagesAsInfoLOW }} to ${{ itWagesAsInfoHIGH }} <br> HOURLY RATE </TD>
+        <TD> </TD>
+        <TD> ${{ itWagesAsNetLOW  }} to ${{ itWagesAsNetHIGH  }} <br> HOURLY RATE </TD>
+        <TD> ${{ itWagesAsWebLOW  }} to ${{ itWagesAsWebHIGH  }} <br> HOURLY RATE </TD>
+     </TR>    
+     <TR class = "itSpecialBorder"> 
+        <TD class = "edTitle"> {{ degreeName2 }}          </TD>
+        <TD> {{ itCertificateInfo }} </TD>
+        <TD> {{ itCertificateProg }} </TD>
+        <TD> {{ itCertificateNet }} </TD>
+        <TD> {{ itCertificateWeb }} </TD>
      </TR>
      <TR>
-        <TD> {{ degreeName1 }}         </TD>
-        <TD> {{ itHighSchoolColumn1 }} </TD>
-        <TD> {{ itHighSchoolColumn2 }} </TD>
-        <TD> {{ itHighSchoolColumn3 }} </TD>
-        <TD> {{ itHighSchoolColumn4 }} </TD>
+        <TD class = "edTitle"> {{ degreeName1 }}         </TD>
+        <TD> {{ itHighSchoolInfo }} </TD>
+        <TD> {{ itHighSchoolProg }} </TD>
+        <TD> {{ itHighSchoolNet }} </TD>
+        <TD> {{ itHighSchoolWeb }} </TD>
      </TR>
 	</TABLE>
 	    </div>

@@ -9,8 +9,9 @@ library(shiny)
 library(shinythemes)
 
 shinyUI(fluidPage(
+
+  includeCSS("main.css"),
   
-  theme = shinytheme('united'),
   # Application title
   titlePanel("Careeer Pathways Louisville MSA"),
   mainPanel(

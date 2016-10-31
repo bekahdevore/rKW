@@ -74,8 +74,21 @@ mainDataFile$deduplicatedPostings <- round(mainDataFile$deduplicatedPostings, di
 #Join data to add major soc group names
 #mainDataFile                    <- full_join(mainDataFile, majorSocCodeNames, by = 'socGroup')
 
-###################################### IT SECTOR #######################################
+noJobsMessage <- "No high-demand jobs at this level within the pathway"
 
+##################################################################################################################################################
+##################################################################################################################################################
+degreeName1   <- "High School or GED"
+degreeName2   <- "Certificate (1-2 yrs)"
+degreeName2.5 <- "Associate Degree (2 yrs) or Some College, no degree"
+degreeName3   <- "Associate Degree (2 yrs)"
+degreeName4   <- "BA/BS"
+degreeName5   <- "Master's Degree"
+degreeName6   <- "Doctoral or Professional Degree"
+
+
+
+###################################### IT SECTOR #######################################
 ######################## DATA FILTERS ########################################
 techJobs <- mainDataFile %>%
                filter(Sector == "IT")
@@ -92,52 +105,43 @@ techJobs <- mainDataFile %>%
 
       ##### INFORMATION SUPPORT COLUMN 
       infoBa <- techJobs %>%
-                  filter(Category                      == 'informationSupport' &
-                         Typical.Entry.Level.Education == "Bachelor's degree")
+                  filter(Category                      == 'informationSupport') %>%
+                  filter(Typical.Entry.Level.Education == "Bachelor's degree")
       
       infoAs <- techJobs %>% 
-                  filter(Category                      == 'informationSupport' &
-                         Typical.Entry.Level.Education == "Associate's degree" |
+                  filter(Category                      == 'informationSupport') %>%
+                  filter(Typical.Entry.Level.Education == "Associate's degree" |
                          Typical.Entry.Level.Education == 'Some college no degree')             
       
       ##### PROGRAMMING & SOFTWARE DEV
       progBa <- techJobs %>%
-                filter(Category                      == 'programmingSoftware' &
-                       Typical.Entry.Level.Education == "Bachelor's degree")
+                filter(Category                      == 'programmingSoftware') %>%
+                filter(Typical.Entry.Level.Education == "Bachelor's degree")
       
-      progAs <- techJobs %>% 
-                filter(Category                      == 'programmingSoftware' &
-                       Typical.Entry.Level.Education == "Associate's degree" |
-                       Typical.Entry.Level.Education == 'Some college no degree')             
+      progAs <- ""             
       
       
       ##### NETWORK SYSTEMS 
       netBa <- techJobs %>%
-                filter(Category                       == 'networkSystems' &
-                       Typical.Entry.Level.Education  == "Bachelor's degree")
+                filter(Category                       == 'networkSystems') %>%
+                filter(Typical.Entry.Level.Education  == "Bachelor's degree")
       
       netAs <- techJobs %>% 
-                filter(Category                       == 'networkSystems' &
-                       Typical.Entry.Level.Education  == "Associate's degree" |
+                filter(Category == 'networkSystems') %>%
+                filter(Typical.Entry.Level.Education  == "Associate's degree" |
                        Typical.Entry.Level.Education  == 'Some college no degree')             
       
       #### WEB AND DIGITAL COMMUNICATIONS COLUMN
       webBa <- techJobs %>%
-                filter(Category                      == 'webCommunications' &
-                       Typical.Entry.Level.Education == "Bachelor's degree")
+                filter(Category                      == 'webCommunications') %>%
+                filter(Typical.Entry.Level.Education == "Bachelor's degree")
+                
       webAs <- techJobs %>% 
-                filter(Category                      == 'webCommunications' &
-                       Typical.Entry.Level.Education == "Associate's degree")             
+                filter(Category                      == 'webCommunications') %>%
+                filter(Typical.Entry.Level.Education == "Associate's degree" |
+                       Typical.Entry.Level.Education == 'Some college no degree')             
 
-##################################################################################################################################################
-##################################################################################################################################################
-      degreeName1   <- "High School or GED"
-      degreeName2   <- "Certificate (1-2 yrs)"
-      degreeName2.5 <- "Associate Degree (2 yrs) or Some College, no degree"
-      degreeName3   <- "Associate Degree (2 yrs)"
-      degreeName4   <- "BA/BS"
-      degreeName5   <- "Master's Degree"
-      degreeName6   <- "Doctoral or Professional Degree"
+
       
 ########################################### COLUMN ENTRY ###########################################       
 ################ JOB NAMES 
@@ -161,11 +165,6 @@ techJobs <- mainDataFile %>%
       itAssociatesNet    <- " Computer Network Support Specialists"
       itAssociatesWeb    <- " Web Developers"
       
-      itSomeCollegeInfo  <- noJobsMessage
-      itSomeCollegeProg  <- noJobsMessage
-      itSomeCollegeNet   <- noJobsMessage
-      itSomeCollegeWeb   <- noJobsMessage
-      
       itCertificateInfo  <- noJobsMessage
       itCertificateProg  <- noJobsMessage
       itCertificateNet   <- noJobsMessage
@@ -182,44 +181,44 @@ techJobs <- mainDataFile %>%
       totalJobsIt           <-  sum(techJobs$Number.of.Job.Postings)
       totalJobPostingsItBa  <-  sum(techJobsBa$Number.of.Job.Postings)
       totalJobPostingsItAs  <-  sum(techJobsAs$Number.of.Job.Postings)
-      totalJobPostingsItSo  <-  sum(techJobsSo$Number.of.Job.Postings)
+
 
       ##### BACHELORS               
-      itPostingsBaInfo      <-  sum(informationSupportBa$Number.of.Job.Postings)
-      itPostingsBaProg      <-  sum(programmingBa$Number.of.Job.Postings) 
-      itPostingsBaNet       <-  sum(networkBa$Number.of.Job.Postings)
+      itPostingsBaInfo      <-  sum(infoBa$Number.of.Job.Postings)
+      itPostingsBaProg      <-  sum(progBa$Number.of.Job.Postings) 
+      itPostingsBaNet       <-  sum(netBa$Number.of.Job.Postings)
       itPostingsBaWeb       <-  sum(webBa$Number.of.Job.Postings)
       
       ##### ASSOCIATES/SOME   
-      itPostingsAsInfo      <-  sum(informationSupportAs$Number.of.Job.Postings)
-      itPostingsAsProg      <-  sum(programmingAs$Number.of.Job.Postings) 
-      itPostingsAsNet       <-  sum(networkAs$Number.of.Job.Postings)
-      itPostingsAsWeb       <-  sum(weAs$Number.of.Job.Postings)
+      itPostingsAsInfo      <-  sum(infoAs$Number.of.Job.Postings)
+      itPostingsAsProg      <-  "" 
+      itPostingsAsNet       <-  sum(netAs$Number.of.Job.Postings)
+      itPostingsAsWeb       <-  sum(webAs$Number.of.Job.Postings)
 
 
 
 ## IT Wage Ranges
 ## 25th Percentile      
-itWagesBaInfo <- round(mean(infoBa$Pct..25.Hourly.Earnings), digits = 2)
-itWagesBaProg <- round(mean(progBa$Pct..25.Hourly.Earnings), digits = 2)
-itWagesBaNet  <- round(mean(progBa$Pct..25.Hourly.Earnings), digits = 2)
-itWagesBaWeb  <- round(mean(progBa$Pct..25.Hourly.Earnings), digits = 2)
+itWagesBaInfoLOW <- round(mean(infoBa$Pct..25.Hourly.Earnings), digits = 2)
+itWagesBaProgLOW <- round(mean(progBa$Pct..25.Hourly.Earnings), digits = 2)
+itWagesBaNetLOW  <- round(mean(netBa$Pct..25.Hourly.Earnings), digits = 2)
+itWagesBaWebLOW  <- round(mean(webBa$Pct..25.Hourly.Earnings), digits = 2)
 
-itWagesAsInfo <- round(mean(infoAs$Pct..25.Hourly.Earnings), digits = 2)
-itWagesAsProg <- round(mean(progAs$Pct..25.Hourly.Earnings), digits = 2)
-itWagesAsNet  <- round(mean(progAs$Pct..25.Hourly.Earnings), digits = 2)
-itWagesAsWeb  <- round(mean(progAs$Pct..25.Hourly.Earnings), digits = 2)
+itWagesAsInfoLOW <- round(mean(infoAs$Pct..25.Hourly.Earnings), digits = 2)
+itWagesAsProgLOW <- ""
+itWagesAsNetLOW  <- round(mean(netAs$Pct..25.Hourly.Earnings), digits = 2)
+itWagesAsWebLOW  <- round(mean(webAs$Pct..25.Hourly.Earnings), digits = 2)
 
 ## 75th Percentile
-itWagesBaInfo <- round(mean(infoBa$Pct..75.Hourly.Earnings), digits = 2)
-itWagesBaProg <- round(mean(progBa$Pct..75.Hourly.Earnings), digits = 2)
-itWagesBaNet  <- round(mean(progBa$Pct..75.Hourly.Earnings), digits = 2)
-itWagesBaWeb  <- round(mean(progBa$Pct..75.Hourly.Earnings), digits = 2)
+itWagesBaInfoHIGH <- round(mean(infoBa$Pct..75.Hourly.Earnings), digits = 2)
+itWagesBaProgHIGH <- round(mean(progBa$Pct..75.Hourly.Earnings), digits = 2)
+itWagesBaNetHIGH  <- round(mean(netBa$Pct..75.Hourly.Earnings), digits = 2)
+itWagesBaWebHIGH  <- round(mean(webBa$Pct..75.Hourly.Earnings), digits = 2)
 
-itWagesAsInfo <- round(mean(infoAs$Pct..75.Hourly.Earnings), digits = 2)
-itWagesAsProg <- round(mean(progAs$Pct..75.Hourly.Earnings), digits = 2)
-itWagesAsNet  <- round(mean(progAs$Pct..75.Hourly.Earnings), digits = 2)
-itWagesAsWeb  <- round(mean(progAs$Pct..75.Hourly.Earnings), digits = 2)
+itWagesAsInfoHIGH <- round(mean(infoAs$Pct..75.Hourly.Earnings), digits = 2)
+itWagesAsProgHIGH <- ""
+itWagesAsNetHIGH  <- round(mean(netAs$Pct..75.Hourly.Earnings), digits = 2)
+itWagesAsWebHIGH  <- round(mean(webAs$Pct..75.Hourly.Earnings), digits = 2)
 
 
 ########### STOPPED HERE, NEED TO CHANGE NAMES ON SERVER OUTPUTS AND ON THE ITTEMPLATE.HTML
@@ -228,19 +227,19 @@ shinyServer(function(input, output) {
   #     output$healthcare <- renderUI(
   #    htmlTemplate('template.html', 
   #                 totalJobs = totalJobsHealthcare, 
-  #                 column1Name = 'Direct Patient Care')
+  #                 InfoName = 'Direct Patient Care')
   #  )
      
   #  output$manufacturing <- renderUI(
   #     htmlTemplate('template.html', 
   #                 totalJobs = totalJobsManufacturing, 
-  #                 column1Name = 'Production')
+  #                 InfoName = 'Production')
   #  )
      
   #  output$logistics <- renderUI(
   #    htmlTemplate('template.html', 
   #                 totalJobs = totalJobsManufacturing, 
-  #                 column1Name = 'Production')
+  #                 InfoName = 'Production')
   #  )
      
      output$it <- renderUI(
@@ -252,42 +251,71 @@ shinyServer(function(input, output) {
                     degreeName2        = degreeName2, 
                     degreeName1        = degreeName1,
                     
-                    itBachelorsColumn1 = itBachelorsColumn1, 
-                    itBachelorsColumn2 = itBachelorsColumn2,
-                    itBachelorsColumn3 = itBachelorsColumn3, 
-                    itBachelorsColumn4 = itBachelorsColumn4, 
+                    # Bachelors
+                    itBachelorsInfo = itBachelorsInfo,
+                    itBachelorsProg = itBachelorsProg,
+                    itBachelorsNet  = itBachelorsNet, 
+                    itBachelorsWeb  = itBachelorsWeb,
                     
-                    itAssociatesColumn1 = itAssociatesColumn1, 
-                    itAssociatesColumn2 = itAssociatesColumn2, 
-                    itAssociatesColumn3 = itAssociatesColumn3, 
-                    itAssociatesColumn4 = itAssociatesColumn4, 
+                    totalJobPostingsItBa = totalJobPostingsItBa,
+                    itPostingsBaInfo = itPostingsBaInfo, 
+                    itPostingsBaProg = itPostingsBaProg, 
+                    itPostingsBaNet  = itPostingsBaNet, 
+                    itPostingsBaWeb  = itPostingsBaWeb, 
                     
-                    itSomeCollegeColumn1 = itSomeCollegeColumn1, 
-                    itSomeCollegeColumn2 = itSomeCollegeColumn2, 
-                    itSomeCollegeColumn3 = itSomeCollegeColumn3, 
-                    itSomeCollegeColumn4 = itSomeCollegeColumn4, 
+                    itWagesBaInfoLOW  = itWagesBaInfoLOW,
+                    itWagesBaInfoHIGH = itWagesBaInfoHIGH,
+                    itWagesBaProgLOW  = itWagesBaProgHIGH, 
+                    itWagesBaProgHIGH = itWagesBaProgHIGH,
+                    itWagesBaNetLOW   = itWagesBaNetLOW,
+                    itWagesBaNetHIGH  = itWagesBaNetHIGH,
+                    itWagesBaWebLOW   = itWagesBaWebLOW,
+                    itWagesBaWebHIGH  = itWagesBaWebHIGH,
                     
-                    itCertificateColumn1 = itCertificateColumn1, 
-                    itCertificateColumn2 = itCertificateColumn2, 
-                    itCertificateColumn3 = itCertificateColumn3, 
-                    itCertificateColumn4 = itCertificateColumn4, 
+                    # ASSOCIATES
+                    itAssociatesInfo = itAssociatesInfo, 
+                    itAssociatesProg = itAssociatesProg, 
+                    itAssociatesNet  = itAssociatesNet, 
+                    itAssociatesWeb  = itAssociatesWeb, 
                     
-                    itHighSchoolColumn1  = itHighSchoolColumn1, 
-                    itHighSchoolColumn2  = itHighSchoolColumn2, 
-                    itHighSchoolColumn3  = itHighSchoolColumn3, 
-                    itHighSchoolColumn4  = itHighSchoolColumn4)
+                    totalJobPostingsItAs = totalJobPostingsItAs,
+                    itPostingsAsInfo = itPostingsAsInfo, 
+                    itPostingsAsProg = itPostingsAsProg, 
+                    itPostingsAsNet  = itPostingsAsNet, 
+                    itPostingsAsWeb  = itPostingsAsWeb, 
+                    
+                    itWagesAsInfoLOW  = itWagesAsInfoLOW,
+                    itWagesAsInfoHIGH = itWagesAsInfoHIGH,
+                    itWagesAsProgLOW  = itWagesAsProgLOW, 
+                    itWagesAsProgHIGH = itWagesAsProgHIGH,
+                    itWagesAsNetLOW   = itWagesAsNetLOW,
+                    itWagesAsNetHIGH  = itWagesAsNetHIGH,
+                    itWagesAsWebLOW   = itWagesAsWebLOW,
+                    itWagesAsWebHIGH  = itWagesAsWebHIGH,
+                    
+                    # Certificate
+                    itCertificateInfo = itCertificateInfo, 
+                    itCertificateProg = itCertificateProg, 
+                    itCertificateNet  = itCertificateNet, 
+                    itCertificateWeb  = itCertificateWeb, 
+                    
+                    #High School
+                    itHighSchoolInfo  = itHighSchoolInfo, 
+                    itHighSchoolProg  = itHighSchoolProg, 
+                    itHighSchoolNet   = itHighSchoolNet, 
+                    itHighSchoolWeb   = itHighSchoolWeb)
      )
      
      #     output$foodAndBeverage <- renderUI(
      # htmlTemplate('template.html', 
      #              totalJobs = totalJobsManufacturing, 
-     #              column1Name = 'Production')
+     #              InfoName = 'Production')
      #)
      
 #     output$business <- renderUI(
 #       htmlTemplate('template.html', 
      #                    totalJobs = totalJobsManufacturing, 
-     #              column1Name = 'Production')
+     #              InfoName = 'Production')
      # )
      
      
