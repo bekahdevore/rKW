@@ -86,10 +86,29 @@ degreeName4   <- "BA/BS"
 degreeName5   <- "Master's Degree"
 degreeName6   <- "Doctoral or Professional Degree"
 
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
 
 
-###################################### IT SECTOR #######################################
-######################## DATA FILTERS ########################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+#####################################       IT          #################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+    ######################## DATA FILTERS ########################################
 techJobs <- mainDataFile %>%
                filter(Sector == "IT")
 
@@ -195,33 +214,144 @@ techJobs <- mainDataFile %>%
       itPostingsAsNet       <-  sum(netAs$Number.of.Job.Postings)
       itPostingsAsWeb       <-  sum(webAs$Number.of.Job.Postings)
 
+      ## IT Wage Ranges
+      ## 25th Percentile      
+      itWagesBaInfoLOW <- round(mean(infoBa$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesBaProgLOW <- round(mean(progBa$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesBaNetLOW  <- round(mean(netBa$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesBaWebLOW  <- round(mean(webBa$Pct..25.Hourly.Earnings), digits = 2)
+      
+      itWagesAsInfoLOW <- round(mean(infoAs$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesAsProgLOW <- ""
+      itWagesAsNetLOW  <- round(mean(netAs$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesAsWebLOW  <- round(mean(webAs$Pct..25.Hourly.Earnings), digits = 2)
+      
+      ## 75th Percentile
+      itWagesBaInfoHIGH <- round(mean(infoBa$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesBaProgHIGH <- round(mean(progBa$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesBaNetHIGH  <- round(mean(netBa$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesBaWebHIGH  <- round(mean(webBa$Pct..75.Hourly.Earnings), digits = 2)
+      
+      itWagesAsInfoHIGH <- round(mean(infoAs$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesAsProgHIGH <- ""
+      itWagesAsNetHIGH  <- round(mean(netAs$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesAsWebHIGH  <- round(mean(webAs$Pct..75.Hourly.Earnings), digits = 2)
+
+      
+
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+#####################################       LOGISTICS          #################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+######################## DATA FILTERS ########################################
+      logJobs <- mainDataFile %>%
+        filter(Sector == "Logistics")
+      
+      ###### EDUCATION LEVEL DATA 
+      ###### TOTALS BY EDUCATION LEVEL 
+      logJobsBa <- logJobs %>% 
+        filter(Typical.Entry.Level.Education == "Bachelor's degree")
+      
+      logJobsAs <- logJobs %>%
+        filter(Typical.Entry.Level.Education   == "Associate's degree"  |
+                 Typical.Entry.Level.Education == 'Some college no degree')
+      
+      
+      ##### COLUMN ONE
+      proBa <- logJobs %>%
+        filter(Category                      == 'pro') %>%
+        filter(Typical.Entry.Level.Education == "Bachelor's degree")
+      
+      proAs <- logJobs %>% 
+        filter(Category                      == 'pro') %>%
+        filter(Typical.Entry.Level.Education == "Associate's degree" |
+                 Typical.Entry.Level.Education == 'Some college no degree')             
+      
+      ##### COLUMN TWO
+      tranBa <- logJobs %>%
+        filter(Category                      == 'tran') %>%
+        filter(Typical.Entry.Level.Education == "Bachelor's degree")
+      
+      tranAs <- ""             
+      
+      
+      ##### COLUMN THREE
+      wareBa <- logJobs %>%
+        filter(Category                       == 'ware') %>%
+        filter(Typical.Entry.Level.Education  == "Bachelor's degree")
+      
+      wareAs <- logJobs %>% 
+        filter(Category == 'ware') %>%
+        filter(Typical.Entry.Level.Education  == "Associate's degree" |
+                 Typical.Entry.Level.Education  == 'Some college no degree')             
+      
+      
+      ########################################### COLUMN ENTRY ###########################################       
+      ################ JOB NAMES 
+      ########## BACHELORS
+      logBachelorsPro    <- "Purchasing Managers; Logistics Specialists"
+      logBachelorsTran   <- "Sales Managers; Industrial & Aerospace Engineers; Airline Pilots, Copilots, & Flight Engineers"
+      logBachelorsWare   <- "Sales Representatives; Mechanical Engineers"
+
+      ###### ASSOCIATES
+      logAssociatesPro   <- noJobsMessage
+      logAssociatesTran  <- noJobsMessage
+      logAssociatesWare  <- noJobsMessage
+
+      
+      logCertificatePro  <- noJobsMessage
+      logCertificateTran <- "Tractor Trailer Truck Drivers; Aircraft Mechanics & Service Technicians"
+      logCertificateWare <- "ProductionSupervisors"
+
+      logHighSchoolPro   <- "Receptionists; File Clerks; Office Clerks; Customs Brokers; Purchasing Assistants; Wholesale Buyers"
+      logHighSchoolTran  <- "Delivery Drivers; Import & Export Coordinators; Transportation Managers"
+      logHighSchoolWare  <- "Warehouse Workers; Inventory Clerks; Warehouse Managers; Forklift Operators"
+
+      
+      ######################## JOB POSTINGS 
+      
+      ##### TOTALS             
+      totalJobsLog           <-  sum(logJobs$Number.of.Job.Postings)
+      totalJobPostingsLogBa  <-  sum(logJobsBa$Number.of.Job.Postings)
+      totalJobPostingsLogAs  <-  sum(logJobsAs$Number.of.Job.Postings)
+      
+      ##### BACHELORS               
+      logPostingsBaPro      <-  sum(proBa$Number.of.Job.Postings)
+      logPostingsBaTran      <-  sum(tranBa$Number.of.Job.Postings) 
+      logPostingsBaWare       <-  sum(wareBa$Number.of.Job.Postings)
+      
+      ##### ASSOCIATES/SOME   
+      logPostingsAsPro      <-  sum(proAs$Number.of.Job.Postings)
+      logPostingsAsTran      <-  "" 
+      logPostingsAsWare       <-  sum(wareAs$Number.of.Job.Postings)
+
+# STOPPED HERE
+      
+      ## IT Wage Ranges
+      ## 25th Percentile      
+      itWagesBaInfoLOW <- round(mean(infoBa$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesBaProgLOW <- round(mean(progBa$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesBaNetLOW  <- round(mean(netBa$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesBaWebLOW  <- round(mean(webBa$Pct..25.Hourly.Earnings), digits = 2)
+      
+      itWagesAsInfoLOW <- round(mean(infoAs$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesAsProgLOW <- ""
+      itWagesAsNetLOW  <- round(mean(netAs$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesAsWebLOW  <- round(mean(webAs$Pct..25.Hourly.Earnings), digits = 2)
+      
+      ## 75th Percentile
+      itWagesBaInfoHIGH <- round(mean(infoBa$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesBaProgHIGH <- round(mean(progBa$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesBaNetHIGH  <- round(mean(netBa$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesBaWebHIGH  <- round(mean(webBa$Pct..75.Hourly.Earnings), digits = 2)
+      
+      itWagesAsInfoHIGH <- round(mean(infoAs$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesAsProgHIGH <- ""
+      itWagesAsNetHIGH  <- round(mean(netAs$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesAsWebHIGH  <- round(mean(webAs$Pct..75.Hourly.Earnings), digits = 2)
 
 
-## IT Wage Ranges
-## 25th Percentile      
-itWagesBaInfoLOW <- round(mean(infoBa$Pct..25.Hourly.Earnings), digits = 2)
-itWagesBaProgLOW <- round(mean(progBa$Pct..25.Hourly.Earnings), digits = 2)
-itWagesBaNetLOW  <- round(mean(netBa$Pct..25.Hourly.Earnings), digits = 2)
-itWagesBaWebLOW  <- round(mean(webBa$Pct..25.Hourly.Earnings), digits = 2)
-
-itWagesAsInfoLOW <- round(mean(infoAs$Pct..25.Hourly.Earnings), digits = 2)
-itWagesAsProgLOW <- ""
-itWagesAsNetLOW  <- round(mean(netAs$Pct..25.Hourly.Earnings), digits = 2)
-itWagesAsWebLOW  <- round(mean(webAs$Pct..25.Hourly.Earnings), digits = 2)
-
-## 75th Percentile
-itWagesBaInfoHIGH <- round(mean(infoBa$Pct..75.Hourly.Earnings), digits = 2)
-itWagesBaProgHIGH <- round(mean(progBa$Pct..75.Hourly.Earnings), digits = 2)
-itWagesBaNetHIGH  <- round(mean(netBa$Pct..75.Hourly.Earnings), digits = 2)
-itWagesBaWebHIGH  <- round(mean(webBa$Pct..75.Hourly.Earnings), digits = 2)
-
-itWagesAsInfoHIGH <- round(mean(infoAs$Pct..75.Hourly.Earnings), digits = 2)
-itWagesAsProgHIGH <- ""
-itWagesAsNetHIGH  <- round(mean(netAs$Pct..75.Hourly.Earnings), digits = 2)
-itWagesAsWebHIGH  <- round(mean(webAs$Pct..75.Hourly.Earnings), digits = 2)
-
-
-########### STOPPED HERE, NEED TO CHANGE NAMES ON SERVER OUTPUTS AND ON THE ITTEMPLATE.HTML
 
 shinyServer(function(input, output) {
   #     output$healthcare <- renderUI(
@@ -376,17 +506,7 @@ shinyServer(function(input, output) {
                          #High School
                          logHighSchoolPro  = logHighSchoolPro, 
                          logHighSchoolTran  = logHighSchoolTran, 
-                         logHighSchoolWare   = logHighSchoolWare 
-
-     )
+                         logHighSchoolWare   = logHighSchoolWare ))
      
-     
-     
-     
-     
-     
-     
-     
-
   })
 
