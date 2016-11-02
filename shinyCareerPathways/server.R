@@ -265,7 +265,7 @@ shinyServer(function(input, output) {
                     
                     itWagesBaInfoLOW  = itWagesBaInfoLOW,
                     itWagesBaInfoHIGH = itWagesBaInfoHIGH,
-                    itWagesBaProgLOW  = itWagesBaProgHIGH, 
+                    itWagesBaProgLOW  = itWagesBaProgLOW, 
                     itWagesBaProgHIGH = itWagesBaProgHIGH,
                     itWagesBaNetLOW   = itWagesBaNetLOW,
                     itWagesBaNetHIGH  = itWagesBaNetHIGH,
@@ -317,6 +317,68 @@ shinyServer(function(input, output) {
      #                    totalJobs = totalJobsManufacturing, 
      #              InfoName = 'Production')
      # )
+     
+          output$logistics <- renderUI(
+            htmlTemplate('logisticsTemplate.html', 
+                         totalJobs = totalJobsIt, 
+                         degreeName4        = degreeName4, 
+                         degreeName3        = degreeName3, 
+                         degreeName2.5      = degreeName2.5, 
+                         degreeName2        = degreeName2, 
+                         degreeName1        = degreeName1,
+                         
+                         # Bachelors
+                         logBachelorsPro = logBachelorsPro,
+                         logBachelorsTran = logBachelorsTran,
+                         logBachelorsWare  = logBachelorsWare, 
+                         
+                         totalJobPostingslogBa = totalJobPostingslogBa,
+                         
+                         logPostingsBaPro = logPostingsBaPro, 
+                         logPostingsBaTran = logPostingsBaTran, 
+                         logPostingsBaWare  = logPostingsBaWare, 
+
+                         
+                         logWagesBaProLOW  = logWagesBaProLOW,
+                         logWagesBaProHIGH = logWagesBaProHIGH,
+                         logWagesBaTranLOW  = logWagesBaTranLOW, 
+                         logWagesBaTranHIGH = logWagesBaTranHIGH,
+                         logWagesBaWareLOW   = logWagesBaWareLOW,
+                         logWagesBaWareHIGH  = logWagesBaWareHIGH,
+                         
+                         
+                         # ASSOCIATES
+                         logAssociatesPro = logAssociatesPro, 
+                         logAssociatesTran = logAssociatesTran, 
+                         logAssociatesWare  = logAssociatesWare, 
+                         
+                         totalJobPostingslogAs = totalJobPostingslogAs,
+                         
+                         logPostingsAsPro = logPostingsAsPro, 
+                         logPostingsAsTran = logPostingsAsTran, 
+                         logPostingsAsWare  = logPostingsAsWare, 
+
+                         
+                         logWagesAsProLOW  = logWagesAsProLOW,
+                         logWagesAsProHIGH = logWagesAsProHIGH,
+                         logWagesAsTranLOW  = logWagesAsTranLOW, 
+                         logWagesAsTranHIGH = logWagesAsTranHIGH,
+                         logWagesAsWareLOW   = logWagesAsWareLOW,
+                         logWagesAsWareHIGH  = logWagesAsWareHIGH,
+
+                         
+                         # Certificate
+                         logCertificatePro = logCertificatePro, 
+                         logCertificateTran = logCertificateTran, 
+                         logCertificateWare  = logCertificateWare, 
+
+                         
+                         #High School
+                         logHighSchoolPro  = logHighSchoolPro, 
+                         logHighSchoolTran  = logHighSchoolTran, 
+                         logHighSchoolWare   = logHighSchoolWare 
+
+     )
      
      
      

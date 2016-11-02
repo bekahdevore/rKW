@@ -3,6 +3,8 @@ library(cwhmisc)
 library(tidyr)
 library(plyr)
 library(stringr)
+library(RCurl)
+library(googlesheets)
 
 pumaConnection   <- getURL('https://docs.google.com/spreadsheets/d/1LlC-Nwa_ntWM0kE_vWcjtcNSS3Q9I2mBb-RvO_id614/pub?gid=0&single=true&output=csv')
 
@@ -35,10 +37,11 @@ rm(indianaPUMS,
 pums2015 <- pums2015 %>%
               filter(PERNP > 0) %>%
               filter(ESR != "b") %>%
-              filter(AGEP >= 16 & AGEP <= 64)
+              filter(AGEP >= 25 & AGEP <= 64)
 
 
 pums2015 <- pums2015 %>%
+              filter(ESR != "b" | ESR != 4 | ESR != 5) %>%
               mutate(Employment = ifelse(ESR == 3,  "Unemployed", 
                                   ifelse(ESR == 6,  "Not in Labor Force", 
                                   "Employed")))
@@ -47,7 +50,7 @@ pums2015 <- pums2015 %>%
 pums2015        <- pums2015 %>%
                      mutate(Race = ifelse(RAC1P == 1 & HISP == 1, "White", 
                                    ifelse(RAC1P == 2 & HISP == 1, "Black or African American",
-                                   ifelse(HISP != 1, "Latina/o", "Other"))))
+                                   ifelse(HISP != 1, "Hispanic", "Other"))))
 
 # Assign educational attainment catagories
 lessThanHighSchool <- 1:15
@@ -109,5 +112,6 @@ write.csv(pums2015, file = 'educationRaceUnemploymentMedianWage.csv')
 educationRaceUnemploymentMedianWage <- gs_title('pums2015louisvilleMSA')
 educationRaceUnemploymentMedianWage <- educationRaceUnemploymentMedianWage %>% 
                                                gs_edit_cells(input  = pums2015,
+                                                             ws = 1,
                                                              anchor = "A1", 
                                                              byrow  = TRUE)

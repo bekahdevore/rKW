@@ -18,7 +18,7 @@ library(plotly)
 #Start and End Years for BLS data and Month to Filter
 startYear <- 2006
 endYear   <- 2016
-blsMonth  <- 'August'
+blsMonth  <- 'September'
 apiKey    <- '2691a2506f514617823b4e653111fdc9'
 #,'startyear'= startYear, 'endyear' = endYear
 #Load data and parse it out with RJSONIO
@@ -158,7 +158,12 @@ shinyServer(function(input, output) {
            
   output$laborForcePlot <- renderPlotly({
          
-         plot_ly(laborForceData, x = year, y = value, color = area) %>%
+         plot_ly(laborForceData, 
+                 x = ~year, 
+                 y = ~value, 
+                 color = ~area,
+                 type = 'scatter', 
+                 mode = 'lines+markers') %>%
                 layout(
                        autosize = F, 
                        width  = 700, 
@@ -175,7 +180,12 @@ shinyServer(function(input, output) {
   
   output$unemploymentRatePlot <-  renderPlotly({
          
-         plot_ly(unemploymentRateData, x = year, y = value, color = area) %>%
+         plot_ly(unemploymentRateData, 
+                 x = ~year, 
+                 y = ~value, 
+                 color = ~area,
+                 type = 'scatter', 
+                 mode = 'lines+markers') %>%
                 layout(
                        autosize = F, 
                        width  = 700, 

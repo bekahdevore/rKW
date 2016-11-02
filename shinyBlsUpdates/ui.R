@@ -15,11 +15,22 @@ library(scales)
 library(plotly)
 library(shinythemes)
 
-month             <- "August"
-dataRelease       <- "9/28/16"
-totalJobPostings  <- "9,239"
-baPlusJobPostings <- "2,059"
-percentageBaPlus  <- "22%"
+month             <- "September"
+dataRelease       <- "11/2/16"
+totalJobPostings  <- "11,471"
+baPlusJobPostings <- "2,385"
+percentageBaPlus  <- "20.8%"
+
+totalPostings <- 11471
+baPostings <- 2385
+percentBachelors <- round((baPostings/totalPostings), digits = 4) 
+
+lastMonthsPostings <- 9239
+baLastMonth <- 2059
+postingsChange <- (totalPostings - lastMonthsPostings)
+baChange <- (baPostings - baLastMonth)
+
+
 
 shinyUI(fluidPage(
        theme = shinytheme("journal"),

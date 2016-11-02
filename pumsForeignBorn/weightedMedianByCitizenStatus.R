@@ -39,7 +39,10 @@ louisvilleNaturalizedCitizen <- louisvilleMSA %>%
 
 
 #Cacluate weighted median wage by citizenship 
-louisvilleMedianByCitizenship <- ddply(louisvilleNaturalizedCitizen, .(CIT), summarise, wMedian=w.median(WAGP, PWGTP))
+louisvilleMedianByCitizenship <- ddply(louisvilleNaturalizedCitizen,
+                                       .(CIT), 
+                                       summarise, 
+                                       wMedian=w.median(WAGP, PWGTP))
 
 #Add labels for legibility 
 louisvilleMedianByCitizenship <- louisvilleMedianByCitizenship %>%

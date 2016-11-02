@@ -27,8 +27,8 @@ shinyUI(fluidPage(
           ),
       
       tabPanel(
-        'Logistics'#,
-        #htmlOutput('logistics')
+        'Logistics',
+          htmlOutput('logistics')
         ),
       
       tabPanel(
