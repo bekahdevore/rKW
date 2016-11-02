@@ -2,6 +2,7 @@ library(dplyr)
 library(cwhmisc)
 library(tidyr)
 library(plyr)
+library(stringr)
 
 pumaConnection   <- getURL('https://docs.google.com/spreadsheets/d/1LlC-Nwa_ntWM0kE_vWcjtcNSS3Q9I2mBb-RvO_id614/pub?gid=0&single=true&output=csv')
 
@@ -75,19 +76,38 @@ weightedMedian <- ddply(pums2015,
 
 pums2015 <- left_join(pums2015, weightedMedian, by = 'edRace')
 
-#pums2015$edRaceEmpl <- paste(pums2015$Education, pums2015$Race, pums2015$Employment)
+pums2015$edRaceEmpl <- paste(pums2015$Education, pums2015$Race, pums2015$Employment)
 
 #Calculate unemployment rate by group
 #Add column with unemployment count by edRace
 unemployment <- pums2015 %>%
-                group_by(Employment = "Unemployed")
+                filter(Employment == "Unemployed")
 unemployed <- count(unemployment, 'edRace', wt = "PWGTP")
+colnames(unemployed)[2] <- "unemployed"
 
-totalLaborForce
-#Add column with total labor force count by edRace
+
+totalLaborForce        <- pums2015 %>%
+                            filter(Employment != "Not in Labor Force")
+laborForce             <- count(totalLaborForce, 'edRace', wt = "PWGTP")
+colnames(laborForce)[2] <- "laborForce"
+
 #Add column with calculation unemployment/total labor force by edRace 
+unemploymentRate <- full_join(laborForce, unemployed, by = "edRace")
 
+unemploymentRate[is.na(unemploymentRate)] <- 0
+unemploymentRate$rate <- unemploymentRate$unemployed/unemploymentRate$laborForce
 
+pums2015 <- left_join(pums2015, unemploymentRate, by = 'edRace')
+colnames(pums2015)[15] <- 'Unemployment Rate'
+colnames(pums2015)[11] <- 'Education and Race'
 
+pums2015 <- pums2015 %>%
+              select(8:12, 15)
 
+write.csv(pums2015, file = 'educationRaceUnemploymentMedianWage.csv')
 
+educationRaceUnemploymentMedianWage <- gs_title('pums2015louisvilleMSA')
+educationRaceUnemploymentMedianWage <- educationRaceUnemploymentMedianWage %>% 
+                                               gs_edit_cells(input  = pums2015,
+                                                             anchor = "A1", 
+                                                             byrow  = TRUE)
