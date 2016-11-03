@@ -101,7 +101,10 @@ degreeName6   <- "Doctoral or Professional Degree"
 ########################################################################################################################################################################################################################
 ########################################################################################################################################################################################################################
 ########################################################################################################################################################################################################################
-
+# Functions
+roundMean <- function(dataEntry) {
+                sprintf("%.2f", round(mean(dataEntry), digits = 2))
+}
 
 ########################################################################################################################################################################################################################
 ########################################################################################################################################################################################################################
@@ -215,27 +218,29 @@ techJobs <- mainDataFile %>%
       itPostingsAsWeb       <-  sum(webAs$Number.of.Job.Postings)
 
       ## IT Wage Ranges
-      ## 25th Percentile      
-      itWagesBaInfoLOW <- round(mean(infoBa$Pct..25.Hourly.Earnings), digits = 2)
-      itWagesBaProgLOW <- round(mean(progBa$Pct..25.Hourly.Earnings), digits = 2)
-      itWagesBaNetLOW  <- round(mean(netBa$Pct..25.Hourly.Earnings), digits = 2)
-      itWagesBaWebLOW  <- round(mean(webBa$Pct..25.Hourly.Earnings), digits = 2)
+      ## 25th Percentile   
       
-      itWagesAsInfoLOW <- round(mean(infoAs$Pct..25.Hourly.Earnings), digits = 2)
+      # CHANGE to roundMean function 
+      itWagesBaInfoLOW <- roundMean(infoBa$Pct..25.Hourly.Earnings)
+      itWagesBaProgLOW <- roundMean(progBa$Pct..25.Hourly.Earnings)
+      itWagesBaNetLOW  <- roundMean(netBa$Pct..25.Hourly.Earnings)
+      itWagesBaWebLOW  <- roundMean(webBa$Pct..25.Hourly.Earnings)
+      
+      itWagesAsInfoLOW <- roundMean(infoAs$Pct..25.Hourly.Earnings)
       itWagesAsProgLOW <- ""
-      itWagesAsNetLOW  <- round(mean(netAs$Pct..25.Hourly.Earnings), digits = 2)
-      itWagesAsWebLOW  <- round(mean(webAs$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesAsNetLOW  <- roundMean(netAs$Pct..25.Hourly.Earnings)
+      itWagesAsWebLOW  <- roundMean(webAs$Pct..25.Hourly.Earnings)
       
       ## 75th Percentile
-      itWagesBaInfoHIGH <- round(mean(infoBa$Pct..75.Hourly.Earnings), digits = 2)
-      itWagesBaProgHIGH <- round(mean(progBa$Pct..75.Hourly.Earnings), digits = 2)
-      itWagesBaNetHIGH  <- round(mean(netBa$Pct..75.Hourly.Earnings), digits = 2)
-      itWagesBaWebHIGH  <- round(mean(webBa$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesBaInfoHIGH <- roundMean(infoBa$Pct..75.Hourly.Earnings)
+      itWagesBaProgHIGH <- roundMean(progBa$Pct..75.Hourly.Earnings)
+      itWagesBaNetHIGH  <- roundMean(netBa$Pct..75.Hourly.Earnings)
+      itWagesBaWebHIGH  <- roundMean(webBa$Pct..75.Hourly.Earnings)
       
-      itWagesAsInfoHIGH <- round(mean(infoAs$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesAsInfoHIGH <- roundMean(infoAs$Pct..75.Hourly.Earnings)
       itWagesAsProgHIGH <- ""
-      itWagesAsNetHIGH  <- round(mean(netAs$Pct..75.Hourly.Earnings), digits = 2)
-      itWagesAsWebHIGH  <- round(mean(webAs$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesAsNetHIGH  <- roundMean(netAs$Pct..75.Hourly.Earnings)
+      itWagesAsWebHIGH  <- roundMean(webAs$Pct..75.Hourly.Earnings)
 
       
 
@@ -256,7 +261,8 @@ techJobs <- mainDataFile %>%
       logJobsAs <- logJobs %>%
         filter(Typical.Entry.Level.Education   == "Associate's degree"  |
                  Typical.Entry.Level.Education == 'Some college no degree')
-      
+      # ADD certificate 
+      # ADD high school 
       
       ##### COLUMN ONE
       proBa <- logJobs %>%
@@ -266,14 +272,19 @@ techJobs <- mainDataFile %>%
       proAs <- logJobs %>% 
         filter(Category                      == 'pro') %>%
         filter(Typical.Entry.Level.Education == "Associate's degree" |
-                 Typical.Entry.Level.Education == 'Some college no degree')             
+                 Typical.Entry.Level.Education == 'Some college no degree')  
+      # ADD certificate 
+      # ADD high school 
       
       ##### COLUMN TWO
       tranBa <- logJobs %>%
         filter(Category                      == 'tran') %>%
         filter(Typical.Entry.Level.Education == "Bachelor's degree")
       
-      tranAs <- ""             
+      tranAs <- ""     
+      
+      # ADD certificate 
+      # ADD high school 
       
       
       ##### COLUMN THREE
@@ -284,7 +295,10 @@ techJobs <- mainDataFile %>%
       wareAs <- logJobs %>% 
         filter(Category == 'ware') %>%
         filter(Typical.Entry.Level.Education  == "Associate's degree" |
-                 Typical.Entry.Level.Education  == 'Some college no degree')             
+                 Typical.Entry.Level.Education  == 'Some college no degree')     
+      
+      # ADD certificate 
+      # ADD high school 
       
       
       ########################################### COLUMN ENTRY ###########################################       
@@ -315,6 +329,8 @@ techJobs <- mainDataFile %>%
       totalJobsLog           <-  sum(logJobs$Number.of.Job.Postings)
       totalJobPostingsLogBa  <-  sum(logJobsBa$Number.of.Job.Postings)
       totalJobPostingsLogAs  <-  sum(logJobsAs$Number.of.Job.Postings)
+      # ADD certificate 
+      # ADD high school 
       
       ##### BACHELORS               
       logPostingsBaPro      <-  sum(proBa$Number.of.Job.Postings)
@@ -325,27 +341,34 @@ techJobs <- mainDataFile %>%
       logPostingsAsPro      <-  sum(proAs$Number.of.Job.Postings)
       logPostingsAsTran     <-  "" 
       logPostingsAsWare     <-  sum(wareAs$Number.of.Job.Postings)
-
-# STOPPED HERE
       
-      ## IT Wage Ranges
-      ## 25th Percentile      
-      itWagesBaProLOW  <- round(mean(proBa$Pct..25.Hourly.Earnings),    digits = 2)
-      itWagesBaTranLOW <- round(mean(tranBa$Pct..25.Hourly.Earnings),  digits = 2)
-      itWagesBaWareLOW <- round(mean(wareBa$Pct..25.Hourly.Earnings), digits = 2)
+      # ADD certificate 
+      # ADD high school 
+      
+      ## Wage Ranges
+      # 25th Percentile      
+      itWagesBaProLOW  <- roundMean(proBa$Pct..25.Hourly.Earnings)
+      itWagesBaTranLOW <- roundMean(tranBa$Pct..25.Hourly.Earnings)
+      itWagesBaWareLOW <- roundMean(wareBa$Pct..25.Hourly.Earnings)
       
       itWagesAsProLOW  <- ""
       itWagesAsTranLOW <- ""
       itWagesAsWareLOW <- ""
       
-      ## 75th Percentile
-      itWagesBaProHIGH  <- round(mean(proBa$Pct..75.Hourly.Earnings), digits = 2)
-      itWagesBaTranHIGH <- round(mean(tranBa$Pct..75.Hourly.Earnings), digits = 2)
-      itWagesBaWareHIGH <- round(mean(wareBa$Pct..75.Hourly.Earnings), digits = 2)
+      # ADD certificate 
+      # ADD high school 
+      
+      # 75th Percentile
+      itWagesBaProHIGH  <- roundMean(proBa$Pct..75.Hourly.Earnings)
+      itWagesBaTranHIGH <- roundMean(tranBa$Pct..75.Hourly.Earnings)
+      itWagesBaWareHIGH <- roundMean(wareBa$Pct..75.Hourly.Earnings)
       
       itWagesAsProHIGH  <- ""
       itWagesAsTranHIGH <- ""
       itWagesAsWareHIGH <- ""
+      
+      # ADD certificate 
+      # ADD high school 
 
 
 
