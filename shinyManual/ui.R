@@ -25,15 +25,18 @@ shinyUI(fluidPage(
       ),
       
       tabPanel(
-        'Quarterly Report'
+        'Quarterly Report',
+        h1("Quarterly Report")
       ),
       
       tabPanel(
-        'Monthly Newsletter'
+        'Monthly Newsletter', 
+        h1("Monthly Newsletter")
       ), 
       
       tabPanel(
-        'About Datasets'
+        'About Datasets', 
+        h1("Ah, the datasets...")
       )
 
 
