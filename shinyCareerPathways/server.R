@@ -249,12 +249,13 @@ techJobs <- mainDataFile %>%
 #####################################       LOGISTICS          #################################################################################################################################################################
 ########################################################################################################################################################################################################################
 ########################################################################################################################################################################################################################
-######################## DATA FILTERS ########################################
+
+      ######################## SECTOR JOBS ########################################
       logJobs <- mainDataFile %>%
         filter(Sector == "Logistics")
       
-      ###### EDUCATION LEVEL DATA 
-      ###### TOTALS BY EDUCATION LEVEL 
+      
+      ######################## SECTOR JOBS BY EDUCATION LEVEL #####################
       logJobsBa <- logJobs %>% 
         filter(Typical.Entry.Level.Education == "Bachelor's degree")
       
@@ -264,7 +265,8 @@ techJobs <- mainDataFile %>%
       # ADD certificate 
       # ADD high school 
       
-      ##### COLUMN ONE
+      ######################## SECTOR JOBS BY COLUMN ##############################
+      ################# COLUMN ONE
       proBa <- logJobs %>%
         filter(Category                      == 'pro') %>%
         filter(Typical.Entry.Level.Education == "Bachelor's degree")
@@ -276,7 +278,7 @@ techJobs <- mainDataFile %>%
       # ADD certificate 
       # ADD high school 
       
-      ##### COLUMN TWO
+      ################# COLUMN TWO
       tranBa <- logJobs %>%
         filter(Category                      == 'tran') %>%
         filter(Typical.Entry.Level.Education == "Bachelor's degree")
@@ -287,7 +289,7 @@ techJobs <- mainDataFile %>%
       # ADD high school 
       
       
-      ##### COLUMN THREE
+      ################# COLUMN THREE
       wareBa <- logJobs %>%
         filter(Category                       == 'ware') %>%
         filter(Typical.Entry.Level.Education  == "Bachelor's degree")
@@ -301,43 +303,45 @@ techJobs <- mainDataFile %>%
       # ADD high school 
       
       
-      ########################################### COLUMN ENTRY ###########################################       
-      ################ JOB NAMES 
-      ########## BACHELORS
+      ######################## COLUMN ENTRY #######################################    
+      ################# NAMES 
+      ####### EDUCATION LEVEL
+      ## BACHELORS
       logBachelorsPro    <- "Purchasing Managers; Logistics Specialists"
       logBachelorsTran   <- "Sales Managers; Industrial & Aerospace Engineers; Airline Pilots, Copilots, & Flight Engineers"
       logBachelorsWare   <- "Sales Representatives; Mechanical Engineers"
 
-      ###### ASSOCIATES
+      ## ASSOCIATES
       logAssociatesPro   <- noJobsMessage
       logAssociatesTran  <- noJobsMessage
       logAssociatesWare  <- noJobsMessage
 
-      
+      ## CERTIFICATE
       logCertificatePro  <- noJobsMessage
       logCertificateTran <- "Tractor Trailer Truck Drivers; Aircraft Mechanics & Service Technicians"
       logCertificateWare <- "ProductionSupervisors"
 
+      ## HIGH SCHOOL
       logHighSchoolPro   <- "Receptionists; File Clerks; Office Clerks; Customs Brokers; Purchasing Assistants; Wholesale Buyers"
       logHighSchoolTran  <- "Delivery Drivers; Import & Export Coordinators; Transportation Managers"
       logHighSchoolWare  <- "Warehouse Workers; Inventory Clerks; Warehouse Managers; Forklift Operators"
 
       
-      ######################## JOB POSTINGS 
-########### STOPPED IN THIS GENERAL AREA       
-      ##### TOTALS             
+      ################# JOB POSTINGS
+      ####### TOTALS           
       totalJobsLog           <-  sum(logJobs$Number.of.Job.Postings)
       totalJobPostingsLogBa  <-  sum(logJobsBa$Number.of.Job.Postings)
       totalJobPostingsLogAs  <-  sum(logJobsAs$Number.of.Job.Postings)
       # ADD certificate 
       # ADD high school 
       
-      ##### BACHELORS               
+      ####### EDUCATION LEVEL
+      ## BACHELORS      
       logPostingsBaPro      <-  sum(proBa$Number.of.Job.Postings)
       logPostingsBaTran     <-  sum(tranBa$Number.of.Job.Postings) 
       logPostingsBaWare     <-  sum(wareBa$Number.of.Job.Postings)
       
-      ##### ASSOCIATES/SOME   
+      ## ASSOCIATES  
       logPostingsAsPro      <-  sum(proAs$Number.of.Job.Postings)
       logPostingsAsTran     <-  "" 
       logPostingsAsWare     <-  sum(wareAs$Number.of.Job.Postings)
@@ -345,27 +349,33 @@ techJobs <- mainDataFile %>%
       # ADD certificate 
       # ADD high school 
       
-      ## Wage Ranges
-      # 25th Percentile      
-      itWagesBaProLOW  <- roundMean(proBa$Pct..25.Hourly.Earnings)
-      itWagesBaTranLOW <- roundMean(tranBa$Pct..25.Hourly.Earnings)
-      itWagesBaWareLOW <- roundMean(wareBa$Pct..25.Hourly.Earnings)
+      ################# WAGES
+      ####### 25th PERCENTILE 
+      ## EDUCATION LEVEL
+      # BACHELORS
+      logWagesBaProLOW  <- roundMean(proBa$Pct..25.Hourly.Earnings)
+      logWagesBaTranLOW <- roundMean(tranBa$Pct..25.Hourly.Earnings)
+      logWagesBaWareLOW <- roundMean(wareBa$Pct..25.Hourly.Earnings)
       
-      itWagesAsProLOW  <- ""
-      itWagesAsTranLOW <- ""
-      itWagesAsWareLOW <- ""
+      # ASSOCIATES
+      logWagesAsProLOW  <- ""
+      logWagesAsTranLOW <- ""
+      logWagesAsWareLOW <- ""
       
       # ADD certificate 
       # ADD high school 
       
-      # 75th Percentile
-      itWagesBaProHIGH  <- roundMean(proBa$Pct..75.Hourly.Earnings)
-      itWagesBaTranHIGH <- roundMean(tranBa$Pct..75.Hourly.Earnings)
-      itWagesBaWareHIGH <- roundMean(wareBa$Pct..75.Hourly.Earnings)
+      ####### 75th PERCENTILE 
+      ## EDUCATION LEVEL
+      # BACHELORS
+      logWagesBaProHIGH  <- roundMean(proBa$Pct..75.Hourly.Earnings)
+      logWagesBaTranHIGH <- roundMean(tranBa$Pct..75.Hourly.Earnings)
+      logWagesBaWareHIGH <- roundMean(wareBa$Pct..75.Hourly.Earnings)
       
-      itWagesAsProHIGH  <- ""
-      itWagesAsTranHIGH <- ""
-      itWagesAsWareHIGH <- ""
+      ## ASSOCIATES
+      logWagesAsProHIGH  <- ""
+      logWagesAsTranHIGH <- ""
+      logWagesAsWareHIGH <- ""
       
       # ADD certificate 
       # ADD high school 
