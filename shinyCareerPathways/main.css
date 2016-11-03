@@ -1,6 +1,8 @@
-.jobNumber{
-	font-style: bold;
+body{
+	line-height: 1.1;
+	font-weight: 500;
 }
+
 
 .column1{
 	background-color: #a6c8d9;
@@ -30,21 +32,34 @@
 	font-size: 24px;
 }
 
-.totalJobNumber{
-	color: black;
-}
 
 .itAssociates{
 	line-height: .8;
 }
 
-.itSpecialBorder {
+.specialBorder {
 	border-bottom: 3px solid white;
 }
 
-body{
-	line-height: 1.1;
+.allSectorJobPostings {
+	background-color: white;
+	color: black;
 }
+
+.jobPostingsTotal {
+	color: #0E6089;
+
+	font-weight: bold;
+}
+
+.jobPostingsRow {
+	color: white;
+}
+
+.wages {
+	font-weight: bold;
+}
+
 
 th {
 	font-size: 24px;

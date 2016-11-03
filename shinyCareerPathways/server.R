@@ -26,8 +26,8 @@ rm(burningGlassQuarterConnection,
 
 #Merge Data
 mainDataFile                    <- full_join(burningGlassQuarter, emsiData, by = 'SOC')
-mainDataFile                    <- full_join(mainDataFile, socCrosswalk, by = 'SOC')
-mainDataFile                    <- left_join(mainDataFile, sectors, by = "Description")
+mainDataFile                    <- full_join(mainDataFile, socCrosswalk,    by = 'SOC')
+mainDataFile                    <- left_join(mainDataFile, sectors,         by = "SOC")
 
 rm(burningGlassQuarter,
    emsiData, 
@@ -36,7 +36,7 @@ rm(burningGlassQuarter,
 
 #Select necessary variables
 mainDataFile                    <- mainDataFile %>%
-                                      select(1, 12, 3, 10:11, 7, 13:14)
+                                      select(1, 12, 3, 10:11, 7, 14:15)
 
 mainDataFile                    <- as.data.frame(lapply(mainDataFile, function(x) {
                                                             gsub(',', '', x) }))
@@ -53,6 +53,8 @@ mainDataFile[,variables] <- lapply(mainDataFile[,variables] , as.numeric)
 
 mainDataFile$deduplicatedPostings <- (mainDataFile$Number.of.Job.Postings)* .8
 mainDataFile$deduplicatedPostings <- round(mainDataFile$deduplicatedPostings, digits = 0)
+
+mainDataFile[is.na(mainDataFile)] <- 0
 #Split 1st 2 digits of SOC code and store in new data frame
 #splitSOC                        <- as.data.frame(t(sapply(mainDataFile$SOC, 
 #                                                          function(x) substring(x, 
@@ -78,13 +80,14 @@ noJobsMessage <- "No high-demand jobs at this level within the pathway"
 
 ##################################################################################################################################################
 ##################################################################################################################################################
-degreeName1   <- "High School or GED"
-degreeName2   <- "Certificate (1-2 yrs)"
-degreeName2.5 <- "Associate Degree (2 yrs) or Some College, no degree"
-degreeName3   <- "Associate Degree (2 yrs)"
-degreeName4   <- "BA/BS"
-degreeName5   <- "Master's Degree"
+
 degreeName6   <- "Doctoral or Professional Degree"
+degreeName5   <- "Master's Degree"
+degreeName4   <- "BA/BS"
+degreeName3   <- "Associate Degree (2 yrs)"
+degreeName2.5 <- "Associate Degree (2 yrs) or Some College, no degree"
+degreeName2   <- "Certificate (1-2 yrs)"
+degreeName1   <- "High School or GED"
 
 ########################################################################################################################################################################################################################
 ########################################################################################################################################################################################################################
@@ -106,6 +109,10 @@ roundMean <- function(dataEntry) {
                 sprintf("%.2f", round(mean(dataEntry), digits = 2))
 }
 
+formatCommas <- function(dataEntry) {
+                  format(dataEntry, big.mark = ",", trim = TRUE)
+}
+
 ########################################################################################################################################################################################################################
 ########################################################################################################################################################################################################################
 #####################################       IT          #################################################################################################################################################################
@@ -123,8 +130,6 @@ techJobs <- mainDataFile %>%
   techJobsAs <- techJobs %>%
                   filter(Typical.Entry.Level.Education == "Associate's degree"  |
                          Typical.Entry.Level.Education == 'Some college no degree')
-
-
       ##### INFORMATION SUPPORT COLUMN 
       infoBa <- techJobs %>%
                   filter(Category                      == 'informationSupport') %>%
@@ -134,15 +139,12 @@ techJobs <- mainDataFile %>%
                   filter(Category                      == 'informationSupport') %>%
                   filter(Typical.Entry.Level.Education == "Associate's degree" |
                          Typical.Entry.Level.Education == 'Some college no degree')             
-      
       ##### PROGRAMMING & SOFTWARE DEV
       progBa <- techJobs %>%
                 filter(Category                      == 'programmingSoftware') %>%
                 filter(Typical.Entry.Level.Education == "Bachelor's degree")
       
       progAs <- ""             
-      
-      
       ##### NETWORK SYSTEMS 
       netBa <- techJobs %>%
                 filter(Category                       == 'networkSystems') %>%
@@ -152,7 +154,6 @@ techJobs <- mainDataFile %>%
                 filter(Category == 'networkSystems') %>%
                 filter(Typical.Entry.Level.Education  == "Associate's degree" |
                        Typical.Entry.Level.Education  == 'Some college no degree')             
-      
       #### WEB AND DIGITAL COMMUNICATIONS COLUMN
       webBa <- techJobs %>%
                 filter(Category                      == 'webCommunications') %>%
@@ -162,9 +163,7 @@ techJobs <- mainDataFile %>%
                 filter(Category                      == 'webCommunications') %>%
                 filter(Typical.Entry.Level.Education == "Associate's degree" |
                        Typical.Entry.Level.Education == 'Some college no degree')             
-
-
-      
+ 
 ########################################### COLUMN ENTRY ###########################################       
 ################ JOB NAMES 
       ########## BACHELORS
@@ -280,55 +279,40 @@ techJobs <- mainDataFile %>%
         proBa <- logJobs %>%
           filter(Category                      == 'pro') %>%
           filter(Typical.Entry.Level.Education == "Bachelor's degree")
-        
         ## ASSOCIATES
         proAs <- ""
-        
         ## CERTIFICATES
         proCe <- logJobs %>%
           filter(Category                      == 'pro') %>%
           filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
-        
         ## HIGH SCHOOL
         proHi <- logJobs %>% 
           filter(Category                      == 'pro') %>%
           filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
-
-      
       ################# COLUMN TWO
         ## BACHELORS
         tranBa <- logJobs %>%
           filter(Category                      == 'tran') %>%
           filter(Typical.Entry.Level.Education == "Bachelor's degree")
-        
         ## ASSOCIATES
         tranAs <- ""     
-        
         ## CERTIFICATE
         tranCe <- logJobs %>%
           filter(Category                      == 'tran') %>%
           filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
-        
         ## HIGH SCHOOL 
         tranHi <- logJobs %>% 
           filter(Category                      == 'tran') %>%
-          filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
-      
-      
+          filter(Typical.Entry.Level.Education == "High school diploma or equivalent")
       ################# COLUMN THREE
         ## BACHELORS
         wareBa <- logJobs %>%
           filter(Category                       == 'ware') %>%
           filter(Typical.Entry.Level.Education  == "Bachelor's degree")
-        
         ## ASSOCIATES
         wareAs <- ""
-        
         ## CERTIFICATES
-        wareCe <- logJobs %>%
-          filter(Category                      == 'ware') %>%
-          filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
-        
+        wareCe <- ""
         ## HIGH SCHOOL 
         wareHi <- logJobs %>% 
           filter(Category                      == 'ware') %>%
@@ -342,53 +326,44 @@ techJobs <- mainDataFile %>%
       logBachelorsPro    <- "Purchasing Managers; Logistics Specialists"
       logBachelorsTran   <- "Sales Managers; Industrial & Aerospace Engineers; Airline Pilots, Copilots, & Flight Engineers"
       logBachelorsWare   <- "Sales Representatives; Mechanical Engineers"
-
       ## ASSOCIATES
       logAssociatesPro   <- noJobsMessage
       logAssociatesTran  <- noJobsMessage
       logAssociatesWare  <- noJobsMessage
-
       ## CERTIFICATE
       logCertificatePro  <- noJobsMessage
       logCertificateTran <- "Tractor Trailer Truck Drivers; Aircraft Mechanics & Service Technicians"
-      logCertificateWare <- "ProductionSupervisors"
-
+      logCertificateWare <- noJobsMessage
       ## HIGH SCHOOL
       logHighSchoolPro   <- "Receptionists; File Clerks; Office Clerks; Customs Brokers; Purchasing Assistants; Wholesale Buyers"
       logHighSchoolTran  <- "Delivery Drivers; Import & Export Coordinators; Transportation Managers"
-      logHighSchoolWare  <- "Warehouse Workers; Inventory Clerks; Warehouse Managers; Forklift Operators"
+      logHighSchoolWare  <- "Production Supervisors; Warehouse Workers; Inventory Clerks; Warehouse Managers; Forklift Operators"
 
       
       ################# JOB POSTINGS
       ####### TOTALS           
       totalJobsLog           <-  sum(logJobs$Number.of.Job.Postings)
       totalJobPostingsLogBa  <-  sum(logJobsBa$Number.of.Job.Postings)
-      totalJobPostingsLogAs  <-  sum(logJobsAs$Number.of.Job.Postings)
+      totalJobPostingsLogAs  <-  ""
       totalJobPostingsLogCe  <-  sum(logJobsCe$Number.of.Job.Postings)
-      totalJobPostingsLogHi  <-  sum(logJobsCe$Number.of.Job.Postings)
-      
+      totalJobPostingsLogHi  <-  sum(logJobsHi$Number.of.Job.Postings)
       ####### EDUCATION LEVEL
       ## BACHELORS      
       logPostingsBaPro      <-  sum(proBa$Number.of.Job.Postings)
       logPostingsBaTran     <-  sum(tranBa$Number.of.Job.Postings) 
       logPostingsBaWare     <-  sum(wareBa$Number.of.Job.Postings)
-      
       ## ASSOCIATES  
-      logPostingsAsPro      <-  sum(proAs$Number.of.Job.Postings)
+      logPostingsAsPro      <-  ""
       logPostingsAsTran     <-  "" 
-      logPostingsAsWare     <-  sum(wareAs$Number.of.Job.Postings)
-      
+      logPostingsAsWare     <-  ""
       ## CERTIFICATES
       logPostingsCePro      <-  ""
       logPostingsCeTran     <-  sum(tranCe$Number.of.Job.Postings) 
-      logPostingsCeWare     <-  sum(wareCe$Number.of.Job.Postings)
-
+      logPostingsCeWare     <-  ""
       ## HIGH SCHOOL
       logPostingsHiPro      <-  sum(proHi$Number.of.Job.Postings)
       logPostingsHiTran     <-  sum(tranHi$Number.of.Job.Postings) 
       logPostingsHiWare     <-  sum(wareHi$Number.of.Job.Postings)
-      
-      
       ################# WAGES
       ####### 25th PERCENTILE 
       ## EDUCATION LEVEL
@@ -396,40 +371,32 @@ techJobs <- mainDataFile %>%
       logWagesBaProLOW  <- roundMean(proBa$Pct..25.Hourly.Earnings)
       logWagesBaTranLOW <- roundMean(tranBa$Pct..25.Hourly.Earnings)
       logWagesBaWareLOW <- roundMean(wareBa$Pct..25.Hourly.Earnings)
-      
       # ASSOCIATES
       logWagesAsProLOW  <- ""
       logWagesAsTranLOW <- ""
       logWagesAsWareLOW <- ""
-      
       # CERTIFICATES 
       logWagesCeProLOW  <- ""
       logWagesCeTranLOW <- roundMean(tranCe$Pct..25.Hourly.Earnings)
-      logWagesCeWareLOW <- roundMean(wareCe$Pct..25.Hourly.Earnings)
-      
+      logWagesCeWareLOW <- ""
       # HIGH SCHOOL 
       logWagesHiProLOW  <- roundMean(proHi$Pct..25.Hourly.Earnings)
       logWagesHiTranLOW <- roundMean(tranHi$Pct..25.Hourly.Earnings)
       logWagesHiWareLOW <- roundMean(wareHi$Pct..25.Hourly.Earnings)
-      
-      
       ####### 75th PERCENTILE 
       ## EDUCATION LEVEL
       # BACHELORS
       logWagesBaProHIGH  <- roundMean(proBa$Pct..75.Hourly.Earnings)
       logWagesBaTranHIGH <- roundMean(tranBa$Pct..75.Hourly.Earnings)
       logWagesBaWareHIGH <- roundMean(wareBa$Pct..75.Hourly.Earnings)
-      
       ## ASSOCIATES
       logWagesAsProHIGH  <- ""
       logWagesAsTranHIGH <- ""
       logWagesAsWareHIGH <- ""
-      
       ## CERTIFICATES
       logWagesCeProHIGH  <- ""
       logWagesCeTranHIGH <- roundMean(tranCe$Pct..75.Hourly.Earnings)
-      logWagesCeWareHIGH <- roundMean(wareCe$Pct..75.Hourly.Earnings)
-      
+      logWagesCeWareHIGH <- ""
       ## HIGH SCHOOL 
       logWagesHiProHIGH  <- roundMean(proHi$Pct..75.Hourly.Earnings)
       logWagesHiTranHIGH <- roundMean(tranHi$Pct..75.Hourly.Earnings)
@@ -458,7 +425,7 @@ shinyServer(function(input, output) {
      
      output$it <- renderUI(
        htmlTemplate('itTemplate.html', 
-                    totalJobs = totalJobsIt, 
+                    totalJobs = formatCommas(totalJobsIt), 
                     degreeName4        = degreeName4, 
                     degreeName3        = degreeName3, 
                     degreeName2.5      = degreeName2.5, 
@@ -471,7 +438,7 @@ shinyServer(function(input, output) {
                     itBachelorsNet  = itBachelorsNet, 
                     itBachelorsWeb  = itBachelorsWeb,
                     
-                    totalJobPostingsItBa = totalJobPostingsItBa,
+                    totalJobPostingsItBa = formatCommas(totalJobPostingsItBa),
                     itPostingsBaInfo = itPostingsBaInfo, 
                     itPostingsBaProg = itPostingsBaProg, 
                     itPostingsBaNet  = itPostingsBaNet, 
@@ -534,19 +501,18 @@ shinyServer(function(input, output) {
      
           output$logistics <- renderUI(
             htmlTemplate('logisticsTemplate.html', 
-                         totalJobs = totalJobsIt, 
+                         totalJobs = formatCommas(totalJobsLog), 
                          degreeName4        = degreeName4, 
                          degreeName3        = degreeName3, 
-                         degreeName2.5      = degreeName2.5, 
                          degreeName2        = degreeName2, 
                          degreeName1        = degreeName1,
                          
                          # Bachelors
-                         logBachelorsPro = logBachelorsPro,
+                         logBachelorsPro =  logBachelorsPro,
                          logBachelorsTran = logBachelorsTran,
                          logBachelorsWare  = logBachelorsWare, 
                          
-                         totalJobPostingslogBa = totalJobPostingslogBa,
+                         totalJobPostingsLogBa = totalJobPostingsLogBa,
                          
                          logPostingsBaPro = logPostingsBaPro, 
                          logPostingsBaTran = logPostingsBaTran, 
@@ -565,32 +531,48 @@ shinyServer(function(input, output) {
                          logAssociatesPro = logAssociatesPro, 
                          logAssociatesTran = logAssociatesTran, 
                          logAssociatesWare  = logAssociatesWare, 
-                         
-                         totalJobPostingslogAs = totalJobPostingslogAs,
-                         
-                         logPostingsAsPro = logPostingsAsPro, 
-                         logPostingsAsTran = logPostingsAsTran, 
-                         logPostingsAsWare  = logPostingsAsWare, 
-
-                         
-                         logWagesAsProLOW  = logWagesAsProLOW,
-                         logWagesAsProHIGH = logWagesAsProHIGH,
-                         logWagesAsTranLOW  = logWagesAsTranLOW, 
-                         logWagesAsTranHIGH = logWagesAsTranHIGH,
-                         logWagesAsWareLOW   = logWagesAsWareLOW,
-                         logWagesAsWareHIGH  = logWagesAsWareHIGH,
 
                          
                          # Certificate
                          logCertificatePro = logCertificatePro, 
                          logCertificateTran = logCertificateTran, 
                          logCertificateWare  = logCertificateWare, 
+                         
+                         totalJobPostingsLogCe = formatCommas(totalJobPostingsLogCe),
+                         
+                         logPostingsCePro = logPostingsCePro, 
+                         logPostingsCeTran = formatCommas(logPostingsCeTran), 
+                         logPostingsCeWare  = logPostingsCeWare, 
+                         
+                         
+                         logWagesCeProLOW  = logWagesCeProLOW,
+                         logWagesCeProHIGH = logWagesCeProHIGH,
+                         logWagesCeTranLOW  = logWagesCeTranLOW, 
+                         logWagesCeTranHIGH = logWagesCeTranHIGH,
+                         logWagesCeWareLOW   = logWagesCeWareLOW,
+                         logWagesCeWareHIGH  = logWagesCeWareHIGH,
+                         
 
                          
                          #High School
-                         logHighSchoolPro  = logHighSchoolPro, 
-                         logHighSchoolTran  = logHighSchoolTran, 
-                         logHighSchoolWare   = logHighSchoolWare ))
+                         logHighSchoolPro    = logHighSchoolPro, 
+                         logHighSchoolTran   = logHighSchoolTran, 
+                         logHighSchoolWare   = logHighSchoolWare,
+                         
+                         totalJobPostingsLogHi = totalJobPostingsLogHi,
+                         
+                         logPostingsHiPro   = logPostingsHiPro, 
+                         logPostingsHiTran  = logPostingsHiTran, 
+                         logPostingsHiWare  = logPostingsHiWare, 
+                         
+                         
+                         logWagesHiProLOW   = logWagesHiProLOW,
+                         logWagesHiProHIGH  = logWagesHiProHIGH,
+                         logWagesHiTranLOW  = logWagesHiTranLOW, 
+                         logWagesHiTranHIGH = logWagesHiTranHIGH,
+                         logWagesHiWareLOW  = logWagesHiWareLOW,
+                         logWagesHiWareHIGH = logWagesHiWareHIGH
+            ))
      
   })
 

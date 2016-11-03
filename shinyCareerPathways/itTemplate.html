@@ -13,7 +13,7 @@
      <col class = 'column4'>
      <col class = 'column5'>
 	   <TR>
-        <TH class = 'totalJobNumber'> {{ totalJobs }} <br> <h5>TOTAL JOB POSTINGS </h5> </TD>
+        <TH class = 'allSectorJobPostings'> {{ totalJobs }} <br> <h5>TOTAL JOB POSTINGS </h5> </TD>
         <TH class = 'mainTitle'> <h3> Information Support/Services   </h3> </TH>
         <TH class = 'mainTitle'> <h3> Programming and  <br> Software Dev   </h3> </TH>
         <TH class = 'mainTitle'> <h3> Network Systems                </h3> </TH>
@@ -27,13 +27,13 @@
         <TD> {{ itBachelorsWeb     }} </TD>
 	   </TR>
      <TR>
-        <TD> {{ totalJobPostingsItBa  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+        <TD class = "jobPostingsTotal"> {{ totalJobPostingsItBa  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
         <TD> {{ itPostingsBaInfo }} <br> JOB POSTINGS <br> in the last 3 months</TD>
         <TD> {{ itPostingsBaProg }} <br> JOB POSTINGS <br> in the last 3 months</TD>
         <TD> {{ itPostingsBaNet  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
         <TD> {{ itPostingsBaWeb  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
      </TR>
-     <TR>
+     <TR class = "wages">
         <TD>  </TD>
         <TD> ${{ itWagesBaInfoLOW }} to ${{ itWagesBaInfoHIGH }} <br> HOURLY RATE </TD>
         <TD> ${{ itWagesBaProgLOW }} to ${{ itWagesBaProgHIGH }} <br> HOURLY RATE </TD>
@@ -48,20 +48,20 @@
         <TD> {{ itAssociatesWeb  }} </TD>
 	   </TR>
      <TR>
-        <TD> {{ totalJobPostingsItAs  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+        <TD class = "jobPostingsTotal"> {{ totalJobPostingsItAs  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
         <TD> {{ itPostingsAsInfo }} <br> JOB POSTINGS <br> in the last 3 months</TD>
         <TD> {{ itPostingsAsProg }} <br> </TD>
         <TD> {{ itPostingsAsNet  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
         <TD> {{ itPostingsAsWeb  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
      </TR>
-     <TR>
+     <TR class = "wages">
         <TD>  </TD>
         <TD> ${{ itWagesAsInfoLOW }} to ${{ itWagesAsInfoHIGH }} <br> HOURLY RATE </TD>
         <TD> </TD>
         <TD> ${{ itWagesAsNetLOW  }} to ${{ itWagesAsNetHIGH  }} <br> HOURLY RATE </TD>
         <TD> ${{ itWagesAsWebLOW  }} to ${{ itWagesAsWebHIGH  }} <br> HOURLY RATE </TD>
      </TR>    
-     <TR class = "itSpecialBorder"> 
+     <TR class = "specialBorder"> 
         <TD class = "edTitle"> {{ degreeName2 }}          </TD>
         <TD> {{ itCertificateInfo }} </TD>
         <TD> {{ itCertificateProg }} </TD>

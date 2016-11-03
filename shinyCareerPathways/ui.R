@@ -9,11 +9,11 @@ library(shiny)
 library(shinythemes)
 
 shinyUI(fluidPage(
-
+  theme = shinytheme("sandstone"),
   includeCSS("main.css"),
   
   # Application title
-  titlePanel("Careeer Pathways Louisville MSA"),
+  titlePanel("Career Pathways Louisville MSA"),
   mainPanel(
     tabsetPanel(
       tabPanel(

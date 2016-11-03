@@ -26,7 +26,7 @@ rm(burningGlassQuarterConnection,
 #Merge Data
 mainDataFile                    <- full_join(burningGlassQuarter, emsiData, by = 'SOC')
 mainDataFile                    <- full_join(mainDataFile, socCrosswalk, by = 'SOC')
-mainDataFile                    <- left_join(mainDataFile, sectors, by = "Description")
+mainDataFile                    <- left_join(mainDataFile, sectors, by = "SOC")
 
 rm(burningGlassQuarter,
    emsiData, 
