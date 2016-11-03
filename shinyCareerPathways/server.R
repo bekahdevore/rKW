@@ -310,7 +310,7 @@ techJobs <- mainDataFile %>%
 
       
       ######################## JOB POSTINGS 
-      
+########### STOPPED IN THIS GENERAL AREA       
       ##### TOTALS             
       totalJobsLog           <-  sum(logJobs$Number.of.Job.Postings)
       totalJobPostingsLogBa  <-  sum(logJobsBa$Number.of.Job.Postings)
@@ -318,38 +318,35 @@ techJobs <- mainDataFile %>%
       
       ##### BACHELORS               
       logPostingsBaPro      <-  sum(proBa$Number.of.Job.Postings)
-      logPostingsBaTran      <-  sum(tranBa$Number.of.Job.Postings) 
-      logPostingsBaWare       <-  sum(wareBa$Number.of.Job.Postings)
+      logPostingsBaTran     <-  sum(tranBa$Number.of.Job.Postings) 
+      logPostingsBaWare     <-  sum(wareBa$Number.of.Job.Postings)
       
       ##### ASSOCIATES/SOME   
       logPostingsAsPro      <-  sum(proAs$Number.of.Job.Postings)
-      logPostingsAsTran      <-  "" 
-      logPostingsAsWare       <-  sum(wareAs$Number.of.Job.Postings)
+      logPostingsAsTran     <-  "" 
+      logPostingsAsWare     <-  sum(wareAs$Number.of.Job.Postings)
 
 # STOPPED HERE
       
       ## IT Wage Ranges
       ## 25th Percentile      
-      itWagesBaInfoLOW <- round(mean(infoBa$Pct..25.Hourly.Earnings), digits = 2)
-      itWagesBaProgLOW <- round(mean(progBa$Pct..25.Hourly.Earnings), digits = 2)
-      itWagesBaNetLOW  <- round(mean(netBa$Pct..25.Hourly.Earnings), digits = 2)
-      itWagesBaWebLOW  <- round(mean(webBa$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesBaProLOW  <- round(mean(proBa$Pct..25.Hourly.Earnings),    digits = 2)
+      itWagesBaTranLOW <- round(mean(tranBa$Pct..25.Hourly.Earnings),  digits = 2)
+      itWagesBaWareLOW <- round(mean(wareBa$Pct..25.Hourly.Earnings), digits = 2)
       
-      itWagesAsInfoLOW <- round(mean(infoAs$Pct..25.Hourly.Earnings), digits = 2)
-      itWagesAsProgLOW <- ""
-      itWagesAsNetLOW  <- round(mean(netAs$Pct..25.Hourly.Earnings), digits = 2)
-      itWagesAsWebLOW  <- round(mean(webAs$Pct..25.Hourly.Earnings), digits = 2)
+      itWagesAsProLOW  <- ""
+      itWagesAsTranLOW <- ""
+      itWagesAsWareLOW <- ""
       
       ## 75th Percentile
-      itWagesBaInfoHIGH <- round(mean(infoBa$Pct..75.Hourly.Earnings), digits = 2)
-      itWagesBaProgHIGH <- round(mean(progBa$Pct..75.Hourly.Earnings), digits = 2)
-      itWagesBaNetHIGH  <- round(mean(netBa$Pct..75.Hourly.Earnings), digits = 2)
-      itWagesBaWebHIGH  <- round(mean(webBa$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesBaProHIGH  <- round(mean(proBa$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesBaTranHIGH <- round(mean(tranBa$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesBaWareHIGH <- round(mean(wareBa$Pct..75.Hourly.Earnings), digits = 2)
       
-      itWagesAsInfoHIGH <- round(mean(infoAs$Pct..75.Hourly.Earnings), digits = 2)
-      itWagesAsProgHIGH <- ""
-      itWagesAsNetHIGH  <- round(mean(netAs$Pct..75.Hourly.Earnings), digits = 2)
-      itWagesAsWebHIGH  <- round(mean(webAs$Pct..75.Hourly.Earnings), digits = 2)
+      itWagesAsProHIGH  <- ""
+      itWagesAsTranHIGH <- ""
+      itWagesAsWareHIGH <- ""
+
 
 
 

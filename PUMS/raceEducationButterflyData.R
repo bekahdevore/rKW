@@ -41,7 +41,7 @@ pums2015 <- pums2015 %>%
 
 
 pums2015 <- pums2015 %>%
-              filter(ESR != "b" | ESR != 4 | ESR != 5) %>%
+              filter(ESR != 4 | ESR != 5) %>%
               mutate(Employment = ifelse(ESR == 3,  "Unemployed", 
                                   ifelse(ESR == 6,  "Not in Labor Force", 
                                   "Employed")))
@@ -85,14 +85,15 @@ pums2015$edRaceEmpl <- paste(pums2015$Education, pums2015$Race, pums2015$Employm
 #Add column with unemployment count by edRace
 unemployment <- pums2015 %>%
                 filter(Employment == "Unemployed")
-unemployed <- count(unemployment, 'edRace', wt = "PWGTP")
-colnames(unemployed)[2] <- "unemployed"
+                unemployed <- count(unemployment, 'edRace', wt = "PWGTP")
+                colnames(unemployed)[2] <- "unemployed"
 
 
 totalLaborForce        <- pums2015 %>%
                             filter(Employment != "Not in Labor Force")
+
 laborForce             <- count(totalLaborForce, 'edRace', wt = "PWGTP")
-colnames(laborForce)[2] <- "laborForce"
+                          colnames(laborForce)[2] <- "laborForce"
 
 #Add column with calculation unemployment/total labor force by edRace 
 unemploymentRate <- full_join(laborForce, unemployed, by = "edRace")
@@ -101,11 +102,12 @@ unemploymentRate[is.na(unemploymentRate)] <- 0
 unemploymentRate$rate <- unemploymentRate$unemployed/unemploymentRate$laborForce
 
 pums2015 <- left_join(pums2015, unemploymentRate, by = 'edRace')
-colnames(pums2015)[15] <- 'Unemployment Rate'
-colnames(pums2015)[11] <- 'Education and Race'
+                colnames(pums2015)[16] <- 'Unemployment Rate'
+                colnames(pums2015)[13] <- 'Education, Race, and Employment'
+                colnames(pums2015)[11] <- 'Education and Race'
 
 pums2015 <- pums2015 %>%
-              select(8:12, 15)
+              select(8:11, 13, 12, 16)
 
 write.csv(pums2015, file = 'educationRaceUnemploymentMedianWage.csv')
 
@@ -114,4 +116,6 @@ educationRaceUnemploymentMedianWage <- educationRaceUnemploymentMedianWage %>%
                                                gs_edit_cells(input  = pums2015,
                                                              ws = 1,
                                                              anchor = "A1", 
-                                                             byrow  = TRUE)
+                                                          byrow  = TRUE)
+
+## NEED TO FIX
