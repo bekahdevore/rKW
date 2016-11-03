@@ -256,52 +256,84 @@ techJobs <- mainDataFile %>%
       
       
       ######################## SECTOR JOBS BY EDUCATION LEVEL #####################
+      ## BACHELORS
       logJobsBa <- logJobs %>% 
-        filter(Typical.Entry.Level.Education == "Bachelor's degree")
+                      filter(Typical.Entry.Level.Education == "Bachelor's degree")
       
-      logJobsAs <- logJobs %>%
-        filter(Typical.Entry.Level.Education   == "Associate's degree"  |
-                 Typical.Entry.Level.Education == 'Some college no degree')
-      # ADD certificate 
-      # ADD high school 
+      ## ASSOCIATES     
+      logJobsAs <- ""
+
+      ## CERTIFICATES    
+      logJobsCe <- logJobs %>% 
+                      filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+      
+      ## HIGH SCHOOL
+      logJobsHi <- logJobs %>% 
+                      filter(Typical.Entry.Level.Education == "High school diploma or equivalent")
+      
+      
       
       ######################## SECTOR JOBS BY COLUMN ##############################
       ################# COLUMN ONE
-      proBa <- logJobs %>%
-        filter(Category                      == 'pro') %>%
-        filter(Typical.Entry.Level.Education == "Bachelor's degree")
-      
-      proAs <- logJobs %>% 
-        filter(Category                      == 'pro') %>%
-        filter(Typical.Entry.Level.Education == "Associate's degree" |
-                 Typical.Entry.Level.Education == 'Some college no degree')  
-      # ADD certificate 
-      # ADD high school 
+      ####### EDUCATION LEVEL
+        ## BACHELORS
+        proBa <- logJobs %>%
+          filter(Category                      == 'pro') %>%
+          filter(Typical.Entry.Level.Education == "Bachelor's degree")
+        
+        ## ASSOCIATES
+        proAs <- ""
+        
+        ## CERTIFICATES
+        proCe <- logJobs %>%
+          filter(Category                      == 'pro') %>%
+          filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+        
+        ## HIGH SCHOOL
+        proHi <- logJobs %>% 
+          filter(Category                      == 'pro') %>%
+          filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
+
       
       ################# COLUMN TWO
-      tranBa <- logJobs %>%
-        filter(Category                      == 'tran') %>%
-        filter(Typical.Entry.Level.Education == "Bachelor's degree")
-      
-      tranAs <- ""     
-      
-      # ADD certificate 
-      # ADD high school 
+        ## BACHELORS
+        tranBa <- logJobs %>%
+          filter(Category                      == 'tran') %>%
+          filter(Typical.Entry.Level.Education == "Bachelor's degree")
+        
+        ## ASSOCIATES
+        tranAs <- ""     
+        
+        ## CERTIFICATE
+        tranCe <- logJobs %>%
+          filter(Category                      == 'tran') %>%
+          filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+        
+        ## HIGH SCHOOL 
+        tranHi <- logJobs %>% 
+          filter(Category                      == 'tran') %>%
+          filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
       
       
       ################# COLUMN THREE
-      wareBa <- logJobs %>%
-        filter(Category                       == 'ware') %>%
-        filter(Typical.Entry.Level.Education  == "Bachelor's degree")
-      
-      wareAs <- logJobs %>% 
-        filter(Category == 'ware') %>%
-        filter(Typical.Entry.Level.Education  == "Associate's degree" |
-                 Typical.Entry.Level.Education  == 'Some college no degree')     
-      
-      # ADD certificate 
-      # ADD high school 
-      
+        ## BACHELORS
+        wareBa <- logJobs %>%
+          filter(Category                       == 'ware') %>%
+          filter(Typical.Entry.Level.Education  == "Bachelor's degree")
+        
+        ## ASSOCIATES
+        wareAs <- ""
+        
+        ## CERTIFICATES
+        wareCe <- logJobs %>%
+          filter(Category                      == 'ware') %>%
+          filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+        
+        ## HIGH SCHOOL 
+        wareHi <- logJobs %>% 
+          filter(Category                      == 'ware') %>%
+          filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
+        
       
       ######################## COLUMN ENTRY #######################################    
       ################# NAMES 
@@ -332,8 +364,8 @@ techJobs <- mainDataFile %>%
       totalJobsLog           <-  sum(logJobs$Number.of.Job.Postings)
       totalJobPostingsLogBa  <-  sum(logJobsBa$Number.of.Job.Postings)
       totalJobPostingsLogAs  <-  sum(logJobsAs$Number.of.Job.Postings)
-      # ADD certificate 
-      # ADD high school 
+      totalJobPostingsLogCe  <-  sum(logJobsCe$Number.of.Job.Postings)
+      totalJobPostingsLogHi  <-  sum(logJobsCe$Number.of.Job.Postings)
       
       ####### EDUCATION LEVEL
       ## BACHELORS      
@@ -346,8 +378,16 @@ techJobs <- mainDataFile %>%
       logPostingsAsTran     <-  "" 
       logPostingsAsWare     <-  sum(wareAs$Number.of.Job.Postings)
       
-      # ADD certificate 
-      # ADD high school 
+      ## CERTIFICATES
+      logPostingsCePro      <-  ""
+      logPostingsCeTran     <-  sum(tranCe$Number.of.Job.Postings) 
+      logPostingsCeWare     <-  sum(wareCe$Number.of.Job.Postings)
+
+      ## HIGH SCHOOL
+      logPostingsHiPro      <-  sum(proHi$Number.of.Job.Postings)
+      logPostingsHiTran     <-  sum(tranHi$Number.of.Job.Postings) 
+      logPostingsHiWare     <-  sum(wareHi$Number.of.Job.Postings)
+      
       
       ################# WAGES
       ####### 25th PERCENTILE 
@@ -362,8 +402,16 @@ techJobs <- mainDataFile %>%
       logWagesAsTranLOW <- ""
       logWagesAsWareLOW <- ""
       
-      # ADD certificate 
-      # ADD high school 
+      # CERTIFICATES 
+      logWagesCeProLOW  <- ""
+      logWagesCeTranLOW <- roundMean(tranCe$Pct..25.Hourly.Earnings)
+      logWagesCeWareLOW <- roundMean(wareCe$Pct..25.Hourly.Earnings)
+      
+      # HIGH SCHOOL 
+      logWagesHiProLOW  <- roundMean(proHi$Pct..25.Hourly.Earnings)
+      logWagesHiTranLOW <- roundMean(tranHi$Pct..25.Hourly.Earnings)
+      logWagesHiWareLOW <- roundMean(wareHi$Pct..25.Hourly.Earnings)
+      
       
       ####### 75th PERCENTILE 
       ## EDUCATION LEVEL
@@ -377,11 +425,17 @@ techJobs <- mainDataFile %>%
       logWagesAsTranHIGH <- ""
       logWagesAsWareHIGH <- ""
       
-      # ADD certificate 
-      # ADD high school 
-
-
-
+      ## CERTIFICATES
+      logWagesCeProHIGH  <- ""
+      logWagesCeTranHIGH <- roundMean(tranCe$Pct..75.Hourly.Earnings)
+      logWagesCeWareHIGH <- roundMean(wareCe$Pct..75.Hourly.Earnings)
+      
+      ## HIGH SCHOOL 
+      logWagesHiProHIGH  <- roundMean(proHi$Pct..75.Hourly.Earnings)
+      logWagesHiTranHIGH <- roundMean(tranHi$Pct..75.Hourly.Earnings)
+      logWagesHiWareHIGH <- roundMean(wareHi$Pct..75.Hourly.Earnings)
+       
+      
 
 shinyServer(function(input, output) {
   #     output$healthcare <- renderUI(
