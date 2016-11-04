@@ -402,7 +402,202 @@ techJobs <- mainDataFile %>%
       logWagesHiTranHIGH <- roundMean(tranHi$Pct..75.Hourly.Earnings)
       logWagesHiWareHIGH <- roundMean(wareHi$Pct..75.Hourly.Earnings)
        
+
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+#####################################       MANUFACTURING      #################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+
+      ######################## SECTOR JOBS ########################################
+      manJobs <- mainDataFile %>%
+        filter(Sector == "Manufacturing")
       
+      
+      ######################## SECTOR JOBS BY EDUCATION LEVEL #####################
+      ## BACHELORS
+      manJobsBa <- manJobs %>% 
+        filter(Typical.Entry.Level.Education == "Bachelor's degree")
+      
+      ## ASSOCIATES     
+      manJobsAs <- manJobs %>%
+        filter(Typical.Entry.Level.Education == "Associate's degree")
+      
+      ## CERTIFICATES    
+      manJobsCe <- manJobs %>% 
+        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+      
+      ## HIGH SCHOOL
+      manJobsHi <- manJobs %>% 
+        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")
+      
+      
+      
+      ######################## SECTOR JOBS BY COLUMN ##############################
+      ################# COLUMN ONE
+      ####### EDUCATION LEVEL
+      ## BACHELORS
+      prodBa <- manJobs %>%
+        filter(Category                      == 'prod') %>%
+        filter(Typical.Entry.Level.Education == "Bachelor's degree")
+      ## ASSOCIATES
+      prodAs <- manJobs %>%
+        filter(Category                      == 'prod') %>%
+        filter(Typical.Entry.Level.Education == "Associate's degree")
+      ## CERTIFICATES
+      prodCe <- manJobs %>%
+        filter(Category                      == 'prod') %>%
+        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+      ## HIGH SCHOOL
+      prodHi <- manJobs %>% 
+        filter(Category                      == 'prod') %>%
+        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
+      ################# COLUMN TWO
+      ## BACHELORS
+      procBa <- manJobs %>%
+        filter(Category                      == 'proc') %>%
+        filter(Typical.Entry.Level.Education == "Bachelor's degree")
+      ## ASSOCIATES
+      procAs <- manJobs %>%
+        filter(Category                      == 'proc') %>%
+        filter(Typical.Entry.Level.Education == "Associate's degree")    
+      ## CERTIFICATE
+      procCe <- manJobs %>%
+        filter(Category                      == 'proc') %>%
+        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+      ## HIGH SCHOOL 
+      procHi <- manJobs %>% 
+        filter(Category                      == 'proc') %>%
+        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")
+      ################# COLUMN THREE
+      ## BACHELORS
+      qualBa <- manJobs %>%
+        filter(Category                       == 'qual') %>%
+        filter(Typical.Entry.Level.Education  == "Bachelor's degree")
+      ## ASSOCIATES
+      qualAs <- manJobs %>%
+        filter(Category                      == 'qual') %>%
+        filter(Typical.Entry.Level.Education == "Associate's degree")
+      ## CERTIFICATES
+      qualCe <- manJobs %>%
+        filter(Category                      == 'qual') %>%
+        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+      ## HIGH SCHOOL 
+      qualHi <- manJobs %>% 
+        filter(Category                      == 'qual') %>%
+        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
+      ################# COLUMN FOUR
+      ## BACHELORS
+      mainBa <- manJobs %>%
+        filter(Category                       == 'main') %>%
+        filter(Typical.Entry.Level.Education  == "Bachelor's degree")
+      ## ASSOCIATES
+      mainAs <- manJobs %>%
+        filter(Category                      == 'main') %>%
+        filter(Typical.Entry.Level.Education == "Associate's degree")
+      ## CERTIFICATES
+      mainCe <- manJobs %>%
+        filter(Category                      == 'main') %>%
+        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+      ## HIGH SCHOOL 
+      mainHi <- manJobs %>% 
+        filter(Category                      == 'main') %>%
+        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
+      
+      
+      ######################## COLUMN ENTRY #######################################    
+      ################# NAMES 
+      ####### EDUCATION LEVEL
+      ## BACHELORS
+      manBachelorsProd   <- "Manufacturing Engineers"
+      manBachelorsProc   <- "Estimators; Sales Engineers"
+      manBachelorsQual   <- "Quality Engineers; Prodduction Mangers"
+      manBachelorsMain   <- "Electrical and Mechanical Engineers" 
+      
+      ## ASSOCIATES
+      manAssociatesProd  <- noJobsMessage
+      manAssociatesProc  <- "Mechanical Drafters (Computer Aided Designers)"
+      manAssociatesQual  <- "Engineering and Manufacturing Technicians"
+      manAssociatesMain  <- noJobsMessage
+      
+      ## CERTIFICATE
+      manCertificateProd <- "Prodduction Supervisors; CNC Machine Tool Operators"
+      manCertificateProc <- noJobsMessage
+      manCertificateQual <- "Quality Coordinators"
+      manCertificateMain <- "Welders; Industrial Machinary Mechanics; Industrial Maintenance Technicians"
+      
+      ## HIGH SCHOOL
+      manHighSchoolProd  <- "Assembly Technicians; Industrial Tool Operators"
+      manHighSchoolProc  <- noJobsMessage
+      manHighSchoolQual  <- "Quality Assurance Specialist"
+      manHighSchoolMain  <- "Repair Technician"
+      
+      ## STOPPED HERE
+      ################# JOB POSTINGS
+      ####### TOTALS           
+      totalJobsLog           <-  sum(logJobs$Number.of.Job.Postings)
+      totalJobPostingsLogBa  <-  sum(logJobsBa$Number.of.Job.Postings)
+      totalJobPostingsLogAs  <-  ""
+      totalJobPostingsLogCe  <-  sum(logJobsCe$Number.of.Job.Postings)
+      totalJobPostingsLogHi  <-  sum(logJobsHi$Number.of.Job.Postings)
+      ####### EDUCATION LEVEL
+      ## BACHELORS      
+      logPostingsBaPro      <-  sum(proBa$Number.of.Job.Postings)
+      logPostingsBaTran     <-  sum(tranBa$Number.of.Job.Postings) 
+      logPostingsBaWare     <-  sum(wareBa$Number.of.Job.Postings)
+      ## ASSOCIATES  
+      logPostingsAsPro      <-  ""
+      logPostingsAsTran     <-  "" 
+      logPostingsAsWare     <-  ""
+      ## CERTIFICATES
+      logPostingsCePro      <-  ""
+      logPostingsCeTran     <-  sum(tranCe$Number.of.Job.Postings) 
+      logPostingsCeWare     <-  ""
+      ## HIGH SCHOOL
+      logPostingsHiPro      <-  sum(proHi$Number.of.Job.Postings)
+      logPostingsHiTran     <-  sum(tranHi$Number.of.Job.Postings) 
+      logPostingsHiWare     <-  sum(wareHi$Number.of.Job.Postings)
+      ################# WAGES
+      ####### 25th PERCENTILE 
+      ## EDUCATION LEVEL
+      # BACHELORS
+      logWagesBaProLOW  <- roundMean(proBa$Pct..25.Hourly.Earnings)
+      logWagesBaTranLOW <- roundMean(tranBa$Pct..25.Hourly.Earnings)
+      logWagesBaWareLOW <- roundMean(wareBa$Pct..25.Hourly.Earnings)
+      # ASSOCIATES
+      logWagesAsProLOW  <- ""
+      logWagesAsTranLOW <- ""
+      logWagesAsWareLOW <- ""
+      # CERTIFICATES 
+      logWagesCeProLOW  <- ""
+      logWagesCeTranLOW <- roundMean(tranCe$Pct..25.Hourly.Earnings)
+      logWagesCeWareLOW <- ""
+      # HIGH SCHOOL 
+      logWagesHiProLOW  <- roundMean(proHi$Pct..25.Hourly.Earnings)
+      logWagesHiTranLOW <- roundMean(tranHi$Pct..25.Hourly.Earnings)
+      logWagesHiWareLOW <- roundMean(wareHi$Pct..25.Hourly.Earnings)
+      ####### 75th PERCENTILE 
+      ## EDUCATION LEVEL
+      # BACHELORS
+      logWagesBaProHIGH  <- roundMean(proBa$Pct..75.Hourly.Earnings)
+      logWagesBaTranHIGH <- roundMean(tranBa$Pct..75.Hourly.Earnings)
+      logWagesBaWareHIGH <- roundMean(wareBa$Pct..75.Hourly.Earnings)
+      ## ASSOCIATES
+      logWagesAsProHIGH  <- ""
+      logWagesAsTranHIGH <- ""
+      logWagesAsWareHIGH <- ""
+      ## CERTIFICATES
+      logWagesCeProHIGH  <- ""
+      logWagesCeTranHIGH <- roundMean(tranCe$Pct..75.Hourly.Earnings)
+      logWagesCeWareHIGH <- ""
+      ## HIGH SCHOOL 
+      logWagesHiProHIGH  <- roundMean(proHi$Pct..75.Hourly.Earnings)
+      logWagesHiTranHIGH <- roundMean(tranHi$Pct..75.Hourly.Earnings)
+      logWagesHiWareHIGH <- roundMean(wareHi$Pct..75.Hourly.Earnings)
+      
+      
+      
+            
 
 shinyServer(function(input, output) {
   #     output$healthcare <- renderUI(
@@ -573,6 +768,106 @@ shinyServer(function(input, output) {
                          logWagesHiWareLOW  = logWagesHiWareLOW,
                          logWagesHiWareHIGH = logWagesHiWareHIGH
             ))
-     
+          
+          output$manufacturing <- renderUI(
+            htmlTemplate('manufacturingTemplate.html', 
+                         totalJobs = formatCommas(totalJobsMan), 
+                         degreeName4        = degreeName4, 
+                         degreeName3        = degreeName3, 
+                         degreeName2        = degreeName2, 
+                         degreeName1        = degreeName1,
+                         
+                         # Bachelors
+                         manBachelorsProd  = manBachelorsProd,
+                         manBachelorsProg  = manBachelorsProg,
+                         manBachelorsQual  = manBachelorsQual, 
+                         manBachelorsMain  = manBachelorsMain, 
+                         
+                         totalJobPostingsManBa = totalJobPostingsManBa,
+                         
+                         manPostingsBaProd = manPostingsBaProd, 
+                         manPostingsBaProg = manPostingsBaProg, 
+                         manPostingsBaQual = manPostingsBaQual, 
+                         manPostingsBaMain = manPostingsBaMain, 
+                         
+                         
+                         manWagesBaProdLOW  = manWagesBaProdLOW,
+                         manWagesBaProdHIGH = manWagesBaProdHIGH,
+                         manWagesBaProgLOW  = manWagesBaProgLOW, 
+                         manWagesBaProgHIGH = manWagesBaProgHIGH,
+                         manWagesBaQualLOW   = manWagesBaQualLOW,
+                         manWagesBaQualHIGH  = manWagesBaQualHIGH,
+                         manWagesBaMainLOW   = manWagesBaMainLOW,
+                         manWagesBaMainHIGH  = manWagesBaMainHIGH,                         
+                         
+                         # ASSOCIATES
+                         manAssociatesProd = manAssociatesProd, 
+                         manAssociatesProg = manAssociatesProg, 
+                         manAssociatesQual  = manAssociatesQual,
+                         manAssociatesMain  = manAssociatesMain,
+                         
+                         totalJobPostingsManAs = totalJobPostingsManAs,
+                         
+                         manPostingsAsProd = manPostingsAsProd, 
+                         manPostingsAsProg = manPostingsAsProg, 
+                         manPostingsAsQual = manPostingsAsQual, 
+                         manPostingsAsMain = manPostingsAsMain, 
+                         
+                         
+                         manWagesAsProdLOW  = manWagesAsProdLOW,
+                         manWagesAsProdHIGH = manWagesAsProdHIGH,
+                         manWagesAsProgLOW  = manWagesAsProgLOW, 
+                         manWagesAsProgHIGH = manWagesAsProgHIGH,
+                         manWagesAsQualLOW  = manWagesAsQualLOW,
+                         manWagesAsQualHIGH = manWagesAsQualHIGH,
+                         manWagesAsMainLOW  = manWagesAsMainLOW,
+                         manWagesAsMainHIGH = manWagesAsMainHIGH,           
+                         
+                         
+                         # Certificate
+                         manCertificateProd = manCertificateProd, 
+                         manCertificateProg = manCertificateProg, 
+                         manCertificateQual = manCertificateQual, 
+                         manCertificateMain = manCertificateMain,
+                         
+                         totalJobPostingsManCe = formatCommas(totalJobPostingsManCe),
+                         
+                         manPostingsCeProd = manPostingsCeProd, 
+                         manPostingsCeProg = formatCommas(manPostingsCeProg), 
+                         manPostingsCeQual = manPostingsCeQual, 
+                         manPostingsCeMain = manPostingsCeMain, 
+                         
+                         
+                         manWagesCeProdLOW  = manWagesCeProdLOW,
+                         manWagesCeProdHIGH = manWagesCeProdHIGH,
+                         manWagesCeProgLOW  = manWagesCeProgLOW, 
+                         manWagesCeProgHIGH = manWagesCeProgHIGH,
+                         manWagesCeQualLOW   = manWagesCeQualLOW,
+                         manWagesCeQualHIGH  = manWagesCeQualHIGH,
+                         manWagesCeMainLOW   = manWagesCeMainLOW,
+                         manWagesCeMainHIGH  = manWagesCeMainHIGH,
+ 
+                         #High School
+                         manHighSchoolProd   = manHighSchoolProd, 
+                         manHighSchoolProg   = manHighSchoolProg, 
+                         manHighSchoolQual   = manHighSchoolQual,
+                         manHighSchoolMain   = manHighSchoolMain,
+                         
+                         totalJobPostingsManHi = totalJobPostingsManHi,
+                         
+                         manPostingsHiProd  = manPostingsHiProd, 
+                         manPostingsHiProg  = manPostingsHiProg, 
+                         manPostingsHiQual  = manPostingsHiQual,
+                         manPostingsHiMain  = manPostingsHiMain,
+                         
+                         manWagesHiProdLOW  = manWagesHiProdLOW,
+                         manWagesHiProdHIGH = manWagesHiProdHIGH,
+                         manWagesHiProgLOW  = manWagesHiProgLOW, 
+                         manWagesHiProgHIGH = manWagesHiProgHIGH,
+                         manWagesHiQualLOW  = manWagesHiQualLOW,
+                         manWagesHiQualHIGH = manWagesHiQualHIGH, 
+                         manWagesHiMainLOW  = manWagesHiMainLOW,
+                         manWagesHiMainHIGH = manWagesHiMainHIGH
+            ))
   })
 

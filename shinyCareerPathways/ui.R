@@ -17,8 +17,8 @@ shinyUI(fluidPage(
   mainPanel(
     tabsetPanel(
       tabPanel(
-          'Manufacturing'#,
-          #htmlOutput('manufacturing')
+          'Manufacturing',
+          htmlOutput('manufacturing')
           ),
       
       tabPanel(
