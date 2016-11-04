@@ -35,8 +35,7 @@ rm(indianaPUMS,
    variables)
 
 pums2015 <- pums2015 %>%
-              filter(PERNP > 0) %>%
-              filter(ESR != "b") %>%
+              filter(PERNP != 0) %>%
               filter(AGEP >= 25 & AGEP <= 64)
 
 
