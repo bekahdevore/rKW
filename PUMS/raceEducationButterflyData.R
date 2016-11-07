@@ -5,6 +5,7 @@ library(plyr)
 library(stringr)
 library(RCurl)
 library(googlesheets)
+library(matrixStats)
 
 pumaConnection   <- getURL('https://docs.google.com/spreadsheets/d/1LlC-Nwa_ntWM0kE_vWcjtcNSS3Q9I2mBb-RvO_id614/pub?gid=0&single=true&output=csv')
 
@@ -12,14 +13,19 @@ pumas            <- read.csv(textConnection(pumaConnection), check.names = FALSE
 indianaPUMS      <- read.csv('ss15pin.csv')
 kentuckyPUMS     <- read.csv('ss15pky.csv')
 
-indianaPUMS      <- indianaPUMS %>%
+inPUMS      <- indianaPUMS %>%
                       filter(indianaPUMS$PUMA  %in% pumas$inPUMA)
 
-kentuckyPUMS     <- kentuckyPUMS %>%
+kyPUMS     <- kentuckyPUMS %>%
                       filter(kentuckyPUMS$PUMA %in% pumas$kyPUMA)
 
-pums2015         <- rbind(indianaPUMS, kentuckyPUMS)
+louMsaData       <- rbind(inPUMS, kyPUMS)
+#rm(kyPUMS, inPUMS)
 
+kyInData <- rbind(indianaPUMS, kentuckyPUMS)
+
+
+unemploymentWageFunction <- function(pums2015){
 pums2015         <- pums2015 %>%
                     select(PWGTP, AGEP, RAC1P, HISP, SCHL, PERNP, ESR)
 
@@ -28,14 +34,9 @@ variables        <- c('PWGTP', 'AGEP', 'RAC1P', 'HISP', 'SCHL', 'PERNP', 'ESR')
 pums2015[,variables] <- lapply(pums2015[,variables] , as.character)
 pums2015[,variables] <- lapply(pums2015[,variables] , as.numeric)
 
-rm(indianaPUMS,
-   kentuckyPUMS, 
-   pumaConnection, 
-   pumas, 
-   variables)
+rm(variables)
 
 pums2015 <- pums2015 %>%
-              filter(PERNP != 0) %>%
               filter(AGEP >= 25 & AGEP <= 64)
 
 
@@ -69,11 +70,13 @@ pums2015           <- pums2015 %>%
 
 pums2015$edRace <- paste(pums2015$Education, pums2015$Race)
 
-
-weightedMedian <- ddply(pums2015,
+pums2015weightedMedian <- pums2015 %>%
+                           filter(PERNP != 0)              
+        
+weightedMedian <- ddply(pums2015weightedMedian,
                       .(edRace), 
                        summarise, 
-                       wMedian=w.median(PERNP, PWGTP))
+                       wMedian=weightedMedian(PERNP, PWGTP))
 
 
 pums2015 <- left_join(pums2015, weightedMedian, by = 'edRace')
@@ -84,14 +87,14 @@ pums2015$edRaceEmpl <- paste(pums2015$Education, pums2015$Race, pums2015$Employm
 #Add column with unemployment count by edRace
 unemployment <- pums2015 %>%
                 filter(Employment == "Unemployed")
-                unemployed <- count(unemployment, 'edRace', wt = "PWGTP")
+                unemployed <- dplyr::count(unemployment, edRace, wt = PWGTP)
                 colnames(unemployed)[2] <- "unemployed"
 
 
 totalLaborForce        <- pums2015 %>%
                             filter(Employment != "Not in Labor Force")
 
-laborForce             <- count(totalLaborForce, 'edRace', wt = "PWGTP")
+laborForce             <- dplyr::count(totalLaborForce, edRace, wt = PWGTP)
                           colnames(laborForce)[2] <- "laborForce"
 
 #Add column with calculation unemployment/total labor force by edRace 
@@ -106,15 +109,46 @@ pums2015 <- left_join(pums2015, unemploymentRate, by = 'edRace')
                 colnames(pums2015)[11] <- 'Education and Race'
 
 pums2015 <- pums2015 %>%
-              select(8:11, 13, 12, 16)
+              select(8:11, 13, 12, 16) %>%
+              distinct(pums2015$"Education and Race", .keep_all = TRUE) %>%
+              select(2:4, 6:7)
+              
+print(pums2015)
+}
 
-write.csv(pums2015, file = 'educationRaceUnemploymentMedianWage.csv')
+louMsaUnemploymentWages <- unemploymentWageFunction(louMsaData) 
+kyUnemploymentWages     <- unemploymentWageFunction(kentuckyPUMS)
+kyInUnemploymentWages   <- unemploymentWageFunction(kyInData)
 
-educationRaceUnemploymentMedianWage <- gs_title('pums2015louisvilleMSA')
-educationRaceUnemploymentMedianWage <- educationRaceUnemploymentMedianWage %>% 
-                                               gs_edit_cells(input  = pums2015,
-                                                             ws = 1,
-                                                             anchor = "A1", 
-                                                          byrow  = TRUE)
+#OUTPUT FOR LOUISVILLE MSA
+educationWagesButterfly <- gs_title('pums2015')
+educationWagesButterfly <- educationWagesButterfly %>% 
+                            gs_edit_cells(input  = louMsaUnemploymentWages,
+                                      ws = 1,
+                                      anchor = "A1", 
+                                      byrow  = TRUE)
 
-## NEED TO FIX
+#OUTPUT FOR KY
+educationWagesButterfly <- educationWagesButterfly %>% 
+                            gs_edit_cells(input  = kyUnemploymentWages,
+                                          ws = 2,
+                                          anchor = "A1", 
+                                          byrow  = TRUE)
+#OUTPUT FOR KY, IN, TN
+educationWagesButterfly <- educationWagesButterfly %>% 
+                            gs_edit_cells(input  = kyInUnemploymentWages,
+                                          ws = 3,
+                                          anchor = "A1", 
+                                          byrow  = TRUE)
+#OUTPUT FOR Lou, Ind, Nash
+educationWagesButterfly <- educationWagesButterfly %>% 
+                            gs_edit_cells(input  = unemploymentRate,
+                                          ws = 4,
+                                          anchor = "A1", 
+                                          byrow  = TRUE)
+
+
+
+
+
+#write.csv(pums2015, file = 'educationWagesButterfly.csv')

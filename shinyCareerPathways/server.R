@@ -521,7 +521,7 @@ techJobs <- mainDataFile %>%
       manAssociatesMain  <- noJobsMessage
       
       ## CERTIFICATE
-      manCertificateProd <- "Prodduction Supervisors; CNC Machine Tool Operators"
+      manCertificateProd <- "Production Supervisors; CNC Machine Tool Operators"
       manCertificateProc <- noJobsMessage
       manCertificateQual <- "Quality Coordinators"
       manCertificateMain <- "Welders; Industrial Machinary Mechanics; Industrial Maintenance Technicians"
@@ -535,68 +535,77 @@ techJobs <- mainDataFile %>%
       ## STOPPED HERE
       ################# JOB POSTINGS
       ####### TOTALS           
-      totalJobsLog           <-  sum(logJobs$Number.of.Job.Postings)
-      totalJobPostingsLogBa  <-  sum(logJobsBa$Number.of.Job.Postings)
-      totalJobPostingsLogAs  <-  ""
-      totalJobPostingsLogCe  <-  sum(logJobsCe$Number.of.Job.Postings)
-      totalJobPostingsLogHi  <-  sum(logJobsHi$Number.of.Job.Postings)
+      totalJobsMan           <-  sum(manJobs$Number.of.Job.Postings)
+      totalJobPostingsManBa  <-  sum(manJobsBa$Number.of.Job.Postings)
+      totalJobPostingsManAs  <-  ""
+      totalJobPostingsManCe  <-  sum(manJobsCe$Number.of.Job.Postings)
+      totalJobPostingsManHi  <-  sum(manJobsHi$Number.of.Job.Postings)
       ####### EDUCATION LEVEL
       ## BACHELORS      
-      logPostingsBaPro      <-  sum(proBa$Number.of.Job.Postings)
-      logPostingsBaTran     <-  sum(tranBa$Number.of.Job.Postings) 
-      logPostingsBaWare     <-  sum(wareBa$Number.of.Job.Postings)
+      manPostingsBaProd     <-  sum(prodBa$Number.of.Job.Postings)
+      manPostingsBaProc     <-  sum(tranBa$Number.of.Job.Postings) 
+      manPostingsBaQual     <-  sum(wareBa$Number.of.Job.Postings)
+      manPostingsBaMain     <-  sum(mainBa$Number.of.Job.Postings)
       ## ASSOCIATES  
-      logPostingsAsPro      <-  ""
-      logPostingsAsTran     <-  "" 
-      logPostingsAsWare     <-  ""
+      manPostingsAsProd     <-  ""
+      manPostingsAsProc     <-  "" 
+      manPostingsAsQual     <-  ""
+      manPostingsAsMain     <-  ""
       ## CERTIFICATES
-      logPostingsCePro      <-  ""
-      logPostingsCeTran     <-  sum(tranCe$Number.of.Job.Postings) 
-      logPostingsCeWare     <-  ""
+      manPostingsCeProd     <-  ""
+      manPostingsCeProc     <-  sum(tranCe$Number.of.Job.Postings) 
+      manPostingsCeQual     <-  ""
+      manPostingsCeMain     <-  ""
       ## HIGH SCHOOL
-      logPostingsHiPro      <-  sum(proHi$Number.of.Job.Postings)
-      logPostingsHiTran     <-  sum(tranHi$Number.of.Job.Postings) 
-      logPostingsHiWare     <-  sum(wareHi$Number.of.Job.Postings)
+      manPostingsHiProd     <-  sum(prodHi$Number.of.Job.Postings)
+      manPostingsHiProc     <-  sum(tranHi$Number.of.Job.Postings) 
+      manPostingsHiQual     <-  sum(wareHi$Number.of.Job.Postings)
+      manPostingsHiMain     <-  sum(wareHi$Number.of.Job.Postings)
       ################# WAGES
       ####### 25th PERCENTILE 
       ## EDUCATION LEVEL
       # BACHELORS
-      logWagesBaProLOW  <- roundMean(proBa$Pct..25.Hourly.Earnings)
-      logWagesBaTranLOW <- roundMean(tranBa$Pct..25.Hourly.Earnings)
-      logWagesBaWareLOW <- roundMean(wareBa$Pct..25.Hourly.Earnings)
+      manWagesBaProdLOW <- roundMean(proBa$Pct..25.Hourly.Earnings)
+      manWagesBaProcLOW <- roundMean(tranBa$Pct..25.Hourly.Earnings)
+      manWagesBaQualLOW <- roundMean(wareBa$Pct..25.Hourly.Earnings)
+      manWagesBaMainLOW <- roundMean(mainBa$Pct..25.Hourly.Earnings)
       # ASSOCIATES
-      logWagesAsProLOW  <- ""
-      logWagesAsTranLOW <- ""
-      logWagesAsWareLOW <- ""
+      manWagesAsProdLOW <- ""
+      manWagesAsProcLOW <- ""
+      manWagesAsQualLOW <- ""
+      manWagesAsMainLOW <- ""
       # CERTIFICATES 
-      logWagesCeProLOW  <- ""
-      logWagesCeTranLOW <- roundMean(tranCe$Pct..25.Hourly.Earnings)
-      logWagesCeWareLOW <- ""
+      manWagesCeProdLOW <- ""
+      manWagesCeProcLOW <- roundMean(tranCe$Pct..25.Hourly.Earnings)
+      manWagesCeQualLOW <- ""
+      manWagesCeMainLOW <- ""
       # HIGH SCHOOL 
-      logWagesHiProLOW  <- roundMean(proHi$Pct..25.Hourly.Earnings)
-      logWagesHiTranLOW <- roundMean(tranHi$Pct..25.Hourly.Earnings)
-      logWagesHiWareLOW <- roundMean(wareHi$Pct..25.Hourly.Earnings)
+      manWagesHiProdLOW <- roundMean(proHi$Pct..25.Hourly.Earnings)
+      manWagesHiProcLOW <- roundMean(tranHi$Pct..25.Hourly.Earnings)
+      manWagesHiQualLOW <- roundMean(wareHi$Pct..25.Hourly.Earnings)
+      manWagesHiMainLOW <- roundMean(mainHi$Pct..25.Hourly.Earnings)
       ####### 75th PERCENTILE 
       ## EDUCATION LEVEL
       # BACHELORS
-      logWagesBaProHIGH  <- roundMean(proBa$Pct..75.Hourly.Earnings)
-      logWagesBaTranHIGH <- roundMean(tranBa$Pct..75.Hourly.Earnings)
-      logWagesBaWareHIGH <- roundMean(wareBa$Pct..75.Hourly.Earnings)
+      manWagesBaProdHIGH <- roundMean(proBa$Pct..75.Hourly.Earnings)
+      manWagesBaProcHIGH <- roundMean(tranBa$Pct..75.Hourly.Earnings)
+      manWagesBaQualHIGH <- roundMean(wareBa$Pct..75.Hourly.Earnings)
+      manWagesBaMainHIGH <- roundMean(mainBa$Pct..75.Hourly.Earnings)
       ## ASSOCIATES
-      logWagesAsProHIGH  <- ""
-      logWagesAsTranHIGH <- ""
-      logWagesAsWareHIGH <- ""
+      manWagesAsProdHIGH <- ""
+      manWagesAsProcHIGH <- ""
+      manWagesAsQualHIGH <- ""
+      manWagesAsMainHIGH <- ""
       ## CERTIFICATES
-      logWagesCeProHIGH  <- ""
-      logWagesCeTranHIGH <- roundMean(tranCe$Pct..75.Hourly.Earnings)
-      logWagesCeWareHIGH <- ""
+      manWagesCeProdHIGH  <- ""
+      manWagesCeProcHIGH <- roundMean(tranCe$Pct..75.Hourly.Earnings)
+      manWagesCeQualHIGH <- ""
+      manWagesCeMainHIGH <- ""
       ## HIGH SCHOOL 
-      logWagesHiProHIGH  <- roundMean(proHi$Pct..75.Hourly.Earnings)
-      logWagesHiTranHIGH <- roundMean(tranHi$Pct..75.Hourly.Earnings)
-      logWagesHiWareHIGH <- roundMean(wareHi$Pct..75.Hourly.Earnings)
-      
-      
-      
+      manWagesHiProdHIGH  <- roundMean(proHi$Pct..75.Hourly.Earnings)
+      manWagesHiProcHIGH <- roundMean(tranHi$Pct..75.Hourly.Earnings)
+      manWagesHiQualHIGH <- roundMean(wareHi$Pct..75.Hourly.Earnings)
+      manWagesHiMainHIGH <- roundMean(mainHi$Pct..75.Hourly.Earnings)
             
 
 shinyServer(function(input, output) {
@@ -779,22 +788,22 @@ shinyServer(function(input, output) {
                          
                          # Bachelors
                          manBachelorsProd  = manBachelorsProd,
-                         manBachelorsProg  = manBachelorsProg,
+                         manBachelorsProc  = manBachelorsProc,
                          manBachelorsQual  = manBachelorsQual, 
                          manBachelorsMain  = manBachelorsMain, 
                          
                          totalJobPostingsManBa = totalJobPostingsManBa,
                          
                          manPostingsBaProd = manPostingsBaProd, 
-                         manPostingsBaProg = manPostingsBaProg, 
+                         manPostingsBaProc = manPostingsBaProc, 
                          manPostingsBaQual = manPostingsBaQual, 
                          manPostingsBaMain = manPostingsBaMain, 
                          
                          
                          manWagesBaProdLOW  = manWagesBaProdLOW,
                          manWagesBaProdHIGH = manWagesBaProdHIGH,
-                         manWagesBaProgLOW  = manWagesBaProgLOW, 
-                         manWagesBaProgHIGH = manWagesBaProgHIGH,
+                         manWagesBaProcLOW  = manWagesBaProcLOW, 
+                         manWagesBaProcHIGH = manWagesBaProcHIGH,
                          manWagesBaQualLOW   = manWagesBaQualLOW,
                          manWagesBaQualHIGH  = manWagesBaQualHIGH,
                          manWagesBaMainLOW   = manWagesBaMainLOW,
@@ -802,22 +811,22 @@ shinyServer(function(input, output) {
                          
                          # ASSOCIATES
                          manAssociatesProd = manAssociatesProd, 
-                         manAssociatesProg = manAssociatesProg, 
+                         manAssociatesProc = manAssociatesProc, 
                          manAssociatesQual  = manAssociatesQual,
                          manAssociatesMain  = manAssociatesMain,
                          
                          totalJobPostingsManAs = totalJobPostingsManAs,
                          
                          manPostingsAsProd = manPostingsAsProd, 
-                         manPostingsAsProg = manPostingsAsProg, 
+                         manPostingsAsProc = manPostingsAsProc, 
                          manPostingsAsQual = manPostingsAsQual, 
                          manPostingsAsMain = manPostingsAsMain, 
                          
                          
                          manWagesAsProdLOW  = manWagesAsProdLOW,
                          manWagesAsProdHIGH = manWagesAsProdHIGH,
-                         manWagesAsProgLOW  = manWagesAsProgLOW, 
-                         manWagesAsProgHIGH = manWagesAsProgHIGH,
+                         manWagesAsProcLOW  = manWagesAsProcLOW, 
+                         manWagesAsProcHIGH = manWagesAsProcHIGH,
                          manWagesAsQualLOW  = manWagesAsQualLOW,
                          manWagesAsQualHIGH = manWagesAsQualHIGH,
                          manWagesAsMainLOW  = manWagesAsMainLOW,
@@ -826,22 +835,22 @@ shinyServer(function(input, output) {
                          
                          # Certificate
                          manCertificateProd = manCertificateProd, 
-                         manCertificateProg = manCertificateProg, 
+                         manCertificateProc = manCertificateProc, 
                          manCertificateQual = manCertificateQual, 
                          manCertificateMain = manCertificateMain,
                          
                          totalJobPostingsManCe = formatCommas(totalJobPostingsManCe),
                          
                          manPostingsCeProd = manPostingsCeProd, 
-                         manPostingsCeProg = formatCommas(manPostingsCeProg), 
+                         manPostingsCeProc = formatCommas(manPostingsCeProc), 
                          manPostingsCeQual = manPostingsCeQual, 
                          manPostingsCeMain = manPostingsCeMain, 
                          
                          
                          manWagesCeProdLOW  = manWagesCeProdLOW,
                          manWagesCeProdHIGH = manWagesCeProdHIGH,
-                         manWagesCeProgLOW  = manWagesCeProgLOW, 
-                         manWagesCeProgHIGH = manWagesCeProgHIGH,
+                         manWagesCeProcLOW  = manWagesCeProcLOW, 
+                         manWagesCeProcHIGH = manWagesCeProcHIGH,
                          manWagesCeQualLOW   = manWagesCeQualLOW,
                          manWagesCeQualHIGH  = manWagesCeQualHIGH,
                          manWagesCeMainLOW   = manWagesCeMainLOW,
@@ -849,21 +858,21 @@ shinyServer(function(input, output) {
  
                          #High School
                          manHighSchoolProd   = manHighSchoolProd, 
-                         manHighSchoolProg   = manHighSchoolProg, 
+                         manHighSchoolProc   = manHighSchoolProc, 
                          manHighSchoolQual   = manHighSchoolQual,
                          manHighSchoolMain   = manHighSchoolMain,
                          
                          totalJobPostingsManHi = totalJobPostingsManHi,
                          
                          manPostingsHiProd  = manPostingsHiProd, 
-                         manPostingsHiProg  = manPostingsHiProg, 
+                         manPostingsHiProc  = manPostingsHiProc, 
                          manPostingsHiQual  = manPostingsHiQual,
                          manPostingsHiMain  = manPostingsHiMain,
                          
                          manWagesHiProdLOW  = manWagesHiProdLOW,
                          manWagesHiProdHIGH = manWagesHiProdHIGH,
-                         manWagesHiProgLOW  = manWagesHiProgLOW, 
-                         manWagesHiProgHIGH = manWagesHiProgHIGH,
+                         manWagesHiProcLOW  = manWagesHiProcLOW, 
+                         manWagesHiProcHIGH = manWagesHiProcHIGH,
                          manWagesHiQualLOW  = manWagesHiQualLOW,
                          manWagesHiQualHIGH = manWagesHiQualHIGH, 
                          manWagesHiMainLOW  = manWagesHiMainLOW,
