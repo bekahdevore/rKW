@@ -511,7 +511,7 @@ techJobs <- mainDataFile %>%
       ## BACHELORS
       manBachelorsProd   <- "Manufacturing Engineers"
       manBachelorsProc   <- "Estimators; Sales Engineers"
-      manBachelorsQual   <- "Quality Engineers; Prodduction Mangers"
+      manBachelorsQual   <- "Quality Engineers; Production Mangers"
       manBachelorsMain   <- "Electrical and Mechanical Engineers" 
       
       ## ASSOCIATES
