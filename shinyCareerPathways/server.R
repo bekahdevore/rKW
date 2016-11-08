@@ -113,6 +113,9 @@ formatCommas <- function(dataEntry) {
                   format(dataEntry, big.mark = ",", trim = TRUE)
 }
 
+categoryFilter <- function(dataNameEd, category){dataNameEd %>%
+                    filter(Category  == category)
+}
 ########################################################################################################################################################################################################################
 ########################################################################################################################################################################################################################
 #####################################       IT          #################################################################################################################################################################
@@ -131,38 +134,21 @@ techJobs <- mainDataFile %>%
                   filter(Typical.Entry.Level.Education == "Associate's degree"  |
                          Typical.Entry.Level.Education == 'Some college no degree')
       ##### INFORMATION SUPPORT COLUMN 
-      infoBa <- techJobs %>%
-                  filter(Category                      == 'informationSupport') %>%
-                  filter(Typical.Entry.Level.Education == "Bachelor's degree")
+      infoBa <- categoryFilter(techJobsBa, 'informationSupport')
+      infoAs <- categoryFilter(techJobsAs, 'informationSupport')
       
-      infoAs <- techJobs %>% 
-                  filter(Category                      == 'informationSupport') %>%
-                  filter(Typical.Entry.Level.Education == "Associate's degree" |
-                         Typical.Entry.Level.Education == 'Some college no degree')             
       ##### PROGRAMMING & SOFTWARE DEV
-      progBa <- techJobs %>%
-                filter(Category                      == 'programmingSoftware') %>%
-                filter(Typical.Entry.Level.Education == "Bachelor's degree")
-      
+      progBa <- categoryFilter(techJobsBa, 'programmingSoftware')
       progAs <- ""             
       ##### NETWORK SYSTEMS 
-      netBa <- techJobs %>%
-                filter(Category                       == 'networkSystems') %>%
-                filter(Typical.Entry.Level.Education  == "Bachelor's degree")
-      
-      netAs <- techJobs %>% 
-                filter(Category == 'networkSystems') %>%
-                filter(Typical.Entry.Level.Education  == "Associate's degree" |
-                       Typical.Entry.Level.Education  == 'Some college no degree')             
+      #netBa <- techJobs %>%
+       #         filter(Category                       == 'networkSystems') %>%
+        #        filter(Typical.Entry.Level.Education  == "Bachelor's degree")
+      netBa <- categoryFilter(techJobsBa, 'networkSystems')
+      netAs <- categoryFilter(techJobsAs, 'networkSystems')
       #### WEB AND DIGITAL COMMUNICATIONS COLUMN
-      webBa <- techJobs %>%
-                filter(Category                      == 'webCommunications') %>%
-                filter(Typical.Entry.Level.Education == "Bachelor's degree")
-                
-      webAs <- techJobs %>% 
-                filter(Category                      == 'webCommunications') %>%
-                filter(Typical.Entry.Level.Education == "Associate's degree" |
-                       Typical.Entry.Level.Education == 'Some college no degree')             
+      webBa <- categoryFilter(techJobsBa, 'webCommunications')
+      webAs <- categoryFilter(techJobsAs, 'webCommunications')
  
 ########################################### COLUMN ENTRY ###########################################       
 ################ JOB NAMES 
@@ -273,50 +259,23 @@ techJobs <- mainDataFile %>%
       
       
       ######################## SECTOR JOBS BY COLUMN ##############################
-      ################# COLUMN ONE
+      ################# COLUMN 
       ####### EDUCATION LEVEL
-        ## BACHELORS
-        proBa <- logJobs %>%
-          filter(Category                      == 'pro') %>%
-          filter(Typical.Entry.Level.Education == "Bachelor's degree")
-        ## ASSOCIATES
+      ## ONE
+        proBa <- categoryFilter(logJobsBa, 'pro')
         proAs <- ""
-        ## CERTIFICATES
-        proCe <- logJobs %>%
-          filter(Category                      == 'pro') %>%
-          filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
-        ## HIGH SCHOOL
-        proHi <- logJobs %>% 
-          filter(Category                      == 'pro') %>%
-          filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
-      ################# COLUMN TWO
-        ## BACHELORS
-        tranBa <- logJobs %>%
-          filter(Category                      == 'tran') %>%
-          filter(Typical.Entry.Level.Education == "Bachelor's degree")
-        ## ASSOCIATES
+        proCe <- categoryFilter(logJobsCe, 'pro')
+        proHi <- categoryFilter(logJobsHi, 'pro')
+      ## TWO
+        tranBa <- categoryFilter(logJobsBa, 'tran')
         tranAs <- ""     
-        ## CERTIFICATE
-        tranCe <- logJobs %>%
-          filter(Category                      == 'tran') %>%
-          filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
-        ## HIGH SCHOOL 
-        tranHi <- logJobs %>% 
-          filter(Category                      == 'tran') %>%
-          filter(Typical.Entry.Level.Education == "High school diploma or equivalent")
-      ################# COLUMN THREE
-        ## BACHELORS
-        wareBa <- logJobs %>%
-          filter(Category                       == 'ware') %>%
-          filter(Typical.Entry.Level.Education  == "Bachelor's degree")
-        ## ASSOCIATES
+        tranCe <- categoryFilter(logJobsCe, 'tran')
+        tranHi <- categoryFilter(logJobsHi, 'tran')
+      ## THREE
+        wareBa <- categoryFilter(logJobsBa, 'ware')
         wareAs <- ""
-        ## CERTIFICATES
         wareCe <- ""
-        ## HIGH SCHOOL 
-        wareHi <- logJobs %>% 
-          filter(Category                      == 'ware') %>%
-          filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
+        wareHi <- categoryFilter(logJobsHi, 'ware')
         
       
       ######################## COLUMN ENTRY #######################################    
@@ -430,80 +389,31 @@ techJobs <- mainDataFile %>%
       ## HIGH SCHOOL
       manJobsHi <- manJobs %>% 
         filter(Typical.Entry.Level.Education == "High school diploma or equivalent")
-      
-      
-      
+
       ######################## SECTOR JOBS BY COLUMN ##############################
-      ################# COLUMN ONE
+      ################# COLUMN 
       ####### EDUCATION LEVEL
-      ## BACHELORS
-      prodBa <- manJobs %>%
-        filter(Category                      == 'prod') %>%
-        filter(Typical.Entry.Level.Education == "Bachelor's degree")
-      ## ASSOCIATES
-      prodAs <- manJobs %>%
-        filter(Category                      == 'prod') %>%
-        filter(Typical.Entry.Level.Education == "Associate's degree")
-      ## CERTIFICATES
-      prodCe <- manJobs %>%
-        filter(Category                      == 'prod') %>%
-        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
-      ## HIGH SCHOOL
-      prodHi <- manJobs %>% 
-        filter(Category                      == 'prod') %>%
-        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
-      ################# COLUMN TWO
-      ## BACHELORS
-      procBa <- manJobs %>%
-        filter(Category                      == 'proc') %>%
-        filter(Typical.Entry.Level.Education == "Bachelor's degree")
-      ## ASSOCIATES
-      procAs <- manJobs %>%
-        filter(Category                      == 'proc') %>%
-        filter(Typical.Entry.Level.Education == "Associate's degree")    
-      ## CERTIFICATE
-      procCe <- manJobs %>%
-        filter(Category                      == 'proc') %>%
-        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
-      ## HIGH SCHOOL 
-      procHi <- manJobs %>% 
-        filter(Category                      == 'proc') %>%
-        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")
-      ################# COLUMN THREE
-      ## BACHELORS
-      qualBa <- manJobs %>%
-        filter(Category                       == 'qual') %>%
-        filter(Typical.Entry.Level.Education  == "Bachelor's degree")
-      ## ASSOCIATES
-      qualAs <- manJobs %>%
-        filter(Category                      == 'qual') %>%
-        filter(Typical.Entry.Level.Education == "Associate's degree")
-      ## CERTIFICATES
-      qualCe <- manJobs %>%
-        filter(Category                      == 'qual') %>%
-        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
-      ## HIGH SCHOOL 
-      qualHi <- manJobs %>% 
-        filter(Category                      == 'qual') %>%
-        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
-      ################# COLUMN FOUR
-      ## BACHELORS
-      mainBa <- manJobs %>%
-        filter(Category                       == 'main') %>%
-        filter(Typical.Entry.Level.Education  == "Bachelor's degree")
-      ## ASSOCIATES
-      mainAs <- manJobs %>%
-        filter(Category                      == 'main') %>%
-        filter(Typical.Entry.Level.Education == "Associate's degree")
-      ## CERTIFICATES
-      mainCe <- manJobs %>%
-        filter(Category                      == 'main') %>%
-        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
-      ## HIGH SCHOOL 
-      mainHi <- manJobs %>% 
-        filter(Category                      == 'main') %>%
-        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
       
+      ## ONE
+      prodBa <- categoryFilter(manJobsBa, 'prod')
+      prodAs <- categoryFilter(manJobsAs, 'prod')
+      prodCe <- categoryFilter(manJobsCe, 'prod')
+      prodHi <- categoryFilter(manJobsHi, 'prod')
+      ## TWO
+      procBa <- categoryFilter(manJobsBa, 'proc')
+      procAs <- categoryFilter(manJobsAs, 'proc')
+      procCe <- categoryFilter(manJobsCe, 'proc')
+      procHi <- categoryFilter(manJobsHi, 'proc')
+      ## THREE
+      qualBa <- categoryFilter(manJobsBa, 'qual')
+      qualAs <- categoryFilter(manJobsAs, 'qual')
+      qualCe <- categoryFilter(manJobsCe, 'qual')
+      qualHi <- categoryFilter(manJobsHi, 'qual')
+      ## FOUR
+      mainBa <- categoryFilter(manJobsBa, 'main')
+      mainAs <- categoryFilter(manJobsAs, 'main')
+      mainCe <- categoryFilter(manJobsCe, 'main')
+      mainHi <- categoryFilter(manJobsHi, 'main')
       
       ######################## COLUMN ENTRY #######################################    
       ################# NAMES 
@@ -606,6 +516,222 @@ techJobs <- mainDataFile %>%
       manWagesHiProcHIGH <- roundMean(tranHi$Pct..75.Hourly.Earnings)
       manWagesHiQualHIGH <- roundMean(wareHi$Pct..75.Hourly.Earnings)
       manWagesHiMainHIGH <- roundMean(mainHi$Pct..75.Hourly.Earnings)
+      
+
+  ########################################################################################################################################################################################################################
+  ########################################################################################################################################################################################################################
+  #####################################       BUSINESS     #################################################################################################################################################################
+  ########################################################################################################################################################################################################################
+  ########################################################################################################################################################################################################################
+  
+      ######################## SECTOR JOBS ########################################
+      busJobs <- mainDataFile %>%
+        filter(Sector == "Business")
+      
+      
+      ######################## SECTOR JOBS BY EDUCATION LEVEL #####################
+      ## MASTERS/DOCTORAL/PROFESSIONAL
+      busJobsMa <- busJobs %>% 
+        filter(Typical.Entry.Level.Education == "Master's degree"                 |
+               Typical.Entry.Level.Education == "Doctoral or professional degree") 
+      ## BACHELORS
+      busJobsBa <- busJobs %>% 
+        filter(Typical.Entry.Level.Education == "Bachelor's degree")
+      
+      ## ASSOCIATES     
+      busJobsAs <- busJobs %>%
+        filter(Typical.Entry.Level.Education == "Associate's degree")
+      
+      ## CERTIFICATES    
+      busJobsCe <- busJobs %>% 
+        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+      
+      ## HIGH SCHOOL
+      busJobsHi <- busJobs %>% 
+        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")
+      
+      
+      
+      ######################## SECTOR JOBS BY COLUMN ##############################
+      ################# COLUMN ONE
+      ####### EDUCATION LEVEL
+      finMa <- busJobs %>%
+        filter(Category                      == 'fin') %>%
+        filter(Typical.Entry.Level.Education == "Master's degree")
+      ## BACHELORS
+      finBa <- busJobs %>%
+        filter(Category                      == 'fin') %>%
+        filter(Typical.Entry.Level.Education == "Bachelor's degree")
+      ## ASSOCIATES
+      finAs <- busJobs %>%
+        filter(Category                      == 'fin') %>%
+        filter(Typical.Entry.Level.Education == "Associate's degree")
+      ## CERTIFICATES
+      finCe <- busJobs %>%
+        filter(Category                      == 'fin') %>%
+        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+      ## HIGH SCHOOL
+      finHi <- busJobs %>% 
+        filter(Category                      == 'fin') %>%
+        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
+      ################# COLUMN TWO
+      ## MASTERS/DOCTORAL/PROFESSIONAL
+      legMa <- busJobsMa %>%
+        filter(Category                      == 'leg')
+      ## BACHELORS
+      legBa <- busJobsBa %>%
+        filter(Category                      == 'leg')
+      ## ASSOCIATES
+      legAs <- busJobsAs %>%
+        filter(Category                      == 'leg')   
+      ## CERTIFICATE
+      legCe <- busJobsCe %>%
+        filter(Category                      == 'leg')
+      ## HIGH SCHOOL 
+      legHi <- busJobs %>% 
+        filter(Category                      == 'leg') %>%
+        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")
+      ################# COLUMN THREE
+      ## MASTERS/DOCTORAL/PROFESSIONAL
+      qualBa <- busJobs %>%
+        filter(Category                       == 'qual') %>%
+        filter(Typical.Entry.Level.Education  == "Master's degree")
+      ## BACHELORS
+      qualBa <- busJobs %>%
+        filter(Category                       == 'qual') %>%
+        filter(Typical.Entry.Level.Education  == "Bachelor's degree")
+      ## ASSOCIATES
+      qualAs <- busJobs %>%
+        filter(Category                      == 'qual') %>%
+        filter(Typical.Entry.Level.Education == "Associate's degree")
+      ## CERTIFICATES
+      qualCe <- busJobs %>%
+        filter(Category                      == 'qual') %>%
+        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+      ## HIGH SCHOOL 
+      qualHi <- busJobs %>% 
+        filter(Category                      == 'qual') %>%
+        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
+      ################# COLUMN FOUR
+      ## BACHELORS
+      mainBa <- busJobs %>%
+        filter(Category                       == 'main') %>%
+        filter(Typical.Entry.Level.Education  == "Bachelor's degree")
+      ## ASSOCIATES
+      mainAs <- busJobs %>%
+        filter(Category                      == 'main') %>%
+        filter(Typical.Entry.Level.Education == "Associate's degree")
+      ## CERTIFICATES
+      mainCe <- busJobs %>%
+        filter(Category                      == 'main') %>%
+        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+      ## HIGH SCHOOL 
+      mainHi <- busJobs %>% 
+        filter(Category                      == 'main') %>%
+        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
+      
+      
+      ######################## COLUMN ENTRY #######################################    
+      ################# NAMES 
+      ####### EDUCATION LEVEL
+      ## BACHELORS
+      busBachelorsFin   <- "Busufacturing Engineers"
+      busBachelorsLeg   <- "Estimators; Sales Engineers"
+      busBachelorsAdv   <- "Advity Engineers; Finuction Busgers"
+      busBachelorsMain   <- "Electrical and Mechanical Engineers" 
+      
+      ## ASSOCIATES
+      busAssociatesFin  <- noJobsMessage
+      busAssociatesLeg  <- "Mechanical Drafters (Computer Aided Designers)"
+      busAssociatesAdv  <- "Engineering and Busufacturing Technicians"
+      busAssociatesMain  <- noJobsMessage
+      
+      ## CERTIFICATE
+      busCertificateFin <- "Finuction Supervisors; CNC Machine Tool Operators"
+      busCertificateLeg <- noJobsMessage
+      busCertificateAdv <- "Advity Coordinators"
+      busCertificateMain <- "Welders; Industrial Machinary Mechanics; Industrial Maintenance Technicians"
+      
+      ## HIGH SCHOOL
+      busHighSchoolFin  <- "Assembly Technicians; Industrial Tool Operators"
+      busHighSchoolLeg  <- noJobsMessage
+      busHighSchoolAdv  <- "Advity Assurance Specialist"
+      busHighSchoolMain  <- "Repair Technician"
+      
+      ## STOPPED HERE
+      ################# JOB POSTINGS
+      ####### TOTALS           
+      totalJobsBus           <-  sum(busJobs$Number.of.Job.Postings)
+      totalJobPostingsBusBa  <-  sum(busJobsBa$Number.of.Job.Postings)
+      totalJobPostingsBusAs  <-  ""
+      totalJobPostingsBusCe  <-  sum(busJobsCe$Number.of.Job.Postings)
+      totalJobPostingsBusHi  <-  sum(busJobsHi$Number.of.Job.Postings)
+      ####### EDUCATION LEVEL
+      ## BACHELORS      
+      busPostingsBaFin     <-  sum(finBa$Number.of.Job.Postings)
+      busPostingsBaLeg     <-  sum(tranBa$Number.of.Job.Postings) 
+      busPostingsBaAdv     <-  sum(wareBa$Number.of.Job.Postings)
+      busPostingsBaMain     <-  sum(mainBa$Number.of.Job.Postings)
+      ## ASSOCIATES  
+      busPostingsAsFin     <-  ""
+      busPostingsAsLeg     <-  "" 
+      busPostingsAsAdv     <-  ""
+      busPostingsAsMain     <-  ""
+      ## CERTIFICATES
+      busPostingsCeFin     <-  ""
+      busPostingsCeLeg     <-  sum(tranCe$Number.of.Job.Postings) 
+      busPostingsCeAdv     <-  ""
+      busPostingsCeMain     <-  ""
+      ## HIGH SCHOOL
+      busPostingsHiFin     <-  sum(finHi$Number.of.Job.Postings)
+      busPostingsHiLeg     <-  sum(tranHi$Number.of.Job.Postings) 
+      busPostingsHiAdv     <-  sum(wareHi$Number.of.Job.Postings)
+      busPostingsHiMain     <-  sum(wareHi$Number.of.Job.Postings)
+      ################# WAGES
+      ####### 25th PERCENTILE 
+      ## EDUCATION LEVEL
+      # BACHELORS
+      busWagesBaFinLOW <- roundMean(proBa$Pct..25.Hourly.Earnings)
+      busWagesBaLegLOW <- roundMean(tranBa$Pct..25.Hourly.Earnings)
+      busWagesBaAdvLOW <- roundMean(wareBa$Pct..25.Hourly.Earnings)
+      busWagesBaMainLOW <- roundMean(mainBa$Pct..25.Hourly.Earnings)
+      # ASSOCIATES
+      busWagesAsFinLOW <- ""
+      busWagesAsLegLOW <- ""
+      busWagesAsAdvLOW <- ""
+      busWagesAsMainLOW <- ""
+      # CERTIFICATES 
+      busWagesCeFinLOW <- ""
+      busWagesCeLegLOW <- roundMean(tranCe$Pct..25.Hourly.Earnings)
+      busWagesCeAdvLOW <- ""
+      busWagesCeMainLOW <- ""
+      # HIGH SCHOOL 
+      busWagesHiFinLOW <- roundMean(proHi$Pct..25.Hourly.Earnings)
+      busWagesHiLegLOW <- roundMean(tranHi$Pct..25.Hourly.Earnings)
+      busWagesHiAdvLOW <- roundMean(wareHi$Pct..25.Hourly.Earnings)
+      busWagesHiMainLOW <- roundMean(mainHi$Pct..25.Hourly.Earnings)
+      ####### 75th PERCENTILE 
+      ## EDUCATION LEVEL
+      # BACHELORS
+      busWagesBaFinHIGH <- roundMean(proBa$Pct..75.Hourly.Earnings)
+      busWagesBaLegHIGH <- roundMean(tranBa$Pct..75.Hourly.Earnings)
+      busWagesBaAdvHIGH <- roundMean(wareBa$Pct..75.Hourly.Earnings)
+      busWagesBaMainHIGH <- roundMean(mainBa$Pct..75.Hourly.Earnings)
+      ## ASSOCIATES
+      busWagesAsFinHIGH <- ""
+      busWagesAsLegHIGH <- ""
+      busWagesAsAdvHIGH <- ""
+      busWagesAsMainHIGH <- ""
+      ## CERTIFICATES
+      busWagesCeFinHIGH  <- ""
+      busWagesCeLegHIGH <- roundMean(tranCe$Pct..75.Hourly.Earnings)
+      busWagesCeAdvHIGH <- ""
+      busWagesCeMainHIGH <- ""
+      ## HIGH SCHOOL 
+      busWagesHiFinHIGH  <- roundMean(proHi$Pct..75.Hourly.Earnings)
+      busWagesHiLegHIGH <- roundMean(tranHi$Pct..75.Hourly.Earnings)
+      busWagesHiAdvHIGH <- roundMean(wareHi$Pct..75.Hourly.Earnings)
+      busWagesHiMainHIGH <- roundMean(mainHi$Pct..75.Hourly.Earnings)      
             
 
 shinyServer(function(input, output) {
@@ -887,6 +1013,25 @@ shinyServer(function(input, output) {
                          degreeName2        = degreeName2, 
                          degreeName1        = degreeName1,
                          
+                         # MASTERS
+                         busMastersFin  = busMastersFin,
+                         busMastersLeg  = busMastersLeg,
+                         busMastersAdv  = busMastersAdv, 
+                         
+                         totalJobPostingsBusMa = totalJobPostingsBusMa,
+                         
+                         busPostingsMaFin = busPostingsMaFin, 
+                         busPostingsMaLeg = busPostingsMaLeg, 
+                         busPostingsMaAdv = busPostingsMaAdv, 
+                         
+                         
+                         busWagesMaFinLOW  = busWagesMaFinLOW,
+                         busWagesMaFinHIGH = busWagesMaFinHIGH,
+                         busWagesMaLegLOW  = busWagesMaLegLOW, 
+                         busWagesMaLegHIGH = busWagesMaLegHIGH,
+                         busWagesMaAdvLOW  = busWagesMaAdvLOW,
+                         busWagesMaAdvHIGH = busWagesMaAdvHIGH,
+                         
                          # Bachelors
                          busBachelorsFin  = busBachelorsFin,
                          busBachelorsLeg  = busBachelorsLeg,
@@ -945,9 +1090,9 @@ shinyServer(function(input, output) {
 
                          
                          #High School
-                         busHighSchoolFin   = busHighSchoolFin, 
-                         busHighSchoolLeg   = busHighSchoolLeg, 
-                         busHighSchoolAdv   = busHighSchoolAdv,
+                         busHighSchoolFin  = busHighSchoolFin, 
+                         busHighSchoolLeg  = busHighSchoolLeg, 
+                         busHighSchoolAdv  = busHighSchoolAdv,
                          
                          totalJobPostingsBusHi = totalJobPostingsBusHi,
                          
