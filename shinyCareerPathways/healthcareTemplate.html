@@ -1,42 +1,143 @@
 <!DOCTYPE html>
-<!-- template.html -->
+<!-- healthcareTemplate.html -->
 <html>
   <head>
     {{ headContent() }}
   </head>
   <body>
     <div>
-	<TABLE>
-	   <TR>
-	      <TD>
-	      	{{ totalJobs }}
-	      </TD>
-	      <TD>
-	       {{ column1Name }}
-	      </TD>
-	      <TD>
-               {{ column2Name }}
-              </TD>
-	      <TD>
-               {{ column3Name }}
-              </TD>
-              <TD>
-               {{ column4Name }}
-              </TD>
-              <TD>
-               {{ column5Name }}
-              </TD>
-	   </TR>
-	   <TR>
-	      <TD> {{ degreeName1 }} </TD>
-	      <TD> {{ occupationsDegreeName1column1 }} </TD>
-	   </TR>
-	   <TR>
-	      <TD>Data 5</TD>
-	      <TD>Data 6</TD>
-	   </TR>
-	</TABLE>
-	    </div>
+    	<TABLE>
+         <col class = 'column1'>
+         <col class = 'column2'>
+         <col class = 'column3'>
+         <col class = 'column4'>
+         <col class = 'column5'>
+    	   <TR>
+                <TH class = 'allSectorJobPostings'> {{ totalJobs }} <br> <h5> TOTAL JOB POSTINGS </h5> </TD>
+                <TH class = 'mainTitle'> <h3> Direct Patient Care                                </h3> </TH>
+                <TH class = 'mainTitle'> <h3> Diagnotstic Therapeautic                           </h3> </TH>
+                <TH class = 'mainTitle'> <h3> Administrative/Corporate     						 </h3> </TH>
+    	   </TR>
+           <TR>
+                <TD class = "edTitle"> {{ degreeName6 }} </TD>
+                <TD> {{ healthDoctoralDire     }} </TD>
+                <TD> {{ healthDoctoralDiag     }} </TD>
+                <TD> {{ healthDoctoralAdmi     }} </TD>
+                
+            </TR>
+            <TR>
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsHealthDo  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+
+                <TD> {{ healthPostingsDoDire      }} <br> JOB POSTINGS <br> in the last 3 months </TD>
+                <TD> {{ healthPostingsDoDiag      }} <br> JOB POSTINGS <br> in the last 3 months </TD>
+                <TD> {{ healthPostingsDoAdmi      }} <br> JOB POSTINGS <br> in the last 3 months </TD>    
+            </TR>
+            <TR class = " specialBorder wages">
+                <TD> </TD>
+                <TD> ${{ healthWagesDoDireLOW  }} to ${{ healthWagesDoDireHIGH    }} <br> HOURLY RATE </TD>
+                <TD> ${{ healthWagesDoDiagLOW  }} to ${{ healthWagesDoDiagHIGH    }} <br> HOURLY RATE </TD>
+                <TD> ${{ healthWagesDoAdmiLOW  }} to ${{ healthWagesDoAdmiHIGH    }} <br> HOURLY RATE </TD>
+            </TR>  
+            <TR>
+                <TD class = "edTitle"> {{ degreeName5 }} </TD>
+                <TD> {{ healthMastersDire     }} </TD>
+                <TD> {{ healthMastersDiag     }} </TD>
+                <TD> {{ healthMastersAdmi     }} </TD>
+                
+            </TR>
+            <TR>
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsHealthMa  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+
+                <TD> {{ healthPostingsMaDire      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ healthPostingsMaDiag      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ healthPostingsMaAdmi      }} <br> JOB POSTINGS <br> in the last 3 months</TD>    
+            </TR>
+            <TR class = " specialBorder wages">
+                <TD> </TD>
+                <TD> ${{ healthWagesMaDireLOW  }} to ${{ healthWagesMaDireHIGH    }} <br> HOURLY RATE </TD>
+                <TD> ${{ healthWagesMaDiagLOW  }} to ${{ healthWagesMaDiagHIGH    }} <br> HOURLY RATE </TD>
+                <TD> ${{ healthWagesMaAdmiLOW  }} to ${{ healthWagesMaAdmiHIGH    }} <br> HOURLY RATE </TD>
+            </TR>       
+            <TR>
+                <TD class = "edTitle"> {{ degreeName4   }}      </TD>
+                <TD> {{ healthBachelorsDire     }} </TD>
+                <TD> {{ healthBachelorsDiag     }} </TD>
+                <TD> {{ healthBachelorsAdmi     }} </TD>
+                
+            </TR>
+            <TR>
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsHealthBa  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+
+                <TD> {{ healthPostingsBaDire      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ healthPostingsBaDiag      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ healthPostingsBaAdmi      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+               
+            </TR>
+            <TR class = " specialBorder wages">
+                <TD>  </TD>
+                <TD> ${{ healthWagesBaDireLOW  }} to ${{ healthWagesBaDireHIGH    }} <br> HOURLY RATE </TD>
+                <TD> ${{ healthWagesBaDiagLOW  }} to ${{ healthWagesBaDiagHIGH    }} <br> HOURLY RATE </TD>
+                <TD> ${{ healthWagesBaAdmiLOW  }} to ${{ healthWagesBaAdmiHIGH    }} <br> HOURLY RATE </TD>
+            </TR>       
+            <TR>
+                <TD class = "edTitle"> {{ degreeName3}}  </TD>
+                <TD> {{ healthAssociatesDire  }} </TD>
+                <TD> {{ healthAssociatesDiag  }} </TD>
+                <TD> {{ healthAssociatesAdmi  }} </TD>
+            </TR>
+            <TR>
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsHealthCe }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ healthPostingsAsDire      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ healthPostingsAsDiag      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ healthPostingsAsAdmi      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+            </TR>
+            <TR class = "specialBorder wages">
+                <TD> </TD>
+                <TD> ${{ healthWagesAsDireLOW  }} to ${{ healthWagesBaDireHIGH    }} <br> HOURLY RATE </TD>
+                <TD> ${{ healthWagesAsDiagLOW  }} to ${{ healthWagesBaDiagHIGH    }} <br> HOURLY RATE </TD>
+                <TD> ${{ healthWagesAsAdmiLOW  }} to ${{ healthWagesBaAdmiHIGH    }} <br> HOURLY RATE </TD>
+            </TR>    
+            <TR > 
+                <TD class = "edTitle"> {{ degreeName2 }}          </TD>
+                <TD> {{ healthCertificateDire  }} </TD>
+                <TD> {{ healthCertificateDiag  }} </TD>
+                <TD> {{ healthCertificateAdmi  }} </TD>
+            </TR>
+            <TR class = "jobPostingsRow">
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsHealthCe }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ healthPostingsCeDire      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ healthPostingsCeDiag      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> </TD>
+            </TR>
+            <TR class = "specialBorder wages">
+                <TD> </TD>
+                <TD> ${{ healthWagesCeDireLOW  }} to ${{ healthWagesCeDireHIGH  }} <br> HOURLY RATE </TD>
+                <TD> ${{ healthWagesCeDiagLOW  }} to ${{ healthWagesCeDiagHIGH  }} <br> HOURLY RATE </TD>
+                <TD> </TD>
+            </TR>    
+            <TR >
+                <TD class = "edTitle"> {{ degreeName1 }}         </TD>
+                <TD> {{ healthHighSchoolDire }} </TD>
+                <TD> {{ healthHighSchoolDiag }} </TD>
+                <TD> {{ healthHighSchoolAdmi }} </TD>
+            </TR>
+            <TR class = "jobPostingsRow">
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsHealthHi  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+
+                <TD> {{ healthPostingsHiDire      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ healthPostingsHiDiag      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ healthPostingsHiAdmi      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+            </TR>
+            <TR class = "specialBorder wages">
+                <TD>  </TD>
+                <TD> ${{ healthWagesHiDireLOW  }} to ${{ healthWagesHiDireHIGH  }} <br> HOURLY RATE </TD>
+                <TD> ${{ healthWagesHiDiagLOW  }} to ${{ healthWagesHiDiagHIGH  }} <br> HOURLY RATE </TD>
+                <TD> ${{ healthWagesHiAdmiLOW  }} to ${{ healthWagesHiAdmiHIGH  }} <br> HOURLY RATE </TD>
+            </TR>    
+    	</TABLE>
+	</div>
   </body>
 </html>
+
+
 

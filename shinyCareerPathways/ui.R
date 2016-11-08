@@ -16,14 +16,24 @@ shinyUI(fluidPage(
   titlePanel("Career Pathways Louisville MSA"),
   mainPanel(
     tabsetPanel(
+      
+      tabPanel(
+        'IT',
+        htmlOutput('it')),
+      
+      tabPanel(
+        'Business',
+        htmlOutput('business')
+      ),
+      
+      tabPanel(
+        'Healthcare',
+        htmlOutput('healthcare')
+      ),
+      
       tabPanel(
           'Manufacturing',
           htmlOutput('manufacturing')
-          ),
-      
-      tabPanel(
-          'Healthcare'#,
-          # htmlOutput('healthcare')
           ),
       
       tabPanel(
@@ -32,17 +42,8 @@ shinyUI(fluidPage(
         ),
       
       tabPanel(
-        'IT',
-        htmlOutput('it')),
-      
-      tabPanel(
         'Food & Beverage',
         htmlOutput('food')
-        ),
-      
-      tabPanel(
-        'Business',
-        htmlOutput('business')
         )
   ))
   # Sidebar with a slider input for number of bins

@@ -581,7 +581,7 @@ techJobs <- mainDataFile %>%
       ####### EDUCATION LEVEL
       ## MASTERS
       busMastersFin    <- noJobsMessage
-      busMastersLeg    <- ""
+      busMastersLeg    <- "Judges; Lawyers"
       busMastersAdv    <- noJobsMessage
 
       ## BACHELORS
@@ -863,7 +863,181 @@ techJobs <- mainDataFile %>%
       foodWagesNoRestHIGH <- roundMean(restNo$Pct..75.Hourly.Earnings)
       foodWagesNoHospHIGH <- roundMean(hospNo$Pct..75.Hourly.Earnings)
       foodWagesNoCorpHIGH <- ""
-            
+
+
+      ########################################################################################################################################################################################################################
+      ########################################################################################################################################################################################################################
+      #####################################       Healthcare    #################################################################################################################################################################
+      ########################################################################################################################################################################################################################
+      ########################################################################################################################################################################################################################
+      
+      ######################## SECTOR JOBS ########################################
+      healthJobs <- mainDataFile %>%
+        filter(Sector == "Healthcare")
+      
+      
+      ######################## SECTOR JOBS BY EDUCATION LEVEL #####################
+      ## DOCTORAL/PROFESSIONAL
+      healthJobsDo <- healthJobs %>% filter(Typical.Entry.Level.Education == "Doctoral or professional degree") 
+      ## MASTERS
+      healthJobsMa <- healthJobs %>% filter(Typical.Entry.Level.Education == "Master's degree") 
+      ## BACHELORS
+      healthJobsBa <- healthJobs %>% filter(Typical.Entry.Level.Education == "Bachelor's degree")
+      ## ASSOCIATES     
+      healthJobsAs <- healthJobs %>% filter(Typical.Entry.Level.Education == "Associate's degree")
+      ## CERTIFICATES    
+      healthJobsCe <- healthJobs %>% filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+      ## HIGH SCHOOL
+      healthJobsHi <- healthJobs %>% filter(Typical.Entry.Level.Education == "High school diploma or equivalent")
+
+      
+      ######################## SECTOR JOBS BY COLUMN ##############################
+      ################# COLUMN
+      ####### EDUCATION LEVEL
+      ## ONE
+      direDo <- categoryFilter(healthJobsDo, 'dire')
+      direMa <- categoryFilter(healthJobsMa, 'dire')
+      direBa <- categoryFilter(healthJobsBa, 'dire')
+      direAs <- categoryFilter(healthJobsAs, 'dire')
+      direCe <- categoryFilter(healthJobsCe, 'dire')
+      direHi <- categoryFilter(healthJobsHi, 'dire')
+      ## TWO
+      diagDo <- categoryFilter(healthJobsDo, 'diag')
+      diagMa <- categoryFilter(healthJobsMa, 'diag')
+      diagBa <- categoryFilter(healthJobsBa, 'diag')
+      diagAs <- categoryFilter(healthJobsAs, 'diag')   
+      diagCe <- categoryFilter(healthJobsCe, 'diag')
+      diagHi <- categoryFilter(healthJobsHi, 'diag')
+      ## THREE
+      admiDo <- categoryFilter(healthJobsDo, 'admi')
+      admiMa <- categoryFilter(healthJobsMa, 'admi')
+      admiBa <- categoryFilter(healthJobsBa, 'admi')
+      admiAs <- categoryFilter(healthJobsAs, 'admi')
+      admiCe <- categoryFilter(healthJobsCe, 'admi')
+      admiHi <- categoryFilter(healthJobsHi, 'admi')
+      
+      
+      ######################## COLUMN ENTRY #######################################    
+      ################# NAMES 
+      ####### EDUCATION LEVEL
+      ## DOCTORAL 
+      healthDoctoralDire    <- "Physicians and Surgeons; Physical Therapists; Audiologists; Family and General Practitioners"
+      healthDoctoralDiag    <- "Dentists; Orthodontists; Pharmacists; Optometrists"
+      healthDoctoralAdmi    <- "Healthcare Lawyers"
+      
+      ## MASTERS
+      healthMastersDire    <- "Nurse Practitioners; Occupational Therapists; Physicians Assistants; Nurse Anesthetists; Speech-Language Pathologists"
+      healthMastersDiag    <- "Mental Health Counselors"
+      healthMastersAdmi    <- "Healthcare Social Workers; Statisticians"
+      
+      ## BACHELORS
+      healthBachelorsDire   <- "Directors of Nursing"
+      healthBachelorsDiag   <- "Medical and Clinical Laboratory Technicians; Dieticians and Nutritionists"
+      healthBachelorsAdmi   <- "Systems and Accounting Analysts; Business Office Managers; Human Resources Specialists; Human Resources and Marketing Managers; Marketing Coordinators; Information Technology Managers; Network Engineer; Risk and Financial Analysts"
+      ## ASSOCIATES
+      healthAssociatesDire  <- "Registered Nurses; Physical and Occupational Therapist Assistants; Respiratory Therapists; Sonographers; Cardiovascular Technicians"
+      healthAssociatesDiag  <- "Medical and Clinical Laboratory Technicians; Dental Hygientists; Radiologic Technologists"
+      healthAssociatesAdmi  <- noJobsMessage
+      
+      ## CERTIFICATE
+      healthCertificateDire <- "Nursing Assistants; Emergency Technicians and Paramedics; Medical Assistants; Licensed Nurses"
+      healthCertificateDiag <- "Dental Assistants; Surgical Technologists; Phlebotomists; Ophthamlmic Medical Technicians"
+      healthCertificateAdmi <- "Medical Transcriptionists; Medical Records Clerks"
+      
+      ## HIGH SCHOOL
+      healthHighSchoolDire  <- "Physical Therapists Aides; Patient Transporters; Sterile Processing Technicians; Endoscopy Technicians; Emergency Room Technicians"
+      healthHighSchoolDiag  <- "Pharmacy Clerks; Pharmacy Technicians; Opticians; Social Workers; Home Health Aides; Dietary Cooks; Caregivers"
+      healthHighSchoolAdmi  <- "Medical Receptionists; Executive Assistants; Bookkeepers; Telephone Operators; Office Managers; Customer Service Reps"
+      
+      ################# JOB POSTINGS
+      ####### TOTALS           
+      totalJobsHealth           <-  sum(healthJobs$Number.of.Job.Postings)
+      totalJobPostingsHealthDo  <-  sum(healthJobsDo$Number.of.Job.Postings)
+      totalJobPostingsHealthMa  <-  sum(healthJobsMa$Number.of.Job.Postings)
+      totalJobPostingsHealthBa  <-  sum(healthJobsBa$Number.of.Job.Postings)
+      totalJobPostingsHealthAs  <-  sum(healthJobsAs$Number.of.Job.Postings)
+      totalJobPostingsHealthCe  <-  sum(healthJobsCe$Number.of.Job.Postings)
+      totalJobPostingsHealthHi  <-  sum(healthJobsHi$Number.of.Job.Postings)
+      ####### EDUCATION LEVEL
+      ## DOCTORAL 
+      healthPostingsDoDire     <-  sum(direDo$Number.of.Job.Postings)
+      healthPostingsDoDiag     <-  sum(diagDo$Number.of.Job.Postings)
+      healthPostingsDoAdmi     <-  sum(admiDo$Number.of.Job.Postings)
+      ## MASTERS
+      healthPostingsMaDire     <-  sum(direMa$Number.of.Job.Postings)
+      healthPostingsMaDiag     <-  sum(diagMa$Number.of.Job.Postings)
+      healthPostingsMaAdmi     <-  sum(admiMa$Number.of.Job.Postings)
+      ## BACHELORS      
+      healthPostingsBaDire     <-  sum(direBa$Number.of.Job.Postings)
+      healthPostingsBaDiag     <-  sum(diagBa$Number.of.Job.Postings) 
+      healthPostingsBaAdmi     <-  sum(admiBa$Number.of.Job.Postings)
+      ## ASSOCIATES  
+      healthPostingsAsDire     <-  sum(direAs$Number.of.Job.Postings)
+      healthPostingsAsDiag     <-  sum(diagAs$Number.of.Job.Postings) 
+      healthPostingsAsAdmi     <-  ""
+      ## CERTIFICATES
+      healthPostingsCeDire     <-  sum(direCe$Number.of.Job.Postings)
+      healthPostingsCeDiag     <-  sum(diagCe$Number.of.Job.Postings) 
+      healthPostingsCeAdmi     <-  sum(admiCe$Number.of.Job.Postings)
+      ## HIGH SCHOOL
+      healthPostingsHiDire     <-  sum(direHi$Number.of.Job.Postings)
+      healthPostingsHiDiag     <-  sum(diagHi$Number.of.Job.Postings) 
+      healthPostingsHiAdmi     <-  sum(admiHi$Number.of.Job.Postings)
+      ################# WAGES
+      ####### 25th PERCENTILE 
+      ## EDUCATION LEVEL
+      # MASTERS
+      healthWagesDoDireLOW <- roundMean(direDo$Pct..25.Hourly.Earnings)
+      healthWagesDoDiagLOW <- roundMean(diagDo$Pct..25.Hourly.Earnings)
+      healthWagesDoAdmiLOW <- roundMean(admiDo$Pct..25.Hourly.Earnings)
+      # MASTERS
+      healthWagesMaDireLOW <- roundMean(direMa$Pct..25.Hourly.Earnings)
+      healthWagesMaDiagLOW <- roundMean(diagMa$Pct..25.Hourly.Earnings)
+      healthWagesMaAdmiLOW <- roundMean(admiMa$Pct..25.Hourly.Earnings)
+      # BACHELORS
+      healthWagesBaDireLOW <- roundMean(direBa$Pct..25.Hourly.Earnings)
+      healthWagesBaDiagLOW <- roundMean(diagBa$Pct..25.Hourly.Earnings)
+      healthWagesBaAdmiLOW <- roundMean(admiBa$Pct..25.Hourly.Earnings)
+      # ASSOCIATES
+      healthWagesAsDireLOW <- roundMean(direAs$Pct..25.Hourly.Earnings)
+      healthWagesAsDiagLOW <- roundMean(diagAs$Pct..25.Hourly.Earnings)
+      healthWagesAsAdmiLOW <- ""
+      # CERTIFICATES 
+      healthWagesCeDireLOW <- roundMean(direCe$Pct..25.Hourly.Earnings)
+      healthWagesCeDiagLOW <- roundMean(diagCe$Pct..25.Hourly.Earnings)
+      healthWagesCeAdmiLOW <- roundMean(admiCe$Pct..25.Hourly.Earnings)
+      # HIGH SCHOOL 
+      healthWagesHiDireLOW <- roundMean(direHi$Pct..25.Hourly.Earnings)
+      healthWagesHiDiagLOW <- roundMean(diagHi$Pct..25.Hourly.Earnings)
+      healthWagesHiAdmiLOW <- roundMean(admiHi$Pct..25.Hourly.Earnings)
+      ####### 75th PERCENTILE 
+      ## EDUCATION LEVEL
+      # MASTERS
+      healthWagesDoDireHIGH <- roundMean(direDo$Pct..75.Hourly.Earnings)
+      healthWagesDoDiagHIGH <- roundMean(diagDo$Pct..75.Hourly.Earnings)
+      healthWagesDoAdmiHIGH <- roundMean(admiDo$Pct..75.Hourly.Earnings)
+      # MASTERS
+      healthWagesMaDireHIGH <- roundMean(direMa$Pct..75.Hourly.Earnings)
+      healthWagesMaDiagHIGH <- roundMean(diagMa$Pct..75.Hourly.Earnings)
+      healthWagesMaAdmiHIGH <- roundMean(admiMa$Pct..75.Hourly.Earnings)
+      # BACHELORS
+      healthWagesBaDireHIGH <- roundMean(direBa$Pct..75.Hourly.Earnings)
+      healthWagesBaDiagHIGH <- roundMean(diagBa$Pct..75.Hourly.Earnings)
+      healthWagesBaAdmiHIGH <- roundMean(admiBa$Pct..75.Hourly.Earnings)
+      ## ASSOCIATES
+      healthWagesAsDireHIGH <- roundMean(direAs$Pct..75.Hourly.Earnings)
+      healthWagesAsDiagHIGH <- roundMean(diagAs$Pct..75.Hourly.Earnings)
+      healthWagesAsAdmiHIGH <- ""
+      ## CERTIFICATES
+      healthWagesCeDireHIGH <- roundMean(direCe$Pct..75.Hourly.Earnings)
+      healthWagesCeDiagHIGH <- roundMean(diagCe$Pct..75.Hourly.Earnings)
+      healthWagesCeAdmiHIGH <- roundMean(admiCe$Pct..75.Hourly.Earnings)
+      ## HIGH SCHOOL 
+      healthWagesHiDireHIGH <- roundMean(direHi$Pct..75.Hourly.Earnings)
+      healthWagesHiDiagHIGH <- roundMean(diagHi$Pct..75.Hourly.Earnings)
+      healthWagesHiAdmiHIGH <- roundMean(admiHi$Pct..75.Hourly.Earnings)
+      
+
 
 shinyServer(function(input, output) {
   #     output$healthcare <- renderUI(
@@ -1361,6 +1535,129 @@ shinyServer(function(input, output) {
                          foodWagesNoHospHIGH = foodWagesNoHospHIGH, 
                          foodWagesNoCorpLOW  = foodWagesNoCorpLOW,
                          foodWagesNoCorpHIGH = foodWagesNoCorpHIGH
+            ))
+          
+          output$healthcare <- renderUI(
+            htmlTemplate('healthcareTemplate.html', 
+                         totalJobs = formatCommas(totalJobsHealth),
+                         degreeName6        = degreeName6,
+                         degreeName5        = degreeName5,
+                         degreeName4        = degreeName4, 
+                         degreeName3        = degreeName3, 
+                         degreeName2        = degreeName2, 
+                         degreeName1        = degreeName1,
+                         
+                         # DOCTORAL 
+                         healthDoctoralDire  = healthDoctoralDire,
+                         healthDoctoralDiag  = healthDoctoralDiag,
+                         healthDoctoralAdmi  = healthDoctoralAdmi, 
+                         
+                         totalJobPostingsHealthDo = totalJobPostingsHealthDo,
+                         
+                         healthPostingsDoDire = healthPostingsDoDire, 
+                         healthPostingsDoDiag = healthPostingsDoDiag, 
+                         healthPostingsDoAdmi = healthPostingsDoAdmi, 
+                         
+                         
+                         healthWagesDoDireLOW  = healthWagesDoDireLOW,
+                         healthWagesDoDireHIGH = healthWagesDoDireHIGH,
+                         healthWagesDoDiagLOW  = healthWagesDoDiagLOW, 
+                         healthWagesDoDiagHIGH = healthWagesDoDiagHIGH,
+                         healthWagesDoAdmiLOW  = healthWagesDoAdmiLOW,
+                         healthWagesDoAdmiHIGH = healthWagesDoAdmiHIGH,
+                         
+                         # MASTERS
+                         healthMastersDire  = healthMastersDire,
+                         healthMastersDiag  = healthMastersDiag,
+                         healthMastersAdmi  = healthMastersAdmi, 
+                         
+                         totalJobPostingsHealthMa = totalJobPostingsHealthMa,
+                         
+                         healthPostingsMaDire = healthPostingsMaDire, 
+                         healthPostingsMaDiag = healthPostingsMaDiag, 
+                         healthPostingsMaAdmi = healthPostingsMaAdmi, 
+                         
+                         
+                         healthWagesMaDireLOW  = healthWagesMaDireLOW,
+                         healthWagesMaDireHIGH = healthWagesMaDireHIGH,
+                         healthWagesMaDiagLOW  = healthWagesMaDiagLOW, 
+                         healthWagesMaDiagHIGH = healthWagesMaDiagHIGH,
+                         healthWagesMaAdmiLOW  = healthWagesMaAdmiLOW,
+                         healthWagesMaAdmiHIGH = healthWagesMaAdmiHIGH,
+                         
+                         # Bachelors
+                         healthBachelorsDire  = healthBachelorsDire,
+                         healthBachelorsDiag  = healthBachelorsDiag,
+                         healthBachelorsAdmi  = healthBachelorsAdmi, 
+                         
+                         totalJobPostingsHealthBa = totalJobPostingsHealthBa,
+                         
+                         healthPostingsBaDire = healthPostingsBaDire, 
+                         healthPostingsBaDiag = healthPostingsBaDiag, 
+                         healthPostingsBaAdmi = healthPostingsBaAdmi, 
+                         
+                         
+                         healthWagesBaDireLOW  = healthWagesBaDireLOW,
+                         healthWagesBaDireHIGH = healthWagesBaDireHIGH,
+                         healthWagesBaDiagLOW  = healthWagesBaDiagLOW, 
+                         healthWagesBaDiagHIGH = healthWagesBaDiagHIGH,
+                         healthWagesBaAdmiLOW   = healthWagesBaAdmiLOW,
+                         healthWagesBaAdmiHIGH  = healthWagesBaAdmiHIGH,
+                         # ASSOCIATES
+                         healthAssociatesDire = healthAssociatesDire, 
+                         healthAssociatesDiag = healthAssociatesDiag, 
+                         healthAssociatesAdmi  = healthAssociatesAdmi,
+                         
+                         totalJobPostingsHealthAs = totalJobPostingsHealthAs,
+                         
+                         healthPostingsAsDire = healthPostingsAsDire, 
+                         healthPostingsAsDiag = healthPostingsAsDiag, 
+                         healthPostingsAsAdmi = healthPostingsAsAdmi, 
+                         
+                         
+                         healthWagesAsDireLOW  = healthWagesAsDireLOW,
+                         healthWagesAsDireHIGH = healthWagesAsDireHIGH,
+                         healthWagesAsDiagLOW  = healthWagesAsDiagLOW, 
+                         healthWagesAsDiagHIGH = healthWagesAsDiagHIGH,
+                         healthWagesAsAdmiLOW  = healthWagesAsAdmiLOW,
+                         healthWagesAsAdmiHIGH = healthWagesAsAdmiHIGH,
+                         
+                         
+                         # Certificate
+                         healthCertificateDire = healthCertificateDire, 
+                         healthCertificateDiag = healthCertificateDiag, 
+                         healthCertificateAdmi = healthCertificateAdmi, 
+                         
+                         totalJobPostingsHealthCe = formatCommas(totalJobPostingsHealthCe),
+                         
+                         healthPostingsCeDire = healthPostingsCeDire, 
+                         healthPostingsCeDiag = formatCommas(healthPostingsCeDiag), 
+                         healthPostingsCeAdmi = healthPostingsCeAdmi,
+                         
+                         healthWagesCeDireLOW  = healthWagesCeDireLOW,
+                         healthWagesCeDireHIGH = healthWagesCeDireHIGH,
+                         healthWagesCeDiagLOW  = healthWagesCeDiagLOW, 
+                         healthWagesCeDiagHIGH = healthWagesCeDiagHIGH,
+                         healthWagesCeAdmiLOW  = healthWagesCeAdmiLOW,
+                         healthWagesCeAdmiHIGH = healthWagesCeAdmiHIGH,
+                         
+                         #High School
+                         healthHighSchoolDire  = healthHighSchoolDire, 
+                         healthHighSchoolDiag  = healthHighSchoolDiag, 
+                         healthHighSchoolAdmi  = healthHighSchoolAdmi,
+                         
+                         totalJobPostingsHealthHi = totalJobPostingsHealthHi,
+                         
+                         healthPostingsHiDire  = healthPostingsHiDire, 
+                         healthPostingsHiDiag  = healthPostingsHiDiag, 
+                         healthPostingsHiAdmi  = healthPostingsHiAdmi,
+                         
+                         healthWagesHiDireLOW  = healthWagesHiDireLOW,
+                         healthWagesHiDireHIGH = healthWagesHiDireHIGH,
+                         healthWagesHiDiagLOW  = healthWagesHiDiagLOW, 
+                         healthWagesHiDiagHIGH = healthWagesHiDiagHIGH,
+                         healthWagesHiAdmiLOW  = healthWagesHiAdmiLOW,
+                         healthWagesHiAdmiHIGH = healthWagesHiAdmiHIGH
             ))
   })
 
