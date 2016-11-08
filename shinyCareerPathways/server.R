@@ -878,5 +878,89 @@ shinyServer(function(input, output) {
                          manWagesHiMainLOW  = manWagesHiMainLOW,
                          manWagesHiMainHIGH = manWagesHiMainHIGH
             ))
+          
+          output$business <- renderUI(
+            htmlTemplate('businessTemplate.html', 
+                         totalJobs = formatCommas(totalJobsBus), 
+                         degreeName4        = degreeName4, 
+                         degreeName3        = degreeName3, 
+                         degreeName2        = degreeName2, 
+                         degreeName1        = degreeName1,
+                         
+                         # Bachelors
+                         busBachelorsFin  = busBachelorsFin,
+                         busBachelorsLeg  = busBachelorsLeg,
+                         busBachelorsAdv  = busBachelorsAdv, 
+                         
+                         totalJobPostingsBusBa = totalJobPostingsBusBa,
+                         
+                         busPostingsBaFin = busPostingsBaFin, 
+                         busPostingsBaLeg = busPostingsBaLeg, 
+                         busPostingsBaAdv = busPostingsBaAdv, 
+                         
+                         
+                         busWagesBaFinLOW  = busWagesBaFinLOW,
+                         busWagesBaFinHIGH = busWagesBaFinHIGH,
+                         busWagesBaLegLOW  = busWagesBaLegLOW, 
+                         busWagesBaLegHIGH = busWagesBaLegHIGH,
+                         busWagesBaAdvLOW   = busWagesBaAdvLOW,
+                         busWagesBaAdvHIGH  = busWagesBaAdvHIGH,
+                         # ASSOCIATES
+                         busAssociatesFin = busAssociatesFin, 
+                         busAssociatesLeg = busAssociatesLeg, 
+                         busAssociatesAdv  = busAssociatesAdv,
+                         
+                         totalJobPostingsBusAs = totalJobPostingsBusAs,
+                         
+                         busPostingsAsFin = busPostingsAsFin, 
+                         busPostingsAsLeg = busPostingsAsLeg, 
+                         busPostingsAsAdv = busPostingsAsAdv, 
+                         
+                         
+                         busWagesAsFinLOW  = busWagesAsFinLOW,
+                         busWagesAsFinHIGH = busWagesAsFinHIGH,
+                         busWagesAsLegLOW  = busWagesAsLegLOW, 
+                         busWagesAsLegHIGH = busWagesAsLegHIGH,
+                         busWagesAsAdvLOW  = busWagesAsAdvLOW,
+                         busWagesAsAdvHIGH = busWagesAsAdvHIGH,
+                         
+                         
+                         # Certificate
+                         busCertificateFin = busCertificateFin, 
+                         busCertificateLeg = busCertificateLeg, 
+                         busCertificateAdv = busCertificateAdv, 
+                         
+                         totalJobPostingsBusCe = formatCommas(totalJobPostingsBusCe),
+                         
+                         busPostingsCeFin = busPostingsCeFin, 
+                         busPostingsCeLeg = formatCommas(busPostingsCeLeg), 
+                         busPostingsCeAdv = busPostingsCeAdv,
+                         
+                         busWagesCeFinLOW  = busWagesCeFinLOW,
+                         busWagesCeFinHIGH = busWagesCeFinHIGH,
+                         busWagesCeLegLOW  = busWagesCeLegLOW, 
+                         busWagesCeLegHIGH = busWagesCeLegHIGH,
+                         busWagesCeAdvLOW  = busWagesCeAdvLOW,
+                         busWagesCeAdvHIGH = busWagesCeAdvHIGH,
+
+                         
+                         #High School
+                         busHighSchoolFin   = busHighSchoolFin, 
+                         busHighSchoolLeg   = busHighSchoolLeg, 
+                         busHighSchoolAdv   = busHighSchoolAdv,
+                         
+                         totalJobPostingsBusHi = totalJobPostingsBusHi,
+                         
+                         busPostingsHiFin  = busPostingsHiFin, 
+                         busPostingsHiLeg  = busPostingsHiLeg, 
+                         busPostingsHiAdv  = busPostingsHiAdv,
+                         
+                         busWagesHiFinLOW  = busWagesHiFinLOW,
+                         busWagesHiFinHIGH = busWagesHiFinHIGH,
+                         busWagesHiLegLOW  = busWagesHiLegLOW, 
+                         busWagesHiLegHIGH = busWagesHiLegHIGH,
+                         busWagesHiAdvLOW  = busWagesHiAdvLOW,
+                         busWagesHiAdvHIGH = busWagesHiAdvHIGH
+            ))
   })
 
