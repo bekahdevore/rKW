@@ -36,8 +36,8 @@ shinyUI(fluidPage(
         htmlOutput('it')),
       
       tabPanel(
-        'Food & Beverage'#,
-        #htmlOutput('foodAndBeverage')
+        'Food & Beverage',
+        htmlOutput('food')
         ),
       
       tabPanel(

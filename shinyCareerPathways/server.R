@@ -88,6 +88,7 @@ degreeName3   <- "Associate Degree (2 yrs)"
 degreeName2.5 <- "Associate Degree (2 yrs) or Some College, no degree"
 degreeName2   <- "Certificate (1-2 yrs)"
 degreeName1   <- "High School or GED"
+degreeName0   <- "Less than High School"
 
 ########################################################################################################################################################################################################################
 ########################################################################################################################################################################################################################
@@ -574,14 +575,13 @@ techJobs <- mainDataFile %>%
       advCe <- categoryFilter(busJobsCe, 'adv')
       advHi <- categoryFilter(busJobsHi, 'adv')
 
-      
-      
+
       ######################## COLUMN ENTRY #######################################    
       ################# NAMES 
       ####### EDUCATION LEVEL
       ## MASTERS
       busMastersFin    <- noJobsMessage
-      busMastersLeg    <- "Judges; Lawyers"
+      busMastersLeg    <- ""
       busMastersAdv    <- noJobsMessage
 
       ## BACHELORS
@@ -678,6 +678,191 @@ techJobs <- mainDataFile %>%
       busWagesHiFinHIGH  <- roundMean(finHi$Pct..75.Hourly.Earnings)
       busWagesHiLegHIGH <- roundMean(legHi$Pct..75.Hourly.Earnings)
       busWagesHiAdvHIGH <- roundMean(advHi$Pct..75.Hourly.Earnings)
+      
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+#####################################       FOOD AND BEVERAGE      #################################################################################################################################################################
+########################################################################################################################################################################################################################
+########################################################################################################################################################################################################################
+
+      ######################## SECTOR JOBS ########################################
+      foodJobs <- mainDataFile %>%
+        filter(Sector == "Food")
+      
+      
+      ######################## SECTOR JOBS BY EDUCATION LEVEL #####################
+      ## BACHELORS
+      foodJobsBa <- foodJobs %>% 
+        filter(Typical.Entry.Level.Education == "Bachelor's degree")
+      
+      ## ASSOCIATES     
+      foodJobsAs <- foodJobs %>%
+        filter(Typical.Entry.Level.Education == "Associate's degree")
+      
+      ## CERTIFICATES    
+      foodJobsCe <- foodJobs %>% 
+        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
+      
+      ## HIGH SCHOOL
+      foodJobsHi <- foodJobs %>% 
+        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")
+      
+      ## LESS THAN HIGH SCHOOL
+      foodJobsNo <- foodJobs %>% 
+        filter(Typical.Entry.Level.Education == "No formal educational credential")
+      
+      ######################## SECTOR JOBS BY COLUMN ##############################
+      ################# COLUMN 
+      ####### EDUCATION LEVEL
+      ## ONE
+      prodBa <- categoryFilter(foodJobsBa, 'prod')
+      prodAs <- categoryFilter(foodJobsAs, 'prod')
+      prodCe <- categoryFilter(foodJobsCe, 'prod')
+      prodHi <- categoryFilter(foodJobsHi, 'prod')
+      prodNo <- categoryFilter(foodJobsNo, 'prod')
+      ## TWO
+      restBa <- categoryFilter(foodJobsBa, 'rest')
+      restAs <- categoryFilter(foodJobsAs, 'rest')
+      restCe <- categoryFilter(foodJobsCe, 'rest')
+      restHi <- categoryFilter(foodJobsHi, 'rest')
+      restNo <- categoryFilter(foodJobsNo, 'rest')
+      ## THREE
+      hospBa <- categoryFilter(foodJobsBa, 'hosp')
+      hospAs <- categoryFilter(foodJobsAs, 'hosp')
+      hospCe <- categoryFilter(foodJobsCe, 'hosp')
+      hospHi <- categoryFilter(foodJobsHi, 'hosp')
+      hospNo <- categoryFilter(foodJobsNo, 'hosp')
+      ## FOUR
+      corpBa <- categoryFilter(foodJobsBa, 'corp')
+      corpAs <- categoryFilter(foodJobsAs, 'corp')
+      corpCe <- categoryFilter(foodJobsCe, 'corp')
+      corpHi <- categoryFilter(foodJobsHi, 'corp')
+      corpNo <- categoryFilter(foodJobsNo, 'corp')
+      
+      ######################## COLUMN ENTRY #######################################    
+      ################# NAMES 
+      ####### EDUCATION LEVEL
+      ## BACHELORS
+      foodBachelorsProd   <- noJobsMessage
+      foodBachelorsRest   <- "General Managers"
+      foodBachelorsHosp   <- "Sales Managers; Marketing Coordinators"
+      foodBachelorsCorp   <- "Human Resources Specialists; Financial Analysts; Quality Assurance Analysts; Application Developers; Marketing Managers; Accountants; Network Engineers" 
+      
+      ## ASSOCIATES
+      foodAssociatesProd  <- noJobsMessage
+      foodAssociatesRest  <- noJobsMessage
+      foodAssociatesHosp  <- noJobsMessage
+      foodAssociatesCorp  <- noJobsMessage
+      
+      ## CERTIFICATE
+      foodCertificateProd <- "Shift Coordinators; Tractor-Trailer Truck Drivers"
+      foodCertificateRest <- noJobsMessage
+      foodCertificateHosp <- noJobsMessage
+      foodCertificateCorp <- noJobsMessage
+      
+      ## HIGH SCHOOL
+      foodHighSchoolProd  <- "Maintenance Technicians; Deliverary Drivers; Production Associates"
+      foodHighSchoolRest  <- "Shift Mangers; Assistant Managers; Chefs"
+      foodHighSchoolHosp  <- "Front Desk Agents; Housekeeping Supervisors; Security Officers"
+      foodHighSchoolCorp  <- "Accounting Clerks; Front Office Supervisors; Customer Service Reps; Telephone Operators"
+      
+      ## HIGH SCHOOL
+      foodNoSchoolProd  <- "Order Fillers; Bakers"
+      foodNoSchoolRest  <- "Restaurant Team Members; Servers; Grill, Line and Prep Cooks; Cashiers; Bartenders; Hosts"
+      foodNoSchoolHosp  <- "Housekeepers; Janitors; Valet Attendants"
+      foodNoSchoolCorp  <- noJobsMessage
+      
+      
+      ################# JOB POSTINGS
+      ####### TOTALS           
+      totalJobsFood           <-  sum(foodJobs$Number.of.Job.Postings)
+      totalJobPostingsFoodBa  <-  sum(foodJobsBa$Number.of.Job.Postings)
+      totalJobPostingsFoodAs  <-  ""
+      totalJobPostingsFoodCe  <-  sum(foodJobsCe$Number.of.Job.Postings)
+      totalJobPostingsFoodHi  <-  sum(foodJobsHi$Number.of.Job.Postings)
+      totalJobPostingsFoodNo  <-  sum(foodJobsNo$Number.of.Job.Postings)
+      ####### EDUCATION LEVEL
+      ## BACHELORS      
+      foodPostingsBaProd     <-  sum(prodBa$Number.of.Job.Postings)
+      foodPostingsBaRest     <-  sum(restBa$Number.of.Job.Postings) 
+      foodPostingsBaHosp     <-  sum(hospBa$Number.of.Job.Postings)
+      foodPostingsBaCorp     <-  sum(corpBa$Number.of.Job.Postings)
+      ## ASSOCIATES  
+      foodPostingsAsProd     <-  ""
+      foodPostingsAsRest     <-  "" 
+      foodPostingsAsHosp     <-  ""
+      foodPostingsAsCorp     <-  ""
+      ## CERTIFICATES
+      foodPostingsCeProd     <-  sum(prodCe$Number.of.Job.Postings) 
+      foodPostingsCeRest     <-  ""
+      foodPostingsCeHosp     <-  ""
+      foodPostingsCeCorp     <-  ""
+      ## HIGH SCHOOL
+      foodPostingsHiProd     <-  sum(prodHi$Number.of.Job.Postings)
+      foodPostingsHiRest     <-  sum(restHi$Number.of.Job.Postings) 
+      foodPostingsHiHosp     <-  sum(hospHi$Number.of.Job.Postings)
+      foodPostingsHiCorp     <-  sum(corpHi$Number.of.Job.Postings)
+      ## LESS THAN HIGH SCHOOL
+      foodPostingsNoProd     <-  sum(prodNo$Number.of.Job.Postings)
+      foodPostingsNoRest     <-  sum(restNo$Number.of.Job.Postings) 
+      foodPostingsNoHosp     <-  sum(hospNo$Number.of.Job.Postings)
+      foodPostingsNoCorp     <-  ""
+      ################# WAGES
+      ####### 25th PERCENTILE 
+      ## EDUCATION LEVEL
+      # BACHELORS
+      foodWagesBaProdLOW <- roundMean(proBa$Pct..25.Hourly.Earnings)
+      foodWagesBaRestLOW <- roundMean(restBa$Pct..25.Hourly.Earnings)
+      foodWagesBaHospLOW <- roundMean(hospBa$Pct..25.Hourly.Earnings)
+      foodWagesBaCorpLOW <- roundMean(corpBa$Pct..25.Hourly.Earnings)
+      # ASSOCIATES
+      foodWagesAsProdLOW <- ""
+      foodWagesAsRestLOW <- ""
+      foodWagesAsHospLOW <- ""
+      foodWagesAsCorpLOW <- ""
+      # CERTIFICATES 
+      foodWagesCeProdLOW <- roundMean(prodCe$Pct..25.Hourly.Earnings)
+      foodWagesCeRestLOW <- ""
+      foodWagesCeHospLOW <- ""
+      foodWagesCeCorpLOW <- ""
+      # HIGH SCHOOL 
+      foodWagesHiProdLOW <- roundMean(proHi$Pct..25.Hourly.Earnings)
+      foodWagesHiRestLOW <- roundMean(restHi$Pct..25.Hourly.Earnings)
+      foodWagesHiHospLOW <- roundMean(hospHi$Pct..25.Hourly.Earnings)
+      foodWagesHiCorpLOW <- roundMean(corpHi$Pct..25.Hourly.Earnings)
+      # LESS THAN HIGH SCHOOL 
+      foodWagesNoProdLOW <- roundMean(prodNo$Pct..25.Hourly.Earnings)
+      foodWagesNoRestLOW <- roundMean(restNo$Pct..25.Hourly.Earnings)
+      foodWagesNoHospLOW <- roundMean(hospNo$Pct..25.Hourly.Earnings)
+      foodWagesNoCorpLOW <- ""
+      
+      ####### 75th PERCENTILE 
+      ## EDUCATION LEVEL
+      # BACHELORS
+      foodWagesBaProdHIGH <- roundMean(proBa$Pct..75.Hourly.Earnings)
+      foodWagesBaRestHIGH <- roundMean(restBa$Pct..75.Hourly.Earnings)
+      foodWagesBaHospHIGH <- roundMean(hospBa$Pct..75.Hourly.Earnings)
+      foodWagesBaCorpHIGH <- roundMean(corpBa$Pct..75.Hourly.Earnings)
+      ## ASSOCIATES
+      foodWagesAsProdHIGH <- ""
+      foodWagesAsRestHIGH <- ""
+      foodWagesAsHospHIGH <- ""
+      foodWagesAsCorpHIGH <- ""
+      ## CERTIFICATES
+      foodWagesCeProdHIGH <- roundMean(prodCe$Pct..75.Hourly.Earnings)
+      foodWagesCeRestHIGH <- ""
+      foodWagesCeHospHIGH <- ""
+      foodWagesCeCorpHIGH <- ""
+      ## HIGH SCHOOL 
+      foodWagesHiProdHIGH <- roundMean(prodHi$Pct..75.Hourly.Earnings)
+      foodWagesHiRestHIGH <- roundMean(restHi$Pct..75.Hourly.Earnings)
+      foodWagesHiHospHIGH <- roundMean(hospHi$Pct..75.Hourly.Earnings)
+      foodWagesHiCorpHIGH <- roundMean(corpHi$Pct..75.Hourly.Earnings)
+      ## HIGH SCHOOL 
+      foodWagesNoProdHIGH <- roundMean(prodNo$Pct..75.Hourly.Earnings)
+      foodWagesNoRestHIGH <- roundMean(restNo$Pct..75.Hourly.Earnings)
+      foodWagesNoHospHIGH <- roundMean(hospNo$Pct..75.Hourly.Earnings)
+      foodWagesNoCorpHIGH <- ""
             
 
 shinyServer(function(input, output) {
@@ -1052,6 +1237,130 @@ shinyServer(function(input, output) {
                          busWagesHiLegHIGH = busWagesHiLegHIGH,
                          busWagesHiAdvLOW  = busWagesHiAdvLOW,
                          busWagesHiAdvHIGH = busWagesHiAdvHIGH
+            ))
+
+          output$food <- renderUI(
+            htmlTemplate('foodTemplate.html', 
+                         totalJobs = formatCommas(totalJobsFood), 
+                         degreeName4        = degreeName4, 
+                         degreeName3        = degreeName3, 
+                         degreeName2        = degreeName2, 
+                         degreeName1        = degreeName1,
+                         degreeName0        = degreeName0,
+                         
+                         # Bachelors
+                         foodBachelorsProd  = foodBachelorsProd,
+                         foodBachelorsRest  = foodBachelorsRest,
+                         foodBachelorsHosp  = foodBachelorsHosp, 
+                         foodBachelorsCorp  = foodBachelorsCorp, 
+                         
+                         totalJobPostingsFoodBa = totalJobPostingsFoodBa,
+                         
+                         foodPostingsBaProd = foodPostingsBaProd, 
+                         foodPostingsBaRest = foodPostingsBaRest, 
+                         foodPostingsBaHosp = foodPostingsBaHosp, 
+                         foodPostingsBaCorp = foodPostingsBaCorp, 
+                         
+                         
+                         foodWagesBaProdLOW  = foodWagesBaProdLOW,
+                         foodWagesBaProdHIGH = foodWagesBaProdHIGH,
+                         foodWagesBaRestLOW  = foodWagesBaRestLOW, 
+                         foodWagesBaRestHIGH = foodWagesBaRestHIGH,
+                         foodWagesBaHospLOW   = foodWagesBaHospLOW,
+                         foodWagesBaHospHIGH  = foodWagesBaHospHIGH,
+                         foodWagesBaCorpLOW   = foodWagesBaCorpLOW,
+                         foodWagesBaCorpHIGH  = foodWagesBaCorpHIGH,                         
+                         
+                         # ASSOCIATES
+                         foodAssociatesProd = foodAssociatesProd, 
+                         foodAssociatesRest = foodAssociatesRest, 
+                         foodAssociatesHosp  = foodAssociatesHosp,
+                         foodAssociatesCorp  = foodAssociatesCorp,
+                         
+                         totalJobPostingsFoodAs = totalJobPostingsFoodAs,
+                         
+                         foodPostingsAsProd = foodPostingsAsProd, 
+                         foodPostingsAsRest = foodPostingsAsRest, 
+                         foodPostingsAsHosp = foodPostingsAsHosp, 
+                         foodPostingsAsCorp = foodPostingsAsCorp, 
+                         
+                         
+                         foodWagesAsProdLOW  = foodWagesAsProdLOW,
+                         foodWagesAsProdHIGH = foodWagesAsProdHIGH,
+                         foodWagesAsRestLOW  = foodWagesAsRestLOW, 
+                         foodWagesAsRestHIGH = foodWagesAsRestHIGH,
+                         foodWagesAsHospLOW  = foodWagesAsHospLOW,
+                         foodWagesAsHospHIGH = foodWagesAsHospHIGH,
+                         foodWagesAsCorpLOW  = foodWagesAsCorpLOW,
+                         foodWagesAsCorpHIGH = foodWagesAsCorpHIGH,           
+                         
+                         
+                         # Certificate
+                         foodCertificateProd = foodCertificateProd, 
+                         foodCertificateRest = foodCertificateRest, 
+                         foodCertificateHosp = foodCertificateHosp, 
+                         foodCertificateCorp = foodCertificateCorp,
+                         
+                         totalJobPostingsFoodCe = formatCommas(totalJobPostingsFoodCe),
+                         
+                         foodPostingsCeProd = foodPostingsCeProd, 
+                         foodPostingsCeRest = formatCommas(foodPostingsCeRest), 
+                         foodPostingsCeHosp = foodPostingsCeHosp, 
+                         foodPostingsCeCorp = foodPostingsCeCorp, 
+                         
+                         
+                         foodWagesCeProdLOW  = foodWagesCeProdLOW,
+                         foodWagesCeProdHIGH = foodWagesCeProdHIGH,
+                         foodWagesCeRestLOW  = foodWagesCeRestLOW, 
+                         foodWagesCeRestHIGH = foodWagesCeRestHIGH,
+                         foodWagesCeHospLOW   = foodWagesCeHospLOW,
+                         foodWagesCeHospHIGH  = foodWagesCeHospHIGH,
+                         foodWagesCeCorpLOW   = foodWagesCeCorpLOW,
+                         foodWagesCeCorpHIGH  = foodWagesCeCorpHIGH,
+                         
+                         #High School
+                         foodHighSchoolProd   = foodHighSchoolProd, 
+                         foodHighSchoolRest   = foodHighSchoolRest, 
+                         foodHighSchoolHosp   = foodHighSchoolHosp,
+                         foodHighSchoolCorp   = foodHighSchoolCorp,
+                         
+                         totalJobPostingsFoodHi = totalJobPostingsFoodHi,
+                         
+                         foodPostingsHiProd  = foodPostingsHiProd, 
+                         foodPostingsHiRest  = foodPostingsHiRest, 
+                         foodPostingsHiHosp  = foodPostingsHiHosp,
+                         foodPostingsHiCorp  = foodPostingsHiCorp,
+                         
+                         foodWagesHiProdLOW  = foodWagesHiProdLOW,
+                         foodWagesHiProdHIGH = foodWagesHiProdHIGH,
+                         foodWagesHiRestLOW  = foodWagesHiRestLOW, 
+                         foodWagesHiRestHIGH = foodWagesHiRestHIGH,
+                         foodWagesHiHospLOW  = foodWagesHiHospLOW,
+                         foodWagesHiHospHIGH = foodWagesHiHospHIGH, 
+                         foodWagesHiCorpLOW  = foodWagesHiCorpLOW,
+                         foodWagesHiCorpHIGH = foodWagesHiCorpHIGH,
+                         
+                         # LESS THAN HIGH SCHOOL
+                         foodNoSchoolProd   = foodNoSchoolProd, 
+                         foodNoSchoolRest   = foodNoSchoolRest, 
+                         foodNoSchoolHosp   = foodNoSchoolHosp,
+                         foodNoSchoolCorp   = foodNoSchoolCorp,
+                         
+                         totalJobPostingsFoodNo = totalJobPostingsFoodNo,
+                         
+                         foodPostingsNoProd  = foodPostingsNoProd, 
+                         foodPostingsNoRest  = foodPostingsNoRest, 
+                         foodPostingsNoHosp  = foodPostingsNoHosp,
+                         foodPostingsNoCorp  = foodPostingsNoCorp,
+                         
+                         foodWagesNoProdLOW  = foodWagesNoProdLOW,
+                         foodWagesNoProdHIGH = foodWagesNoProdHIGH,
+                         foodWagesNoRestLOW  = foodWagesNoRestLOW, 
+                         foodWagesNoRestHIGH = foodWagesNoRestHIGH,
+                         foodWagesNoHospLOW  = foodWagesNoHospLOW,
+                         foodWagesNoHospHIGH = foodWagesNoHospHIGH, 
+                         foodWagesNoCorpLOW  = foodWagesNoCorpLOW,
+                         foodWagesNoCorpHIGH = foodWagesNoCorpHIGH
             ))
   })
 
