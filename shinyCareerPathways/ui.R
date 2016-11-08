@@ -41,8 +41,8 @@ shinyUI(fluidPage(
         ),
       
       tabPanel(
-        'Business'#,
-        # htmlOutput('business')
+        'Business',
+        htmlOutput('business')
         )
   ))
   # Sidebar with a slider input for number of bins

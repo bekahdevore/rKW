@@ -553,185 +553,131 @@ techJobs <- mainDataFile %>%
       
       
       ######################## SECTOR JOBS BY COLUMN ##############################
-      ################# COLUMN ONE
+      ################# COLUMN
       ####### EDUCATION LEVEL
-      finMa <- busJobs %>%
-        filter(Category                      == 'fin') %>%
-        filter(Typical.Entry.Level.Education == "Master's degree")
-      ## BACHELORS
-      finBa <- busJobs %>%
-        filter(Category                      == 'fin') %>%
-        filter(Typical.Entry.Level.Education == "Bachelor's degree")
-      ## ASSOCIATES
-      finAs <- busJobs %>%
-        filter(Category                      == 'fin') %>%
-        filter(Typical.Entry.Level.Education == "Associate's degree")
-      ## CERTIFICATES
-      finCe <- busJobs %>%
-        filter(Category                      == 'fin') %>%
-        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
-      ## HIGH SCHOOL
-      finHi <- busJobs %>% 
-        filter(Category                      == 'fin') %>%
-        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
-      ################# COLUMN TWO
-      ## MASTERS/DOCTORAL/PROFESSIONAL
-      legMa <- busJobsMa %>%
-        filter(Category                      == 'leg')
-      ## BACHELORS
-      legBa <- busJobsBa %>%
-        filter(Category                      == 'leg')
-      ## ASSOCIATES
-      legAs <- busJobsAs %>%
-        filter(Category                      == 'leg')   
-      ## CERTIFICATE
-      legCe <- busJobsCe %>%
-        filter(Category                      == 'leg')
-      ## HIGH SCHOOL 
-      legHi <- busJobs %>% 
-        filter(Category                      == 'leg') %>%
-        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")
-      ################# COLUMN THREE
-      ## MASTERS/DOCTORAL/PROFESSIONAL
-      qualBa <- busJobs %>%
-        filter(Category                       == 'qual') %>%
-        filter(Typical.Entry.Level.Education  == "Master's degree")
-      ## BACHELORS
-      qualBa <- busJobs %>%
-        filter(Category                       == 'qual') %>%
-        filter(Typical.Entry.Level.Education  == "Bachelor's degree")
-      ## ASSOCIATES
-      qualAs <- busJobs %>%
-        filter(Category                      == 'qual') %>%
-        filter(Typical.Entry.Level.Education == "Associate's degree")
-      ## CERTIFICATES
-      qualCe <- busJobs %>%
-        filter(Category                      == 'qual') %>%
-        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
-      ## HIGH SCHOOL 
-      qualHi <- busJobs %>% 
-        filter(Category                      == 'qual') %>%
-        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
-      ################# COLUMN FOUR
-      ## BACHELORS
-      mainBa <- busJobs %>%
-        filter(Category                       == 'main') %>%
-        filter(Typical.Entry.Level.Education  == "Bachelor's degree")
-      ## ASSOCIATES
-      mainAs <- busJobs %>%
-        filter(Category                      == 'main') %>%
-        filter(Typical.Entry.Level.Education == "Associate's degree")
-      ## CERTIFICATES
-      mainCe <- busJobs %>%
-        filter(Category                      == 'main') %>%
-        filter(Typical.Entry.Level.Education == "Postsecondary nondegree award")
-      ## HIGH SCHOOL 
-      mainHi <- busJobs %>% 
-        filter(Category                      == 'main') %>%
-        filter(Typical.Entry.Level.Education == "High school diploma or equivalent")  
+      ## ONE
+      finMa <- categoryFilter(busJobsMa, 'fin')
+      finBa <- categoryFilter(busJobsBa, 'fin')
+      finAs <- categoryFilter(busJobsAs, 'fin')
+      finCe <- categoryFilter(busJobsCe, 'fin')
+      finHi <- categoryFilter(busJobsHi, 'fin')
+      ## TWO
+      legMa <- categoryFilter(busJobsMa, 'leg')
+      legBa <- categoryFilter(busJobsBa, 'leg')
+      legAs <- categoryFilter(busJobsAs, 'leg')   
+      legCe <- categoryFilter(busJobsCe, 'leg')
+      legHi <- categoryFilter(busJobsHi, 'leg')
+      ## THREE
+      advMa <- categoryFilter(busJobsMa, 'adv')
+      advBa <- categoryFilter(busJobsBa, 'adv')
+      advAs <- categoryFilter(busJobsAs, 'adv')
+      advCe <- categoryFilter(busJobsCe, 'adv')
+      advHi <- categoryFilter(busJobsHi, 'adv')
+
       
       
       ######################## COLUMN ENTRY #######################################    
       ################# NAMES 
       ####### EDUCATION LEVEL
+      ## MASTERS
+      busMastersFin    <- noJobsMessage
+      busMastersLeg    <- "Judges; Lawyers"
+      busMastersAdv    <- noJobsMessage
+
       ## BACHELORS
-      busBachelorsFin   <- "Busufacturing Engineers"
-      busBachelorsLeg   <- "Estimators; Sales Engineers"
-      busBachelorsAdv   <- "Advity Engineers; Finuction Busgers"
-      busBachelorsMain   <- "Electrical and Mechanical Engineers" 
+      busBachelorsFin   <- "Financial Managers; Accountants; Budget Analysts; Credit Analysts; Personal Financial Advisors; Business Bankers"
+      busBachelorsLeg   <- "Management Consultant"
+      busBachelorsAdv   <- "Marketing, Sales, and Public Relations Managers; Fundraising and Marketing Coordinators; Videographers; Editors; Graphic Designers; Animators; Communications Specialists; Technical Writers; Copywriters"
       
       ## ASSOCIATES
       busAssociatesFin  <- noJobsMessage
-      busAssociatesLeg  <- "Mechanical Drafters (Computer Aided Designers)"
-      busAssociatesAdv  <- "Engineering and Busufacturing Technicians"
-      busAssociatesMain  <- noJobsMessage
+      busAssociatesLeg  <- "Paralegals and Legal Assistants"
+      busAssociatesAdv  <- "Executive Assistants"
       
       ## CERTIFICATE
-      busCertificateFin <- "Finuction Supervisors; CNC Machine Tool Operators"
+      busCertificateFin <- noJobsMessage
       busCertificateLeg <- noJobsMessage
-      busCertificateAdv <- "Advity Coordinators"
-      busCertificateMain <- "Welders; Industrial Machinary Mechanics; Industrial Maintenance Technicians"
+      busCertificateAdv <- "Audio and Video Equiptment Technicians"
       
       ## HIGH SCHOOL
-      busHighSchoolFin  <- "Assembly Technicians; Industrial Tool Operators"
-      busHighSchoolLeg  <- noJobsMessage
-      busHighSchoolAdv  <- "Advity Assurance Specialist"
-      busHighSchoolMain  <- "Repair Technician"
+      busHighSchoolFin  <- "Collections and Billing Specialists; Bookkeepers; Correspondence Clerks; Credit Assistants"
+      busHighSchoolLeg  <- "Legal Administrative Assistants; Receptionists"
+      busHighSchoolAdv  <- "Office Assistants; Artists; Media and Communication Assistants; Photographers; Secretaries and Administrative Assistants"
       
-      ## STOPPED HERE
       ################# JOB POSTINGS
       ####### TOTALS           
       totalJobsBus           <-  sum(busJobs$Number.of.Job.Postings)
+      totalJobPostingsBusMa  <-  sum(busJobsMa$Number.of.Job.Postings)
       totalJobPostingsBusBa  <-  sum(busJobsBa$Number.of.Job.Postings)
       totalJobPostingsBusAs  <-  ""
       totalJobPostingsBusCe  <-  sum(busJobsCe$Number.of.Job.Postings)
       totalJobPostingsBusHi  <-  sum(busJobsHi$Number.of.Job.Postings)
       ####### EDUCATION LEVEL
+      ## MASTERS
+      busPostingsMaFin     <-  sum(finMa$Number.of.Job.Postings)
+      busPostingsMaLeg     <-  sum(legMa$Number.of.Job.Postings)
+      busPostingsMaAdv     <-  sum(advMa$Number.of.Job.Postings)
       ## BACHELORS      
       busPostingsBaFin     <-  sum(finBa$Number.of.Job.Postings)
-      busPostingsBaLeg     <-  sum(tranBa$Number.of.Job.Postings) 
-      busPostingsBaAdv     <-  sum(wareBa$Number.of.Job.Postings)
-      busPostingsBaMain     <-  sum(mainBa$Number.of.Job.Postings)
+      busPostingsBaLeg     <-  sum(legBa$Number.of.Job.Postings) 
+      busPostingsBaAdv     <-  sum(advBa$Number.of.Job.Postings)
       ## ASSOCIATES  
       busPostingsAsFin     <-  ""
       busPostingsAsLeg     <-  "" 
       busPostingsAsAdv     <-  ""
-      busPostingsAsMain     <-  ""
       ## CERTIFICATES
-      busPostingsCeFin     <-  ""
-      busPostingsCeLeg     <-  sum(tranCe$Number.of.Job.Postings) 
+      busPostingsCeFin     <-  sum(finCe$Number.of.Job.Postings)
+      busPostingsCeLeg     <-  sum(legCe$Number.of.Job.Postings) 
       busPostingsCeAdv     <-  ""
-      busPostingsCeMain     <-  ""
       ## HIGH SCHOOL
       busPostingsHiFin     <-  sum(finHi$Number.of.Job.Postings)
-      busPostingsHiLeg     <-  sum(tranHi$Number.of.Job.Postings) 
-      busPostingsHiAdv     <-  sum(wareHi$Number.of.Job.Postings)
-      busPostingsHiMain     <-  sum(wareHi$Number.of.Job.Postings)
+      busPostingsHiLeg     <-  sum(legHi$Number.of.Job.Postings) 
+      busPostingsHiAdv     <-  sum(advHi$Number.of.Job.Postings)
       ################# WAGES
       ####### 25th PERCENTILE 
       ## EDUCATION LEVEL
+      # MASTERS
+      busWagesMaFinLOW <- roundMean(finMa$Pct..25.Hourly.Earnings)
+      busWagesMaLegLOW <- roundMean(legMa$Pct..25.Hourly.Earnings)
+      busWagesMaAdvLOW <- roundMean(advMa$Pct..25.Hourly.Earnings)
       # BACHELORS
-      busWagesBaFinLOW <- roundMean(proBa$Pct..25.Hourly.Earnings)
-      busWagesBaLegLOW <- roundMean(tranBa$Pct..25.Hourly.Earnings)
-      busWagesBaAdvLOW <- roundMean(wareBa$Pct..25.Hourly.Earnings)
-      busWagesBaMainLOW <- roundMean(mainBa$Pct..25.Hourly.Earnings)
+      busWagesBaFinLOW <- roundMean(finBa$Pct..25.Hourly.Earnings)
+      busWagesBaLegLOW <- roundMean(legBa$Pct..25.Hourly.Earnings)
+      busWagesBaAdvLOW <- roundMean(advBa$Pct..25.Hourly.Earnings)
       # ASSOCIATES
       busWagesAsFinLOW <- ""
       busWagesAsLegLOW <- ""
       busWagesAsAdvLOW <- ""
-      busWagesAsMainLOW <- ""
       # CERTIFICATES 
       busWagesCeFinLOW <- ""
-      busWagesCeLegLOW <- roundMean(tranCe$Pct..25.Hourly.Earnings)
+      busWagesCeLegLOW <- roundMean(legCe$Pct..25.Hourly.Earnings)
       busWagesCeAdvLOW <- ""
-      busWagesCeMainLOW <- ""
       # HIGH SCHOOL 
-      busWagesHiFinLOW <- roundMean(proHi$Pct..25.Hourly.Earnings)
-      busWagesHiLegLOW <- roundMean(tranHi$Pct..25.Hourly.Earnings)
-      busWagesHiAdvLOW <- roundMean(wareHi$Pct..25.Hourly.Earnings)
-      busWagesHiMainLOW <- roundMean(mainHi$Pct..25.Hourly.Earnings)
+      busWagesHiFinLOW <- roundMean(finHi$Pct..25.Hourly.Earnings)
+      busWagesHiLegLOW <- roundMean(legHi$Pct..25.Hourly.Earnings)
+      busWagesHiAdvLOW <- roundMean(advHi$Pct..25.Hourly.Earnings)
       ####### 75th PERCENTILE 
       ## EDUCATION LEVEL
+      # MASTERS
+      busWagesMaFinHIGH <- roundMean(finMa$Pct..75.Hourly.Earnings)
+      busWagesMaLegHIGH <- roundMean(legMa$Pct..75.Hourly.Earnings)
+      busWagesMaAdvHIGH <- roundMean(advMa$Pct..75.Hourly.Earnings)
       # BACHELORS
-      busWagesBaFinHIGH <- roundMean(proBa$Pct..75.Hourly.Earnings)
-      busWagesBaLegHIGH <- roundMean(tranBa$Pct..75.Hourly.Earnings)
-      busWagesBaAdvHIGH <- roundMean(wareBa$Pct..75.Hourly.Earnings)
-      busWagesBaMainHIGH <- roundMean(mainBa$Pct..75.Hourly.Earnings)
+      busWagesBaFinHIGH <- roundMean(finBa$Pct..75.Hourly.Earnings)
+      busWagesBaLegHIGH <- roundMean(legBa$Pct..75.Hourly.Earnings)
+      busWagesBaAdvHIGH <- roundMean(advBa$Pct..75.Hourly.Earnings)
       ## ASSOCIATES
       busWagesAsFinHIGH <- ""
       busWagesAsLegHIGH <- ""
       busWagesAsAdvHIGH <- ""
-      busWagesAsMainHIGH <- ""
       ## CERTIFICATES
       busWagesCeFinHIGH  <- ""
-      busWagesCeLegHIGH <- roundMean(tranCe$Pct..75.Hourly.Earnings)
+      busWagesCeLegHIGH <- roundMean(legCe$Pct..75.Hourly.Earnings)
       busWagesCeAdvHIGH <- ""
-      busWagesCeMainHIGH <- ""
       ## HIGH SCHOOL 
-      busWagesHiFinHIGH  <- roundMean(proHi$Pct..75.Hourly.Earnings)
-      busWagesHiLegHIGH <- roundMean(tranHi$Pct..75.Hourly.Earnings)
-      busWagesHiAdvHIGH <- roundMean(wareHi$Pct..75.Hourly.Earnings)
-      busWagesHiMainHIGH <- roundMean(mainHi$Pct..75.Hourly.Earnings)      
+      busWagesHiFinHIGH  <- roundMean(finHi$Pct..75.Hourly.Earnings)
+      busWagesHiLegHIGH <- roundMean(legHi$Pct..75.Hourly.Earnings)
+      busWagesHiAdvHIGH <- roundMean(advHi$Pct..75.Hourly.Earnings)
             
 
 shinyServer(function(input, output) {
