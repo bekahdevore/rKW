@@ -12,6 +12,8 @@ library(dplyr)
 skills <- as.data.frame(read.csv("skills.csv"))
 
 
+library(googleVis)
+
 shinyServer(function(input, output) {
   
   sankeyData <- reactive({
@@ -30,11 +32,8 @@ shinyServer(function(input, output) {
                options=list(height =1000,
                             width = "100%", 
                             sankey = "{link:{
-                            color:{fill:'grey'}, 
-                            
-  }}"
-               )
-               )
+                            color:{fill:'grey'},}}"
+               ))
     })
   })
 
