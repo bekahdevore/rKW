@@ -3,11 +3,13 @@ library(shinythemes)
 library(dplyr)
 library(treemap)
 library(googleVis)
+library(plotly)
 
 credentialByEducationLevel <- read.csv("credentialByEducation.csv")
 credentialByEducationLevel <- credentialByEducationLevel %>% filter(Degree != 'na')
 occupationNames            <- read.csv('sankey.csv')
 #occupationNames            <- occupationNames %>% filter(socGroup != 55)
+occupationNames$label      <- as.character(occupationNames$label)
 
 navbarPage(
   #tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css"))
@@ -24,7 +26,8 @@ navbarPage(
                        choices = unique(occupationNames$Occupation)), 
            sliderInput("wageSlide", "Occupations with a median wage at or above:", 
                        min=0, max=216216, value=47273), 
-           htmlOutput('view')
+            background = "maroon",
+            htmlOutput('view')
            #br(), 
            #br(), 
            #h2('Including postings not asking for a credential:'), 
@@ -36,7 +39,8 @@ navbarPage(
           h5("Top 30 Certifications by Education Level"),
           selectInput("select", label = h4("Choose an education level"), 
                       choices = unique(credentialByEducationLevel$Degree)), 
-          plotOutput('value')
+          plotOutput('value'), 
+          plotlyOutput('educationBar')
   ),
   
   

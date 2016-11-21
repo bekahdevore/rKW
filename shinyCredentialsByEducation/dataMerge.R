@@ -48,6 +48,10 @@ credentialsToOccupations <- louisvilleDataCerts %>% select(2, 5:6, 22, 36)
 credentialsToOccupations$Certification <- as.character(credentialsToOccupations$Certification)
 
 #credentialsToOccupations[, 5][is.na(credentialsToOccupations[, 5])] <- "No Certification"
+credentialsToOccupations$t <- 1
+
+countCredentials <- count(credentialsToOccupations, Certification, wt = t, sort = TRUE)
+sum(countCredentials)
 
 credentialsToOccupations <- na.omit(credentialsToOccupations)
 

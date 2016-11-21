@@ -78,7 +78,7 @@ shinyUI(fluidPage(
       ),
       
       tabPanel(
-        'Kentuckianalytics',
+        'KentuckiAnalytics',
         h1("KentuckiAnalytics"), 
         h5('The LMI blog is housed at', a('KentuckiAnalytics.org', href = 'http://kentuckianalytics.org/'), 
            'a wordpress.org based site.'),
@@ -89,11 +89,22 @@ shinyUI(fluidPage(
       tabPanel(
         'Monthly Newsletter', 
         h1("Monthly Newsletter"), 
-        h5('Every 30 days we (in partnership with the KW communications department) 
+        p('Every 30 days we (in partnership with the KW communications department) 
            release a newsletter with BLS updates for the Louisville MSA area'),
-        h5('Schedule of updates can be found here:',
+        h6('Schedule of updates can be found here:',
            a('BLS MSA Release Schedule', href = 'http://www.bls.gov/schedule/news_release/metro.htm')), 
-        h5('To update the data and visualizations follow these steps:')
+        h5('To update the data and visualizations follow these steps:'), 
+        p('Find the rScript on the shared drive following this path:'), 
+        p('admin_shared$/Bekah.Data/rProjects/shinyBlsUpdates/'), 
+        p('Open the .Rproj document in the folder to open the entire project in rStudio (you will need R and rStudio downloaded on your 
+          computer. If this is you first time in R, make sure to 1st run the, "Package Script for 1st Time User" found here: insertPathHere'), 
+        p('Once you have the shinyBlsUpdates.rProj opened navigate to server.r'), 
+        p('In server.r change the month variable at the top to the new reference month, check the BLS update calendar for the most recent months data'), 
+        p('Navigate to ui.r'), 
+        p('In ui.r update lines 13 - 19'), 
+        p('Next run lines 1 - 24 to calculate the percent of bachelors degrees (remember this for the next step)'), 
+        p('Almost finished ....'), 
+        p('Next open piktochart, find the login credentials here: ')
       ), 
       
       tabPanel(
@@ -106,7 +117,8 @@ shinyUI(fluidPage(
         p('Adding summary statistics'),
         br(),
         h5(a('Career Pathways',        href = 'https://kwlmi.shinyapps.io/shinyCareerPathways/')), 
-        p('In progress: checking data codes in HTML and rScipts, and adding to catagories'), 
+        p('In progress:'), 
+        p('checking data codes in HTML and rScipts, and adding to catagories'), 
         br(),
         h5(a('BLS Newsletter Update',   href = 'https://kwlmi.shinyapps.io/shinyBlsUpdates/')),
         br(),
@@ -124,6 +136,11 @@ shinyUI(fluidPage(
         br(),
         h5(a('Training Occupations',    href = ' https://kwlmi.shinyapps.io/trainingOccupations/')),
         br()
+      ),
+      
+      tabPanel(
+        'Other', 
+        h5('Find the', a('MIT Living Wage here', href = 'http://livingwage.mit.edu/metros/31140'), 'we use the measure for a family of two with two children w/o childcare.')
       ),
       
       tabPanel(

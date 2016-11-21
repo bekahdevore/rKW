@@ -4,7 +4,8 @@ library(dplyr)
 library(treemap)
 library(googleVis)
 library(RCurl)
-
+library(plotly)
+library(ggplot2)
 ## LOAD DATA
 credentialByEducationLevel   <- read.csv("credentialByEducation.csv")
 sankey                       <- read.csv('sankey.csv')
@@ -13,8 +14,7 @@ sankeyAll                    <- read.csv('sankeyAll.csv')
 
 sankeyFilter <- function(dataHere){
   colnames(dataHere)[4] <- 'value'
-  dataHere <- dataHere %>% 
-            select(2:7)
+  dataHere <- dataHere %>% select(2:7)
 }
 
 sankey    <- sankeyFilter(sankey)
@@ -52,7 +52,7 @@ opts              <- paste0("{
                          link: { colorMode: 'gradient',
                          colors: ", colors_link_array ," },
                          node: { colors: ", colors_node_array ,", 
-                                label: {fontSize: 18}}}" )
+                                label: {fontSize: 16}}}" )
 
 
 
@@ -62,6 +62,11 @@ shinyServer(function(input, output) {
   credentials <- reactive({ credentialByEducationLevel <- credentialByEducationLevel %>%
                                           filter(Degree == input$select) %>%
                                           top_n(10, wt = nn)})
+  
+  credentialsBar <- reactive({ credentialByEducationLevel <- credentialByEducationLevel %>%
+    filter(Degree == input$select) %>%
+    top_n(10, wt = nn) %>%
+    unique(Certification)})
   
   sankeyData <- reactive({sankey <- sankey %>%
     filter(Occupation == input$occupationGroup) %>%
@@ -85,6 +90,13 @@ shinyServer(function(input, output) {
                       title  = '')
     })
   
+  ## NEED TO WORK ON THIS
+  output$educationBar <- renderPlotly({
+          plot_ly(credentialBar(), 
+                  x = ~Certification, 
+                  y = ~nn)
+    
+  })
 
   
   output$view  <- renderGvis({
