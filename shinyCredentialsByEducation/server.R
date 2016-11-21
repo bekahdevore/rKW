@@ -8,7 +8,17 @@ library(RCurl)
 ## LOAD DATA
 credentialByEducationLevel   <- read.csv("credentialByEducation.csv")
 sankey                       <- read.csv('sankey.csv')
-sankey$source <- as.character(sankey$source)
+sankeyAll                    <- read.csv('sankeyAll.csv')
+
+
+sankeyFilter <- function(dataHere){
+  colnames(dataHere)[4] <- 'value'
+  dataHere <- dataHere %>% 
+            select(2:7)
+}
+
+sankey    <- sankeyFilter(sankey)
+sankeyAll <- sankeyFilter(sankeyAll)
 
 ## Add Number to Count Observations
 credentialByEducationLevel$n <- 1
@@ -41,7 +51,8 @@ colors_node_array <- paste0("[", paste0("'", colors_link,"'", collapse = ','), "
 opts              <- paste0("{
                          link: { colorMode: 'gradient',
                          colors: ", colors_link_array ," },
-                         node: { colors: ", colors_node_array ,"}}" )
+                         node: { colors: ", colors_node_array ,", 
+                                label: {fontSize: 18}}}" )
 
 
 
@@ -52,19 +63,29 @@ shinyServer(function(input, output) {
                                           filter(Degree == input$select) %>%
                                           top_n(10, wt = nn)})
   
+  sankeyData <- reactive({sankey <- sankey %>%
+    filter(Occupation == input$occupationGroup) %>%
+    filter(Median.Hourly.Earnings >= input$wageSlide) %>%
+    select(1:3) %>%      
+    top_n(10, wt = value)
+  })
+  
+  #sankeyAllData <- reactive({sankeyAll <- sankeyAll %>%
+   # filter(Occupation == input$occupationGroup) %>%
+    #select(1:3) %>%      
+    #top_n(50, wt = value)
+  #})
+  
   
   ## OUTPUT PLOTS
   output$value <- renderPlot({
     
               treemap(credentials(),  index = 'label', vSize = 'nn',
                       vColor = 'Certification', 
-                      title  = '')})
+                      title  = '')
+    })
   
-  sankeyData <- reactive({sankey <- sankey %>%
-    filter(Occupation == input$occupationGroup) %>%
-    select(2:4) %>%
-    top_n(10, wt = value)
-  })
+
   
   output$view  <- renderGvis({
 
@@ -72,11 +93,24 @@ shinyServer(function(input, output) {
                              from    = "source",
                              to      = "target",
                              weight  = "value" ,
-                             options = list(height = 500,
+                             options = list(height = 700,
                                             width  = "100%", 
-                                            sankey = opts))})
+                                            sankey = opts))
+    })
+  
+  #output$sankeyAll  <- renderGvis({
+    
+   # gvisSankey(sankeyAllData(), 
+    #           from    = "source",
+    #           to      = "target",
+    #           weight  = "value" ,
+    #           options = list(height = 800,
+    #                          width  = "100%", 
+    #                          sankey = opts))
+  #})
 
 })
+
 
 
 #sankey ="{link: {color: { fill: '#73AFD4' } },
@@ -90,16 +124,19 @@ shinyServer(function(input, output) {
 #  output$it <- renderUI(
 #      htmlTemplate('index.html', 
 #          sankey = sankey)) 
-sankey <- sankey %>%
-  filter(Occupation == "Management") %>%
-  select(2:4) %>%
-  top_n(10, wt = value)
+#sankey$Occupation <- as.character(sankey$Occupation)
+#test <- sankey %>% subset(socGroup == 11) %>%
+#  select(2:4) %>%
+#  top_n(10, wt = value)
+#sankey[sankey$Occupation == "Management"]
+#gvisSankey(sankey, 
+#           from    = "source",
+#           to      = "target",
+#           weight  = "value" ,
+#           options = list(height = 500,
+#                          width  = "100%", 
+#                          sankey = opts))
 
-gvisSankey(sankey, 
-           from    = "source",
-           to      = "target",
-           weight  = "value" ,
-           options = list(height = 500,
-                          width  = "100%", 
-                          sankey = opts))
 
+# notice how few arguments we need now
+# some output but not the nice output I expect

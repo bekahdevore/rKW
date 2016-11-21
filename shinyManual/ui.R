@@ -19,16 +19,28 @@ shinyUI(fluidPage(
         h3("Welcome!"),
         h5("This is a guide."),
         p("A process manual to help anyone replicate reports, data, and visualizations published the KentuckianaWorks Labor Market Intelligence Department."), 
-        h5("An attempt will be made to make this as precise and painless as possible for all involved."),
-        h3("Each tab contains processes for different projects"), 
-        h2("May the odds be ever in your favor.")
+        p("An attempt will be made to make this as precise and painless as possible for all involved."),
+        p("Each tab contains processes for different projects"), 
+        h5("May the odds be ever in your favor :)")
       ),
       
       
       tabPanel(
         'Career Calculator',
         h1("Career Calculator"), 
-        h5('Data update schedule can be found here:', a('Career Calculator Update Schedule', href = 'https://docs.google.com/document/d/1dXribqXG8DJbaM_NsCI20mfLfI73PB-c7805_O0dv_g/pub'))
+        h5('Data update schedule can be found here:', 
+           a('Career Calculator Update Schedule',
+              href = 'https://docs.google.com/document/d/1dXribqXG8DJbaM_NsCI20mfLfI73PB-c7805_O0dv_g/pub')), 
+        h3('Updating the App'), 
+        p('You need access to the login credentials for the AWS console found here:', 
+           a('AWS credentials', 
+              href = 'https://docs.google.com/a/kentuckianaworks.org/spreadsheets/d/1Rv5j9HcVbbSdPOGJUeu4cSYID6AL6d2sDDBtbKmesuY/edit?usp=sharing')), 
+        p('Once logged in navigate to "Services", then "S3"'), 
+        p('This is where you will find a data "bucket", with downloadable and uploadable data connected to the app'), 
+        p('To update a specific data point, download the datasheet, edit, save, then upload back into the same S3 bucket'), 
+        p('To upload an entire data set, just upload the data set into the bucket, the app is programmed to
+          automatically select and place the new data')
+        
       ),
       
       tabPanel(
@@ -90,11 +102,11 @@ shinyUI(fluidPage(
         h4('Click on a link below to open Shiny App'),
         h5(a('Credentials Analysis', href = 'https://kwlmi.shinyapps.io/shinyCredentialsByEducation/')),
         p('In Progress:'),
-        p('Adding wage ranges for occupations in sankey chart'),
-        p('Adding download .PNG button for easy transfer to communications dept.'),
+        p('Adding bar chart with top 3 credentials by major'),
+        p('Adding summary statistics'),
         br(),
         h5(a('Career Pathways',        href = 'https://kwlmi.shinyapps.io/shinyCareerPathways/')), 
-        p('In progress: Developing backend for data input'), 
+        p('In progress: checking data codes in HTML and rScipts, and adding to catagories'), 
         br(),
         h5(a('BLS Newsletter Update',   href = 'https://kwlmi.shinyapps.io/shinyBlsUpdates/')),
         br(),
