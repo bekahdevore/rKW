@@ -3,14 +3,17 @@ library(shinythemes)
 library(dplyr)
 library(treemap)
 library(googleVis)
-library(plotly)
 
-credentialByEducationLevel <- read.csv("credentialByEducation.csv")
-credentialByEducationLevel <- credentialByEducationLevel %>% filter(Degree != 'na')
-majors                     <- read.csv('majors.csv')
-occupationNames            <- read.csv('sankey.csv')
-occupationNames            <- occupationNames %>% filter(socGroup != 55)
-occupationNames$label      <- as.character(occupationNames$label)
+
+employersList              <- read.csv('employersList.csv')
+majors                     <- read.csv('majorsList.csv')
+occupationNames            <- read.csv('occupationList.csv')
+certificationList          <- read.csv('certificationList.csv')
+
+employersList              <- employersList   %>% filter(x != 'na') %>% arrange(x)
+majors                     <- majors          %>% arrange(x)
+occupationNames            <- occupationNames %>% filter(x != 55)   %>% arrange(x)
+
 
 selectChoices              <- c("High School", 
                                 "Associate's", 
@@ -37,7 +40,7 @@ navbarPage(
            h5("Credentials by Major Occupation Group"),
            selectInput("occupationGroup", 
                        label = h4("Choose an occupation group"), 
-                       choices = unique(occupationNames$Occupation)), 
+                       choices = unique(occupationNames$x)), 
            sliderInput("wageSlide", 
                        "Occupations with a median wage at or above:", 
                        min=0, 
@@ -60,7 +63,7 @@ navbarPage(
                       choices = selectChoices, 
                       0)),
           column(10, align ='center', 
-                 h1("Top Certifications by Education Level"))),
+                 h1("Top Credentials by Education Level"))),
           fluidRow(
           #plotOutput('value'), 
           column(12, plotOutput('educationBar'))),
@@ -72,12 +75,12 @@ navbarPage(
                       label   = h4('Choose an education level'), 
                       choices = selectChoicesMajor)),
           column(10, align = 'center',
-                 h1('Certifications by Education Level and Major'))),
+                 h1('Credentials by Education Level and Major'))),
           fluidRow(
           column(2, 
                  selectizeInput('majors', 
                       label   = h4('Choose or type a major'), 
-                      choices = unique(majors$STDMajor))), 
+                      choices = unique(majors$x))), 
           column(10, align ='center',
                  plotOutput('majors'))),
           br(), 
@@ -87,6 +90,18 @@ navbarPage(
           br(), 
           br()
   )),
+  
+  tabPanel('Employers', 
+           selectizeInput('employers', "Select or type an employer:", 
+                          choices = employersList$x, 
+                          selected = 'Humana'), 
+           plotOutput('employers'), 
+           br(), 
+           br(), 
+           selectizeInput('certification', "Select of type a credential", 
+                          choices = certificationList$x), 
+           htmlOutput('credentialEmployer')
+           ),
   
   tabPanel('About Data', 
            h1('Burning Glass, Labor Insights'),

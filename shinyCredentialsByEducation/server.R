@@ -1,20 +1,23 @@
 library(shiny)
 library(shinythemes)
-library(dplyr)
+library(plyr)
+#library(dplyr)
 library(treemap)
 library(googleVis)
 library(RCurl)
-library(plotly)
 library(ggplot2)
-library(plyr)
+
 
 
 ## LOAD DATA
 credentialByEducationLevel   <- read.csv("credentialByEducation.csv")
 sankey                       <- read.csv('sankey.csv')
-sankeyAll                    <- read.csv('sankeyAll.csv')
 majors                       <- read.csv('majors.csv')
+employers                    <- read.csv('employers.csv')
 
+#credentialByEducationLevel <- credentialByEducationLevel %>% select(2:4)
+#credentialByEducationLevel$Certification <- as.character(credentialByEducationLevel$Certification)
+#credentialByEducationLevel$nn            <- as.numeric(as.character(credentialByEducationLevel$nn))
 
 sankeyFilter <- function(dataHere){
   colnames(dataHere)[4] <- 'value'
@@ -22,24 +25,16 @@ sankeyFilter <- function(dataHere){
 }
 
 sankey    <- sankeyFilter(sankey)
-sankeyAll <- sankeyFilter(sankeyAll)
+#sankeyAll <- sankeyFilter(sankeyAll)
+majors$n <- 1
 
-## Add Number to Count Observations
-credentialByEducationLevel$n <- 1
-majors$n                     <- 1
+sankey$label <- as.character(sankey$label)
+sankey$Certification <- as.character(sankey$Certification)
+sankey$value <- as.numeric(as.character(sankey$value))
 
-## FILTERS
-credentials                <- credentialByEducationLevel %>%  filter(Degree != 'na')
-
-## COUNT BY DEGREE LEVEL AND CERTIFICATION
-credentialByEducationLevel   <- credentials %>% 
-                                    group_by(Degree, Certification) %>%
-                                    tally  %>%
-                                    group_by(Degree) 
-
-credentialByEducationLevel$nn            <- as.numeric(as.character(credentialByEducationLevel$nn))
-credentialByEducationLevel$Certification <- as.character(credentialByEducationLevel$Certification)
-
+colnames(sankey)[1] <- 'source'
+colnames(sankey)[2] <- 'target'
+colnames(sankey)[3] <- 'value'
 ## ADD COMMAS FOR LABELS
 #credentialByEducationLevel$commaNumber <- format(credentialByEducationLevel$nn, big.mark = ',')
 
@@ -86,7 +81,7 @@ shinyServer(function(input, output) {
     #}
     #else {
     credentialByEducationLevel <- credentialByEducationLevel %>%
-    filter(Degree == input$select) %>%
+                              filter(Degree == input$select) %>%
     #filter(nn >= 0) %>%
     top_n(10, wt = nn)
     #}
@@ -99,8 +94,9 @@ shinyServer(function(input, output) {
   sankeyData <- reactive({sankey <- sankey %>%
     filter(Occupation == input$occupationGroup) %>%
     filter(Median.Hourly.Earnings >= input$wageSlide) %>%
-    select(1:3) %>%      
-    top_n(10, wt = value)
+    select(1:3)# %>%      
+    #top_n(10, wt = 'value')
+    sankey <- head(arrange(sankey, desc(value)), n = 10)
   })
   
   majorsData <- reactive({
@@ -112,17 +108,34 @@ shinyServer(function(input, output) {
     majors    <- majors %>% select(1,3)
     majors$nn <- as.numeric(as.character(majors$nn))
     majors$label <- paste(majors$Certification,'\n', '(', majors$nn, 'postings',')')
-    majors    <- head(arrange(majors, desc(nn)), n = 15)
-    
+    majors <- head(arrange(majors, desc(nn)), n = 15)
     
   })
   
+  
+  employersData <- reactive({
+    employers <- employers %>%
+      filter(Employer == input$employers)
+    
+    employers    <- dplyr::count(employers, Certification, n)
+    #employers    <- employers %>% select(1,3)
+    employers$nn <- as.numeric(as.character(employers$nn))
+    employers$label <- paste(employers$Certification,'\n', '(', employers$nn, 'postings',')')
+    employers       <- head(arrange(employers, desc(nn)), n = 15)
+  })
+  
+  credentialEmployerData <- reactive({
+    credential <- employers %>%
+      filter(Certification == input$certification)
+      credential$n <- as.numeric(credential$n)
+      
+      credential <- credential %>% select(2,4,5)
+  })
   #sankeyAllData <- reactive({sankeyAll <- sankeyAll %>%
    # filter(Occupation == input$occupationGroup) %>%
     #select(1:3) %>%      
     #top_n(50, wt = value)
   #})
-  
   
   ## OUTPUT PLOTS
   #output$value <- renderPlot({
@@ -173,6 +186,26 @@ shinyServer(function(input, output) {
              vColor = 'Certification', 
              title  = '')
    })
+   
+   output$employers <- renderPlot({
+     
+     treemap(employersData(),  index = 'label', vSize = 'nn',
+             vColor = 'Certification', 
+             title  = '')
+   })
+   
+   output$credentialEmployer  <- renderGvis({
+     
+     gvisSankey(credentialEmployerData(), 
+                from    = "Employer",
+                to      = "SOCName",
+                weight  = "n" ,
+                options = list(height = 700,
+                               width  = "100%", 
+                               sankey = opts))
+   })
+   
+   
   
   #output$sankeyAll  <- renderGvis({
     

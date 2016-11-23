@@ -140,13 +140,16 @@ shinyUI(fluidPage(
       
       tabPanel(
         'Other', 
-        h5('Find the', a('MIT Living Wage here', href = 'http://livingwage.mit.edu/metros/31140'), 'we use the measure for a family of two with two children w/o childcare.')
+        h5('Find the', a('MIT Living Wage here', 
+                         href = 'http://livingwage.mit.edu/metros/31140'), 
+           'we use the measure for a family of two with two children w/o childcare.')
       ),
       
       tabPanel(
         'About Datasets', 
         h1('The datasets...'), 
         h5('American Community Survey'),
+        h5('Public Use Microdatasets (PUMS)'),
         h5('Bureau of Labor Statistics'), 
         h5('EMSI Analyst'), 
         h5('Burning Glass'), 

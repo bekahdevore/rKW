@@ -3,20 +3,48 @@ library(RCurl)
 
 socNamesConnection   <- getURL('https://docs.google.com/spreadsheets/d/1wWVpXkU7OG2dGjCEEOK4Z4sS02tgK9_zee9cl0MdQRE/pub?gid=0&single=true&output=csv')
 emsiWageConnection   <- getURL("https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5dubxmVxSbxynxKG26BCRQK-9Zx6Yodzc5oEYPoSLdlUCPxzPWnEEucvDuornbObHCEaVC_OuOqE9/pub?gid=0&single=true&output=csv")
-socNames             <- read.csv(textConnection(socNamesConnection))
 
+socNames             <- read.csv(textConnection(socNamesConnection))
 wageRanges           <- read.csv(textConnection(emsiWageConnection))
 louisvilleDataCerts  <- read.csv('louisvilleDataCerts.csv')
 
+certificationList    <- unique(louisvilleDataCerts$Certification)
+certificationList    <- na.omit(certificationList)
+certificationList    <- arrange(certificationList, x)
+write.csv(certificationList, file = 'certificationList.csv')
+
 #cip                 <- read.csv('louisvilleDataCIP.csv')
 #major               <- read.csv('louisvilleDataStdMajor.csv')
+#certifications      <- louisvilleDataCerts %>% select(2, 36)
 
-#certifications      <- louisvilleDataCerts %>%
-#                                 select(2, 36)
+##### NEED TO EDIT FOR THIS SCRIPT TO WORK 
+#degreeList    <- unique(credentialByEducationLevel$Degree)
+#employersList <- unique(employers$Employer) 
+#majorsList    <- unique(majors$STDMajor)
+#sankeyList    <- unique(sankey$Occupation)
 
+#write.csv(degreeList,    file = 'degreeList.csv')
+#write.csv(employersList, file = 'employersList.csv')
+#write.csv(majorsList,    file = 'majorsList.csv')
+#write.csv(sankeyList,    file = 'occupationList.csv')
+
+######## EMPLOYERS DATA
+employers <- louisvilleDataCerts %>% select(9, 36, 6)
+employers <- na.omit(employers)
+employers <- employers %>% filter(Employer != 'na')
+employers$n <- 1
+employers$label <- paste(employers$Certification, '\n', '(', 'job postings', ')')
+
+#### STOPPED HERE
+employersSankey <- dplyr::count(employers, Certification, wt = n)
+
+####### SOC NAMES DATA
 colnames(socNames)[1] <- "socGroup"
 socNames      <- socNames %>% select(1:2)
 
+
+
+##### WAGE RANGES DATA
 wageRanges    <- select(wageRanges, 1:2, 4:6, 5)
 
 wageRanges                    <- as.data.frame(lapply(wageRanges, function(x) { gsub('\\$', '', x )}))
@@ -33,14 +61,23 @@ wageRanges$Pct..25.Hourly.Earnings <- paste("$", (format(round((wageRanges$Pct..
 wageRanges$Median.Hourly.Earnings  <- round((wageRanges$Median.Hourly.Earnings * 2080), 0)
 wageRanges$Pct..75.Hourly.Earnings <- paste("$", (format(round((wageRanges$Pct..75.Hourly.Earnings * 2080), 0), big.mark = ',')), sep = '')
 
+
+
 ## CREDENTIAL BY EDUCATION LEVEL
-#credentialByEducationLevel <- louisvilleDataCerts %>%
-#                                 select(2, 20:23, 36)
+credentialByEducationLevel <- louisvilleDataCerts %>% select(2, 20:23, 36) %>% filter(Degree != 'na')
+credentialByEducationLevel <- na.omit(credentialByEducationLevel)
+## Add Number to Count Observations
+credentialByEducationLevel$n <- 1
 
-#credentialByEducationLevel <- na.omit(credentialByEducationLevel)
-#summary(credentialByEducationLevel)
+## COUNT BY DEGREE LEVEL AND CERTIFICATION
+credentialByEducationLevel   <- credentialByEducationLevel %>% 
+  group_by(Degree, Certification) %>%
+  tally  %>%
+  group_by(Degree)
 
-#write.csv(credentialByEducationLevel, file = "credentialByEducation.csv")
+write.csv(credentialByEducationLevel, file = "credentialByEducation.csv")
+
+
 
 
 ## CREDENTIAL TO OCCUPATION SANKEY
@@ -99,6 +136,7 @@ credentialsToOccupations <- credentialsToOccupations %>% select(11, 2:5, 9, 1)
 
 
 write.csv(credentialsToOccupations, file = "sankey.csv")
+write.csv(employers,                file = "employers.csv")
 ######## For Data including job postings with no credential specification
 #write.csv(credentialsToOccupations, file = "sankeyAll.csv")
 
