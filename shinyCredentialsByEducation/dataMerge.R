@@ -1,5 +1,6 @@
 library(dplyr)
 library(RCurl)
+library(googlesheets)
 
 socNamesConnection   <- getURL('https://docs.google.com/spreadsheets/d/1wWVpXkU7OG2dGjCEEOK4Z4sS02tgK9_zee9cl0MdQRE/pub?gid=0&single=true&output=csv')
 emsiWageConnection   <- getURL("https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5dubxmVxSbxynxKG26BCRQK-9Zx6Yodzc5oEYPoSLdlUCPxzPWnEEucvDuornbObHCEaVC_OuOqE9/pub?gid=0&single=true&output=csv")
@@ -47,8 +48,8 @@ socNames      <- socNames %>% select(1:2)
 ##### WAGE RANGES DATA
 wageRanges    <- select(wageRanges, 1:2, 4:6, 5)
 
-wageRanges                    <- as.data.frame(lapply(wageRanges, function(x) { gsub('\\$', '', x )}))
-wageRanges                    <- as.data.frame(lapply(wageRanges, function(x) { gsub('Insf. Data', '0', x )}))
+wageRanges    <- as.data.frame(lapply(wageRanges, function(x) { gsub('\\$', '', x )}))
+wageRanges   <- as.data.frame(lapply(wageRanges, function(x) { gsub('Insf. Data', '0', x )}))
 
 variables <- c('Pct..25.Hourly.Earnings',
                'Median.Hourly.Earnings',
@@ -87,8 +88,7 @@ credentialsToOccupations$Certification <- as.character(credentialsToOccupations$
 #credentialsToOccupations[, 5][is.na(credentialsToOccupations[, 5])] <- "No Certification"
 credentialsToOccupations$t <- 1
 
-countCredentials <- count(credentialsToOccupations, Certification, wt = t, sort = TRUE)
-sum(countCredentials)
+countCredentials         <- dplyr::count(credentialsToOccupations, Certification, wt = t, sort = TRUE)
 
 credentialsToOccupations <- na.omit(credentialsToOccupations)
 
@@ -137,6 +137,42 @@ credentialsToOccupations <- credentialsToOccupations %>% select(11, 2:5, 9, 1)
 
 write.csv(credentialsToOccupations, file = "sankey.csv")
 write.csv(employers,                file = "employers.csv")
+
+### GROUP BY MAJOR OCCUPATION GROUP
+sankey$socGroup <- as.character(sankey$socGroup)
+colnames(socNames)[1] <- "socGroup"
+socNames$socGroup <- as.character(socNames$socGroup)
+
+occupationGroupCount <- sankey %>% 
+                                group_by(socGroup, Certification) %>%
+                                tally  %>%
+                                group_by(socGroup) 
+
+occupationGroupCount$socGroup <- as.character(occupationGroupCount$socGroup)
+
+occupationGroupCount <- left_join(occupationGroupCount, socNames, by = "socGroup")
+
+write.csv(occupationGroupCount, file = "occupationGroupData.csv")
+
+
+credentialCount <- gs_title("topCredentials")
+
+credentialCount <- credentialCount %>% 
+  gs_edit_cells(input = countCredentials,
+                anchor = "A1", byrow = TRUE)
+
+
+
+
+
+
+
+
+
+
+
+
+
 ######## For Data including job postings with no credential specification
 #write.csv(credentialsToOccupations, file = "sankeyAll.csv")
 

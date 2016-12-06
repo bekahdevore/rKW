@@ -10,9 +10,17 @@ majors                     <- read.csv('majorsList.csv')
 occupationNames            <- read.csv('occupationList.csv')
 certificationList          <- read.csv('certificationList.csv')
 
+t                            <- 23
+w                            <- "All"
+all                          <- cbind(t, w)
+colnames(all)                <- c("X", "occupation")
+colnames(occupationNames)[2] <- "occupation"
+occupationNames               <- rbind(occupationNames, all)
+rm(all)
+
 employersList              <- employersList   %>% filter(x != 'na') %>% arrange(x)
 majors                     <- majors          %>% arrange(x)
-occupationNames            <- occupationNames %>% filter(x != 55)   %>% arrange(x)
+occupationNames            <- occupationNames %>% arrange(occupation)
 
 
 selectChoices              <- c("High School", 
@@ -40,14 +48,16 @@ navbarPage(
            h5("Credentials by Major Occupation Group"),
            selectInput("occupationGroup", 
                        label = h4("Choose an occupation group"), 
-                       choices = unique(occupationNames$x)), 
+                       choices = unique(occupationNames$occupation)), 
            sliderInput("wageSlide", 
                        "Occupations with a median wage at or above:", 
                        min=0, 
                        max=216216, 
                        value=47273), 
            
-            htmlOutput('view')
+            htmlOutput('view')#,
+           #h1('break'),
+            #htmlOutput('occupationGroup')
            #br(), 
            #br(), 
            #h2('Including postings not asking for a credential:'), 
@@ -59,7 +69,7 @@ navbarPage(
             fluidRow(
           column(2, 
           selectInput("select", 
-                      label = h4("Choose an education level"), 
+                      label = h4("Select an education level"), 
                       choices = selectChoices, 
                       0)),
           column(10, align ='center', 
@@ -72,14 +82,14 @@ navbarPage(
           fluidRow(
           column(2,
                  selectInput('majorsDegree', 
-                      label   = h4('Choose an education level'), 
+                      label   = h4('Select an education level'), 
                       choices = selectChoicesMajor)),
           column(10, align = 'center',
                  h1('Credentials by Education Level and Major'))),
           fluidRow(
           column(2, 
                  selectizeInput('majors', 
-                      label   = h4('Choose or type a major'), 
+                      label   = h4('Select/type a major'), 
                       choices = unique(majors$x))), 
           column(10, align ='center',
                  plotOutput('majors'))),
@@ -92,13 +102,13 @@ navbarPage(
   )),
   
   tabPanel('Employers', 
-           selectizeInput('employers', "Select or type an employer:", 
+           selectizeInput('employers', "Select/type an employer:", 
                           choices = employersList$x, 
                           selected = 'Humana'), 
            plotOutput('employers'), 
            br(), 
            br(), 
-           selectizeInput('certification', "Select of type a credential", 
+           selectizeInput('certification', "Select/type a credential", 
                           choices = certificationList$x), 
            htmlOutput('credentialEmployer')
            ),
