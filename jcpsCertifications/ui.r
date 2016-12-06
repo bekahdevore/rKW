@@ -5,9 +5,11 @@ library(DT)
 
 healthList <- read.csv("occupationList.csv")
 manuList   <- read.csv("manufacturingOccupationList.csv")
+govList    <- read.csv("govOccupationList.csv")
 
 healthList <- select(healthList, 2)
 manuList   <- select(manuList,   2)
+govList    <- select(govList,    2)
 
 
 shinyUI(fluidPage(
@@ -16,7 +18,7 @@ shinyUI(fluidPage(
   mainPanel(
     tabsetPanel(
       tabPanel("Data", 
-        h1("Health Science Academies"), 
+        h1("Health Science Pathways"), 
         h4("Projected Jobs"),
         dataTableOutput("healthData"),
         p("Based on the Louisville area job growth, potiential turnover and retirements in the following occupations", 
@@ -33,7 +35,7 @@ shinyUI(fluidPage(
                       tags$li(healthList$x[10])
           )),
 
-        h1("Manufacturing Science Academies"), 
+        h1("Advanced Manufacturing Pathways"), 
         h4("Projected Jobs"),
         dataTableOutput("manuData"), 
          p("Based on the Louisville area job growth, potiential turnover and retirements in the following occupations", 
@@ -60,8 +62,25 @@ shinyUI(fluidPage(
                       tags$li(manuList$x[20]),
                       tags$li(manuList$x[21]), 
                       tags$li(manuList$x[22])
-                    ))),
-    
+                    )),
+        h1("Government, Law and Public Administration Pathways"), 
+        h4("Projected Jobs"),
+        dataTableOutput("govData"),
+        p("Based on the Louisville area job growth, potiential turnover and retirements in the following occupations", 
+                  tags$ul(
+                    tags$li(govList$x[1]), 
+                    tags$li(govList$x[2]), 
+                    tags$li(govList$x[3]), 
+                    tags$li(govList$x[4]), 
+                    tags$li(govList$x[5]), 
+                    tags$li(govList$x[6]), 
+                    tags$li(govList$x[7]), 
+                    tags$li(govList$x[8]), 
+                    tags$li(govList$x[9]), 
+                    tags$li(govList$x[10]), 
+                    tags$li(govList$x[11])
+                  ))),
+      
     tabPanel("About",
              p("Projected jobs and retirements come from", a("EMSI analyst", href = "http://www.economicmodeling.com/analyst/"), ". 
                EMSI aggregates", a("Census", href = "http://factfinder.census.gov/faces/nav/jsf/pages/index.xhtml"),  
