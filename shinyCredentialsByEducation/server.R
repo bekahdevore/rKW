@@ -20,6 +20,7 @@ occupationGroupData          <- read.csv('occupationGroupData.csv')
 #credentialByEducationLevel$Certification <- as.character(credentialByEducationLevel$Certification)
 #credentialByEducationLevel$nn            <- as.numeric(as.character(credentialByEducationLevel$nn))
 employers <- employers %>% select(4:8)
+
 sankeyFilter <- function(dataHere){
   colnames(dataHere)[4] <- 'value'
   dataHere <- dataHere %>% select(2:7)
@@ -112,6 +113,8 @@ shinyServer(function(input, output) {
     sankey <- head(arrange(sankey, desc(value)), n = 10)
   }})
   
+  
+  
   occupationGroup <- reactive({
     if(input$occupationGroup == 'All'){ 
       occupationGroup <- occupationGroupData %>% 
@@ -129,6 +132,8 @@ shinyServer(function(input, output) {
     }})
   
   
+  
+  
   majorsData <- reactive({
     majors <- majors %>%
       filter(Degree   == input$majorsDegree) %>%
@@ -137,9 +142,10 @@ shinyServer(function(input, output) {
     majors    <- dplyr::count(majors, Certification, n)
     majors    <- majors %>% select(1,3)
     majors$nn <- as.numeric(as.character(majors$nn))
+
     majors$label <- paste(majors$Certification,'\n', '(', majors$nn, 'postings',')')
     majors <- head(arrange(majors, desc(nn)), n = 15)
-    
+
   })
   
   
@@ -226,7 +232,8 @@ shinyServer(function(input, output) {
   })
   
    output$majors <- renderPlot({
-      
+     
+     
        treemap(majorsData(),  index = 'label', vSize = 'nn',
                vColor = 'Certification', 
                title  = '')
