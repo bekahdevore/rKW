@@ -7,10 +7,12 @@ library(dplyr)
 healthData        <- read.csv("healthData.csv",        check.names = FALSE)
 manufacturingData <- read.csv("manufacturingData.csv", check.names = FALSE)
 govData           <- read.csv("govData.csv",           check.names = FALSE)
+animalData        <- read.csv("animalData.csv",        check.names = FALSE)
 
 healthData        <- healthData        %>% select(2:6)
 manufacturingData <- manufacturingData %>% select(2:6)
 govData           <- govData           %>% select(2:6)
+animalData        <- animalData        %>% select(2:6)
 
 
 shinyServer(function(input, output) {
@@ -29,6 +31,12 @@ shinyServer(function(input, output) {
         
         output$govData  <- renderDataTable({
                                 datatable(govData, 
+                                          options  = list(dom = "t"), 
+                                          rownames = FALSE)
+        })
+        
+        output$animalData <- renderDataTable({
+                                datatable(animalData, 
                                           options  = list(dom = "t"), 
                                           rownames = FALSE)
         })

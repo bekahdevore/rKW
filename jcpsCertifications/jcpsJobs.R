@@ -123,38 +123,52 @@ allOccupations        <- left_join(originalData, splitSOC, by = "SOC")
 #                               "51-4121",
 #                               "51-4122")
 
-govLawPublicAdmin <- c("55-9999",
-                       "29-2041",
-                       "33-2011",
-                       "33-2021",
-                       "43-5031",
-                       "23-2011",
-                       "33-3021",
-                       "33-9099",
-                       "33-9032",
-                       "33-3012",
-                       "33-3051")
+# govLawPublicAdmin <- c("55-9999",
+#                        "29-2041",
+#                        "33-2011",
+#                        "33-2021",
+#                        "43-5031",
+#                        "23-2011",
+#                        "33-3021",
+#                        "33-9099",
+#                        "33-9032",
+#                        "33-3012",
+#                        "33-3051")
+
+animalAndFoodSciences <- c("11-9051",
+                           "19-4011",
+                           "29-2051",
+                           "31-9096",
+                           "35-1012",
+                           #"35-2011",
+                           "35-2012",
+                           "35-2014",
+                           "35-2019",
+                           "35-2021")
 
 
 
 
 
 ################## OUTPUT 
-#govLawPublicAdminData <- growthOutput(govLawPublicAdmin, .0151)
-#healthData        <- growthOutput(healthOccupations,        .025)
-#manufacturingData <- growthOutput(manufacturingOccupations, .02125)
+#govLawPublicAdminData <- growthOutput(govLawPublicAdmin,        .0151)
+#healthData            <- growthOutput(healthOccupations,        .025)
+#manufacturingData     <- growthOutput(manufacturingOccupations, .02125)
+animalAndFoodData      <- growthOutput(animalAndFoodSciences,    .0601)
 
 #healthList <- occupationList(healthOccupations)
 #manuList   <- occupationList(manufacturingOccupations)
-govList    <- occupationList(govLawPublicAdmin)
-colnames(govList)[1] <- "x"
+#govList    <- occupationList(govLawPublicAdmin)
+animalList  <- occupationList(animalAndFoodSciences)
+colnames(animalList)[1] <- "x"
 
 
 #write.csv(healthData,        file = "healthData.csv")
 #write.csv(manufacturingData, file = "manufacturingData.csv")
 #write.csv(govLawPublicAdminData, file = "govData.csv")
+write.csv(animalAndFoodData, file = "animalData.csv")
 
-#write.csv(healthList,    file = "healthOccupationList.csv")
-#write.csv(manuList,      file = "manufacturingOccupationList.csv")
-write.csv(govList,        file = "govOccupationList.csv")
-
+#write.csv(healthList,    file  = "healthOccupationList.csv")
+#write.csv(manuList,      file  = "manufacturingOccupationList.csv")
+#write.csv(govList,        file = "govOccupationList.csv")
+write.csv(animalList,      file = "animalList.csv")

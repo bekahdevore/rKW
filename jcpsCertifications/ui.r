@@ -6,10 +6,12 @@ library(DT)
 healthList <- read.csv("occupationList.csv")
 manuList   <- read.csv("manufacturingOccupationList.csv")
 govList    <- read.csv("govOccupationList.csv")
+animalList <- read.csv("animalList.csv")
 
 healthList <- select(healthList, 2)
 manuList   <- select(manuList,   2)
 govList    <- select(govList,    2)
+animalList <- select(animalList, 2)
 
 
 shinyUI(fluidPage(
@@ -79,7 +81,22 @@ shinyUI(fluidPage(
                     tags$li(govList$x[9]), 
                     tags$li(govList$x[10]), 
                     tags$li(govList$x[11])
-                  ))),
+                  )),
+        h1("Animal and Food Science Pathways"), 
+        h4("Projected Jobs"),
+        dataTableOutput("animalData"),
+        p("Based on the Louisville area job growth, potiential turnover and retirements in the following occupations", 
+          tags$ul(
+            tags$li(animalList$x[1]), 
+            tags$li(animalList$x[2]), 
+            tags$li(animalList$x[3]), 
+            tags$li(animalList$x[4]), 
+            tags$li(animalList$x[5]), 
+            tags$li(animalList$x[6]), 
+            tags$li(animalList$x[7]), 
+            tags$li(animalList$x[8]), 
+            tags$li(animalList$x[9])
+          ))),
       
     tabPanel("About",
              p("Projected jobs and retirements come from", a("EMSI analyst", href = "http://www.economicmodeling.com/analyst/"), ". 

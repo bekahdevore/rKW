@@ -1,0 +1,9 @@
+name: resCareDataRequest
+account: kwlmi
+server: shinyapps.io
+appId: 144336
+bundleId: 645803
+url: https://kwlmi.shinyapps.io/resCareDataRequest/
+when: 1481572053.3718
+asMultiple: FALSE
+asStatic: FALSE

@@ -7,8 +7,6 @@ library(googleVis)
 library(RCurl)
 library(ggplot2)
 
-
-
 ## LOAD DATA
 credentialByEducationLevel   <- read.csv("credentialByEducation.csv")
 sankey                       <- read.csv('sankey.csv')
@@ -19,8 +17,9 @@ occupationGroupData          <- read.csv('occupationGroupData.csv')
 #credentialByEducationLevel <- credentialByEducationLevel %>% select(2:4)
 #credentialByEducationLevel$Certification <- as.character(credentialByEducationLevel$Certification)
 #credentialByEducationLevel$nn            <- as.numeric(as.character(credentialByEducationLevel$nn))
-employers <- employers %>% select(4:8)
+employers <- employers %>% select(2:6)
 
+### PREPARE SANKEY DATA
 sankeyFilter <- function(dataHere){
   colnames(dataHere)[4] <- 'value'
   dataHere <- dataHere %>% select(2:7)
@@ -30,13 +29,17 @@ sankey    <- sankeyFilter(sankey)
 #sankeyAll <- sankeyFilter(sankeyAll)
 majors$n <- 1
 
+
+### CHANGE DATA TYPE
 sankey$label         <- as.character(sankey$label)
 sankey$Certification <- as.character(sankey$Certification)
 sankey$value         <- as.numeric(as.character(sankey$value))
 
-colnames(sankey)[1] <- 'source'
-colnames(sankey)[2] <- 'target'
-colnames(sankey)[3] <- 'value'
+
+## CHANGE COLUMN NAMES
+colnames(sankey)[1]  <- 'source'
+colnames(sankey)[2]  <- 'target'
+colnames(sankey)[3]  <- 'value'
 
 colnames(occupationGroupData)[5] <- 'source'
 colnames(occupationGroupData)[3] <- 'target'
