@@ -22,8 +22,15 @@ kentuckyPUMS     <- kentuckyPUMS %>%
 
 pums2015        <- rbind(indianaPUMS, kentuckyPUMS)
 
-pums2015        <- pums2015 %>%
-                    select(PWGTP, AGEP, RAC1P, SCHL, PERNP)
+
+df.expanded <- pums2015[rep(row.names(pums2015), pums2015$PWGTP), 1:100]
+df.expanded <- df.expanded %>% filter(AGEP >= 25 & WAGP != 0) %>% select(SCHL, NATIVITY, WAGP)
+df.expanded <- df.expanded %>% mutate(livingWage = ifelse(WAGP >= 47273, 1, 0))
+df.expanded <- df.expanded %>% select(SCHL, NATIVITY, livingWage)
+
+write.csv(df.expanded, file = 'pums2015expanded.csv')
+
+pums2015        <- pums2015 %>% select(PWGTP, AGEP, RAC1P, SCHL, PERNP)
 
 
 # OUTPUT TOO LARGE 

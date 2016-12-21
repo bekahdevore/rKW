@@ -23,7 +23,14 @@ colnames(test)[1] <- 'region'
 colnames(test)[2] <- 'value'
 
 zip_choropleth(test, 
-               title="Summer Works",
-               county_zoom = 21111) + scale_fill_brewer(name = "Population")
+               title="",
+               county_zoom = 21111) + scale_fill_brewer(name = "Population") + scale_fill_brewer(palette = 'Reds', direction = -1)
+
+zip_choropleth(test, 
+               title="",
+               msa_zoom="Louisville/Jefferson County, KY-IN") + scale_fill_brewer(name = "Population") + scale_fill_brewer(palette = 'Reds', direction = -1)
+
 
 datatable(test)
+
+
