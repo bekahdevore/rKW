@@ -7,11 +7,13 @@ healthList <- read.csv("occupationList.csv")
 manuList   <- read.csv("manufacturingOccupationList.csv")
 govList    <- read.csv("govOccupationList.csv")
 animalList <- read.csv("animalList.csv")
+businessList <- read.csv("businessList.csv")
 
-healthList <- select(healthList, 2)
-manuList   <- select(manuList,   2)
-govList    <- select(govList,    2)
-animalList <- select(animalList, 2)
+healthList   <- select(healthList, 2)
+manuList     <- select(manuList,   2)
+govList      <- select(govList,    2)
+animalList   <- select(animalList, 2)
+businessList <- select(businessList, 2)
 
 
 shinyUI(fluidPage(
@@ -96,7 +98,34 @@ shinyUI(fluidPage(
             tags$li(animalList$x[7]), 
             tags$li(animalList$x[8]), 
             tags$li(animalList$x[9])
-          ))),
+          )),
+      
+      h1("Business Pathways"), 
+      h4("Projected Jobs"),
+      dataTableOutput("businessData"),
+      p("Based on the Louisville area job growth, potiential turnover and retirements in the following occupations", 
+        tags$ul(
+          tags$li(businessList$x[1]), 
+          tags$li(businessList$x[2]), 
+          tags$li(businessList$x[3]), 
+          tags$li(businessList$x[4]), 
+          tags$li(businessList$x[5]), 
+          tags$li(businessList$x[6]), 
+          tags$li(businessList$x[7]), 
+          tags$li(businessList$x[8]),
+          tags$li(businessList$x[9]),
+          tags$li(businessList$x[10]), 
+          tags$li(businessList$x[11]), 
+          tags$li(businessList$x[12]), 
+          tags$li(businessList$x[13]), 
+          tags$li(businessList$x[14]), 
+          tags$li(businessList$x[15]), 
+          tags$li(businessList$x[16]), 
+          tags$li(businessList$x[17]),
+          tags$li(businessList$x[18]),
+          tags$li(businessList$x[19]),
+          tags$li(businessList$x[20])
+        ))),
       
     tabPanel("About",
              p("Projected jobs and retirements come from", a("EMSI analyst", href = "http://www.economicmodeling.com/analyst/"), ". 

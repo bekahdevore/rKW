@@ -17,8 +17,8 @@ majorNames      <- read.csv(textConnection(majorConnection))
 ## Clean/filter Data 
 filterData <- function(originalData) {
                 originalData <- originalData %>% 
-                  select(PWGTP, RAC1P, FOD1P, SCHL) %>%
-                  filter(RAC1P <= 2 & SCHL >=21)
+                # select(PWGTP, RAC1P, FOD1P, SCHL) %>%
+                  filter(RAC1P <= 2) #& SCHL >=21)
                 # originalData <- na.omit(originalData) 
 } 
 
@@ -165,4 +165,8 @@ p6
 
 df.expanded <- bachelors[rep(row.names(bachelors), bachelors$PWGTP)]
 
+black %>% group_by(SCHL, ESR)
+
+
+ 
 

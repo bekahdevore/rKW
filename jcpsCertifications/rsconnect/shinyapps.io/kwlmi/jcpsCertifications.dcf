@@ -1,10 +1,11 @@
 name: jcpsCertifications
+title:
 account: kwlmi
 server: shinyapps.io
 appId: 141744
-bundleId: 641210
+bundleId: 711681
 url: https://kwlmi.shinyapps.io/jcpsCertifications/
-when: 1481230945.75921
+when: 1487108567.10743
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: jcpsJobs.R
