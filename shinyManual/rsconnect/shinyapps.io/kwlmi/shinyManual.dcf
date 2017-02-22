@@ -1,9 +1,10 @@
 name: shinyManual
+title:
 account: kwlmi
 server: shinyapps.io
 appId: 135614
-bundleId: 621188
+bundleId: 720725
 url: https://kwlmi.shinyapps.io/shinyManual/
-when: 1479751824.98104
+when: 1487781332.67305
 asMultiple: FALSE
 asStatic: FALSE

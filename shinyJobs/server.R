@@ -8,8 +8,11 @@
 library(shiny)
 library(dplyr)
 library(DT)
+library(RCurl)
 
-techJobs <- read.csv("techJobs.csv")
+
+dataConnection <- getURL("https://docs.google.com/spreadsheets/d/1BxPUQVLcH_Pclo8lp79jlw8ajsCdO31sB2_g9xQsYJY/pub?gid=0&single=true&output=csv")
+techJobs <- read.csv(textConnection(dataConnection))
 
 techJobs <- techJobs%>%
   select(Title, Employer, City, JobDate, JobUrl)%>%

@@ -1,8 +1,10 @@
 name: shinyJobs
+title:
 account: kwlmi
 server: shinyapps.io
-bundleId: 552580
+appId: 124698
+bundleId: 719675
 url: https://kwlmi.shinyapps.io/shinyJobs/
-when: 1473370246.58499
+when: 1487715508.19214
 asMultiple: FALSE
 asStatic: FALSE

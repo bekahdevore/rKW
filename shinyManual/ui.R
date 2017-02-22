@@ -46,7 +46,7 @@ shinyUI(fluidPage(
       tabPanel(
         'Data Requests',
         h1("Data Requests"), 
-        h5('Protocol to answering data requests:'), 
+        h5('Protocol:'), 
         h6('Step One:'), 
         p('Respond to inform the requester that you are aware of their request'), 
         h6('Step Two:'), 
@@ -54,7 +54,8 @@ shinyUI(fluidPage(
           If you have already answered a similar question that is current and will fufill the request, go no further and respond to
           the requester using the data and write a kind and succint email with some information about the data/visualization. If not, 
           proceed to Step Three.'), 
-        h6('Step Three:')
+        h6('Step Three:'), 
+        p()
       ),
       
       tabPanel(
@@ -105,7 +106,15 @@ shinyUI(fluidPage(
         p('Next run lines 1 - 24 to calculate the percent of bachelors degrees (remember this for the next step)'), 
         p('Almost finished ....'), 
         p('Next open piktochart, find the login credentials here: ')
-      ), 
+      ),
+      
+      tabPanel(
+        'Quarterly Report', 
+        h1("How to update the Quarterly Report"), 
+        h4("The quarterly report runs off of three data sheets, by updating 
+           the sheets the visualiations will automatically update when the scripts are run,
+           we will talk about how to do this is the following steps.")
+      ),
       
       tabPanel(
         'Shiny App Links', 
@@ -116,9 +125,9 @@ shinyUI(fluidPage(
         p('Adding bar chart with top 3 credentials by major'),
         p('Adding summary statistics'),
         br(),
-        h5(a('Career Pathways',        href = 'https://kwlmi.shinyapps.io/shinyCareerPathways/')), 
+        h5(a('Career Pathways',        href = 'https://kwlmi.shinyapps.io/careerpathways2/')), 
         p('In progress:'), 
-        p('checking data codes in HTML and rScipts, and adding to catagories'), 
+        p('checking functions in HTML and rScipts'), 
         br(),
         h5(a('BLS Newsletter Update',   href = 'https://kwlmi.shinyapps.io/shinyBlsUpdates/')),
         br(),
@@ -126,9 +135,13 @@ shinyUI(fluidPage(
         br(), 
         h5(a('JCTC Data Request',       href = 'https://kwlmi.shinyapps.io/shinyJCTC/')),
         br(),
+        h5(a('ResCare Data Request',    href = 'https://kwlmi.shinyapps.io/resCareDataRequest/')),
+        br(),
         h5(a('Business Majors',         href = 'https://kwlmi.shinyapps.io/louisvilleBusinessMajors/')),
         br(),
         h5(a('Tech Jobs Data Table',    href = 'https://kwlmi.shinyapps.io/shinyJobs/')),
+        br(),
+        h5(a('Current Jobs and Training',    href = 'https://kwlmi.shinyapps.io/currentJobsAndTraining/')),
         br(),
         h5(a('Louisville by Industry',  href = ' https://kwlmi.shinyapps.io/louByIndustry/')),
         br(),
@@ -153,7 +166,9 @@ shinyUI(fluidPage(
         h5('Bureau of Labor Statistics'), 
         h5('EMSI Analyst'), 
         h5('Burning Glass'), 
-        h5('KCEWS')
+        h5('KCEWS'), 
+        br(), 
+        h3("More information coming soon ... ")
       )
 
 
