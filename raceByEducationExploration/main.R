@@ -43,16 +43,27 @@ whiteBachelors <- bachelors %>% filter(RAC1P == 1)
 blackMasters   <- masters %>% filter(RAC1P == 2)
 whiteMasters   <- masters %>% filter(RAC1P == 1)
 
-genderBreakdownBA <- blackBachelors %>% count(SEX, wt = PWGTP)
-genderBreakdownMA <- blackMasters %>% count(SEX, wt = PWGTP)
-#calculate percent
-#pie graph
+genderBA <- blackBachelors %>% count(SEX, wt = PWGTP)
+genderMA <- blackMasters %>% count(SEX, wt = PWGTP)
 
 ageBA <- blackBachelors %>% count(AGEP, wt = PWGTP)
 ageMA <- blackMasters   %>% count(AGEP, wt = PWGTP)
 
 disabilityBA <- blackBachelors %>% count(DIS, wt = PWGTP)
 disabilityMA <- blackMasters   %>% count(DIS, wt = PWGTP)
+
+# Calculate Percents
 disabilityBA$percent <- (disabilityBA$n)/sum(disabilityBA$n)
 disabilityMA$percent <- (disabilityMA$n)/sum(disabilityMA$n)
- 
+
+genderBA$percent <- (genderBA$n)/sum(genderBA$n)
+genderMA$percent <- (genderMA$n)/sum(genderMA$n)
+
+## VISUALIZATOINS
+
+??pie
+
+
+pie(genderBA$percent)
+pie(genderMA$percent)
+
