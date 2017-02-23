@@ -1,6 +1,8 @@
 library(RCurl)
 library(dplyr)
-
+library(plotrix)
+library(scales)
+library(plotly)
 #Add pums household and population data
 indianaHousing  <- read.csv("ss15hin.csv")
 kentuckyHousing <- read.csv("ss15hky.csv")
@@ -43,14 +45,37 @@ whiteBachelors <- bachelors %>% filter(RAC1P == 1)
 blackMasters   <- masters %>% filter(RAC1P == 2)
 whiteMasters   <- masters %>% filter(RAC1P == 1)
 
-genderBA <- blackBachelors %>% count(SEX, wt = PWGTP)
-genderMA <- blackMasters %>% count(SEX, wt = PWGTP)
 
-ageBA <- blackBachelors %>% count(AGEP, wt = PWGTP)
-ageMA <- blackMasters   %>% count(AGEP, wt = PWGTP)
+countWeight <- function(enterData, countThis){
+  if(countThis == "SEX") {
+  enterData %>% count(SEX, wt = PWGTP)}
+  else if(countThis == "AGE") {
+    enterData %>% count(AGEP, wt = PWGTP)
+  }
+  else if(countThis == "DIS") {
+    enterData %>% count(DIS, wt = PWGTP)
+  }
+}
 
-disabilityBA <- blackBachelors %>% count(DIS, wt = PWGTP)
-disabilityMA <- blackMasters   %>% count(DIS, wt = PWGTP)
+percentFunction <- function(enterData){
+  enterData$percent <- enterData %>% dplyr::mutate(percent = ((enterData$n)/sum(enterData$n)))}
+test <- percentFunction(blackMastersSex)
+
+blackMastersAge   <- countWeight(blackMasters, "AGE")
+whiteMastersAge   <- countWeight(whiteMasters, "AGE")
+blackBachelorsAge <- countWeight(blackBachelors, "AGE")
+whiteBachelorsAge <- countWeight(whiteBachelors, "AGE")
+
+blackMastersSex   <- percentFunction(countWeight(blackMasters, "SEX"))
+whiteMastersSex   <- percentFunction(countWeight(whiteMasters, "SEX"))
+blackBachelorsSex <- percentFunction(countWeight(blackBachelors, "SEX"))
+whiteBachelorsSex <- percentFunction(countWeight(whiteBachelors, "SEX"))
+
+blackMastersDis   <- percentFunction(countWeight(blackMasters, "DIS"))
+whiteMastersDis   <- percentFunction(countWeight(whiteMasters, "DIS"))
+blackBachelorsDis <- percentFunction(countWeight(blackBachelors, "DIS"))
+whiteBachelorsDis <- percentFunction(countWeight(whiteBachelors, "DIS"))
+
 
 # Calculate Percents
 disabilityBA$percent <- (disabilityBA$n)/sum(disabilityBA$n)
@@ -61,9 +86,28 @@ genderMA$percent <- (genderMA$n)/sum(genderMA$n)
 
 ## VISUALIZATOINS
 
-??pie
+sexLabels <- c("Male", "Female")
+disabilityLabels <- c("Yes", "No")
 
+colors <- c('CCCC66', '#00CCFF')
+makePie <- function(enterData, enterTitle, enterLabels) {
+        p <- plot_ly(enterData, labels = enterLabels, values = ~percent, type = 'pie',
+                     textposition = 'inside',
+                     textinfo = 'label+percent',
+                     insidetextfont = list(color = '#003333', 
+                                           size  = 18),
+                     # hoverinfo = 'text',
+                     # text = ~paste('$', X1960, ' billions'),
+                     marker = list(colors = colors,
+                                   line = list(color = '#FFFFFF', width = 1)),
+                     #The 'pull' attribute can also be used to create space between the sectors
+                     showlegend = FALSE) %>%
+          layout(title = enterTitle,
+                 xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                 yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+        p
+}
 
-pie(genderBA$percent)
-pie(genderMA$percent)
-
+makePie(genderMA, "Black or African American, Masters", sexLabels)
+makePie(disabilityBA, "Black or African American with Bachelors, Disablity", c("Yes", "No"))
+makePie(disabilityMA, "Black or African American with Masters, Disability", c("Yes", "No"))
