@@ -18,11 +18,11 @@ rm(dataConnection)
 
 # filter for MSA
 pumaFilter <- function(enterData, enterPUMASList) {
-  dataSave <- enterData %>% filter(PUMA %in% pumas[, enterPUMASList])
+   dataSave <- enterData %>% filter(PUMA %in% pumas[, enterPUMASList])
 }
 
-indianaHousing    <- pumaFilter(indianaHousing, "inPUMA")
-kentuckyHousing   <- pumaFilter(kentuckyHousing, "kyPUMA")
+indianaHousing     <- pumaFilter(indianaHousing, "inPUMA")
+kentuckyHousing    <- pumaFilter(kentuckyHousing, "kyPUMA")
 
 indianaPopulation  <- pumaFilter(indianaPopulation, "inPUMA")
 kentuckyPopulation <- pumaFilter(kentuckyPopulation, "kyPUMA")
@@ -59,33 +59,27 @@ countWeight <- function(enterData, countThis){
 
 percentFunction <- function(enterData){
   enterData$percent <- enterData %>% dplyr::mutate(percent = ((enterData$n)/sum(enterData$n)))}
-test <- percentFunction(blackMastersSex)
 
-blackMastersAge   <- countWeight(blackMasters, "AGE")
-whiteMastersAge   <- countWeight(whiteMasters, "AGE")
+
+blackMastersAge   <- countWeight(blackMasters,   "AGE")
+whiteMastersAge   <- countWeight(whiteMasters,   "AGE")
 blackBachelorsAge <- countWeight(blackBachelors, "AGE")
 whiteBachelorsAge <- countWeight(whiteBachelors, "AGE")
 
-blackMastersSex   <- percentFunction(countWeight(blackMasters, "SEX"))
-whiteMastersSex   <- percentFunction(countWeight(whiteMasters, "SEX"))
-blackBachelorsSex <- percentFunction(countWeight(blackBachelors, "SEX"))
-whiteBachelorsSex <- percentFunction(countWeight(whiteBachelors, "SEX"))
-
-blackMastersDis   <- percentFunction(countWeight(blackMasters, "DIS"))
-whiteMastersDis   <- percentFunction(countWeight(whiteMasters, "DIS"))
+blackMastersDis   <- percentFunction(countWeight(blackMasters,   "DIS"))
+whiteMastersDis   <- percentFunction(countWeight(whiteMasters,   "DIS"))
 blackBachelorsDis <- percentFunction(countWeight(blackBachelors, "DIS"))
 whiteBachelorsDis <- percentFunction(countWeight(whiteBachelors, "DIS"))
 
+blackMastersSex   <- percentFunction(countWeight(blackMasters,   "SEX"))
+whiteMastersSex   <- percentFunction(countWeight(whiteMasters,   "SEX"))
+blackBachelorsSex <- percentFunction(countWeight(blackBachelors, "SEX"))
+whiteBachelorsSex <- percentFunction(countWeight(whiteBachelors, "SEX"))
 
-# Calculate Percents
-disabilityBA$percent <- (disabilityBA$n)/sum(disabilityBA$n)
-disabilityMA$percent <- (disabilityMA$n)/sum(disabilityMA$n)
 
-genderBA$percent <- (genderBA$n)/sum(genderBA$n)
-genderMA$percent <- (genderMA$n)/sum(genderMA$n)
 
-## VISUALIZATOINS
 
+## VISUALIZATIONS
 sexLabels <- c("Male", "Female")
 disabilityLabels <- c("Yes", "No")
 
@@ -108,6 +102,13 @@ makePie <- function(enterData, enterTitle, enterLabels) {
         p
 }
 
-makePie(genderMA, "Black or African American, Masters", sexLabels)
-makePie(disabilityBA, "Black or African American with Bachelors, Disablity", c("Yes", "No"))
-makePie(disabilityMA, "Black or African American with Masters, Disability", c("Yes", "No"))
+makePie(blackMastersSex, "Black with Master's Degree, Sex", sexLabels)
+makePie(whiteMastersSex, "White with Master's Degree, Sex", sexLabels)
+makePie(blackBachelorsSex, "Black with Bachelor's Degree, Sex", sexLabels)
+makePie(whiteBachelorsSex, "White with Bachelor's Degree, Sex", sexLabels)
+
+makePie(blackMastersDis, "Black with Master's Degree, Disablity", disabilityLabels)
+makePie(whiteMastersDis, "White with Master's Degree, Disability", disabilityLabels)
+makePie(blackBachelorsDis, "Black with Bachelor's Degree, Disability", disabilityLabels)
+makePie(whiteBachelorsDis, "White with Bachelor's Degree, Disability", disabilityLabels)
+
