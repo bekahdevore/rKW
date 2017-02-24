@@ -11,6 +11,7 @@ highDemandData$Job.Postings <- as.numeric(as.factor(highDemandData$Job.Postings)
 
 p <- plotly(highDemandData, x = ~Occupation, 
                        y = ~Job.Postings, 
-                         type = 'bar') %>%
-                        add_trace(y = )
+                         type = 'bar') 
+# %>%
+#                         add_trace(y = )
 

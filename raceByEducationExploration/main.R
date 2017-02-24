@@ -60,55 +60,74 @@ countWeight <- function(enterData, countThis){
 percentFunction <- function(enterData){
   enterData$percent <- enterData %>% dplyr::mutate(percent = ((enterData$n)/sum(enterData$n)))}
 
+age = "AGE"
+dis = "DIS"
+sex = "SEX"
 
-blackMastersAge   <- countWeight(blackMasters,   "AGE")
-whiteMastersAge   <- countWeight(whiteMasters,   "AGE")
-blackBachelorsAge <- countWeight(blackBachelors, "AGE")
-whiteBachelorsAge <- countWeight(whiteBachelors, "AGE")
+blackMastersAge   <- countWeight(blackMasters,   age)
+whiteMastersAge   <- countWeight(whiteMasters,   age)
+blackBachelorsAge <- countWeight(blackBachelors, age)
+whiteBachelorsAge <- countWeight(whiteBachelors, age)
 
-blackMastersDis   <- percentFunction(countWeight(blackMasters,   "DIS"))
-whiteMastersDis   <- percentFunction(countWeight(whiteMasters,   "DIS"))
-blackBachelorsDis <- percentFunction(countWeight(blackBachelors, "DIS"))
-whiteBachelorsDis <- percentFunction(countWeight(whiteBachelors, "DIS"))
+blackMastersDis   <- percentFunction(countWeight(blackMasters,   dis))
+whiteMastersDis   <- percentFunction(countWeight(whiteMasters,   dis))
+blackBachelorsDis <- percentFunction(countWeight(blackBachelors, dis))
+whiteBachelorsDis <- percentFunction(countWeight(whiteBachelors, dis))
 
-blackMastersSex   <- percentFunction(countWeight(blackMasters,   "SEX"))
-whiteMastersSex   <- percentFunction(countWeight(whiteMasters,   "SEX"))
-blackBachelorsSex <- percentFunction(countWeight(blackBachelors, "SEX"))
-whiteBachelorsSex <- percentFunction(countWeight(whiteBachelors, "SEX"))
+blackMastersSex   <- percentFunction(countWeight(blackMasters,   sex))
+whiteMastersSex   <- percentFunction(countWeight(whiteMasters,   sex))
+blackBachelorsSex <- percentFunction(countWeight(blackBachelors, sex))
+whiteBachelorsSex <- percentFunction(countWeight(whiteBachelors, sex))
+
+addColumns <- function(enterData, race, education) {
+                  enterData <- enterData %>% dplyr::mutate(race = race) %>% dplyr::mutate(education = education)
+}
+
+black <- "black"
+white <- "white"
+masters <- "masters"
+bachelors <- "bachelors"
+
+blackMastersSex <- addColumns(blackMastersSex, black, masters)
+whiteMastersSex <- addColumns(whiteMastersSex, white, masters)
+
+blackBachelorsSex <- addColumns(blackMastersSex, black, bachelors)
+whiteBachelorsSex <- addColumns(whiteMastersSex, white, bachelors)
+
 
 
 
 
 ## VISUALIZATIONS
-sexLabels <- c("Male", "Female")
-disabilityLabels <- c("Yes", "No")
-
-colors <- c('CCCC66', '#00CCFF')
-makePie <- function(enterData, enterTitle, enterLabels) {
-        p <- plot_ly(enterData, labels = enterLabels, values = ~percent, type = 'pie',
-                     textposition = 'inside',
-                     textinfo = 'label+percent',
-                     insidetextfont = list(color = '#003333', 
-                                           size  = 18),
-                     # hoverinfo = 'text',
-                     # text = ~paste('$', X1960, ' billions'),
-                     marker = list(colors = colors,
-                                   line = list(color = '#FFFFFF', width = 1)),
-                     #The 'pull' attribute can also be used to create space between the sectors
-                     showlegend = FALSE) %>%
-          layout(title = enterTitle,
-                 xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-                 yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
-        p
-}
-
-makePie(blackMastersSex, "Black with Master's Degree, Sex", sexLabels)
-makePie(whiteMastersSex, "White with Master's Degree, Sex", sexLabels)
-makePie(blackBachelorsSex, "Black with Bachelor's Degree, Sex", sexLabels)
-makePie(whiteBachelorsSex, "White with Bachelor's Degree, Sex", sexLabels)
-
-makePie(blackMastersDis, "Black with Master's Degree, Disablity", disabilityLabels)
-makePie(whiteMastersDis, "White with Master's Degree, Disability", disabilityLabels)
-makePie(blackBachelorsDis, "Black with Bachelor's Degree, Disability", disabilityLabels)
-makePie(whiteBachelorsDis, "White with Bachelor's Degree, Disability", disabilityLabels)
+# sexLabels <- c("Male", "Female")
+# disabilityLabels <- c("Yes", "No")
+# 
+# colors <- c('CCCC66', '#00CCFF')
+# makePie <- function(enterData, enterTitle, enterLabels) {
+#         p <- plot_ly(enterData, labels = enterLabels, values = ~percent, type = 'pie',
+#                      textposition = 'inside',
+#                      textinfo = 'label+percent',
+#                      insidetextfont = list(color = '#003333', 
+#                                            size  = 18),
+#                      # hoverinfo = 'text',
+#                      # text = ~paste('$', X1960, ' billions'),
+#                      marker = list(colors = colors,
+#                                    line = list(color = '#FFFFFF', width = 1)),
+#                      #The 'pull' attribute can also be used to create space between the sectors
+#                      showlegend = FALSE) %>%
+#           layout(title = enterTitle,
+#                  xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+#                  yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+#         p
+# }
+# 
+# makePie(blackMastersSex, "Black with Master's Degree, Sex", sexLabels)
+# makePie(whiteMastersSex, "White with Master's Degree, Sex", sexLabels)
+# makePie(blackBachelorsSex, "Black with Bachelor's Degree, Sex", sexLabels)
+# makePie(whiteBachelorsSex, "White with Bachelor's Degree, Sex", sexLabels)
+# 
+# makePie(blackMastersDis, "Black with Master's Degree, Disablity", disabilityLabels)
+# makePie(whiteMastersDis, "White with Master's Degree, Disability", disabilityLabels)
+# makePie(blackBachelorsDis, "Black with Bachelor's Degree, Disability", disabilityLabels)
+# makePie(whiteBachelorsDis, "White with Bachelor's Degree, Disability", disabilityLabels)
 
