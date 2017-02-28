@@ -3,7 +3,8 @@ library(dplyr)
 library(plotrix)
 library(scales)
 library(plotly)
-#Add pums household and population data
+
+## ADD DATA
 indianaHousing  <- read.csv("ss15hin.csv")
 kentuckyHousing <- read.csv("ss15hky.csv")
 
@@ -16,11 +17,35 @@ pumas          <- read.csv(textConnection(dataConnection))
 rm(dataConnection)
 
 
-# filter for MSA
+## FUNCTIONS
 pumaFilter <- function(enterData, enterPUMASList) {
    dataSave <- enterData %>% filter(PUMA %in% pumas[, enterPUMASList])
 }
 
+countWeight <- function(enterData, countThis){
+  if(countThis == "SEX") {
+    enterData %>% count(SEX, wt = PWGTP)}
+  else if(countThis == "AGE") {
+    enterData %>% count(AGEP, wt = PWGTP)
+  }
+  else if(countThis == "DIS") {
+    enterData %>% count(DIS, wt = PWGTP)
+  }
+}
+
+percentFunction <- function(enterData){
+  enterData$percent <- enterData %>% dplyr::mutate(percent = ((enterData$n)/sum(enterData$n)))
+}
+
+addColumns <- function(enterData, race, education, dataPoint) {
+  enterData <- enterData %>% 
+    dplyr::mutate(race = race) %>% 
+    dplyr::mutate(education = education) %>%
+    dplyr::mutate(datapoint = dataPoint)
+}
+
+
+## FILTER DATA
 indianaHousing     <- pumaFilter(indianaHousing, "inPUMA")
 kentuckyHousing    <- pumaFilter(kentuckyHousing, "kyPUMA")
 
@@ -35,6 +60,7 @@ kentucky <- left_join(kentuckyPopulation, kentuckyHousing, by = "SERIALNO")
 allData <- rbind(indiana, kentucky)
 rm(indiana, indianaHousing, indianaPopulation, kentucky, kentuckyHousing, kentuckyPopulation, pumas, pumaFilter)
 
+
 #seperate into groups by race and education 
 bachelors <- allData %>% filter(SCHL == 21)
 masters   <- allData %>% filter(SCHL == 22)
@@ -46,19 +72,7 @@ blackMasters   <- masters %>% filter(RAC1P == 2)
 whiteMasters   <- masters %>% filter(RAC1P == 1)
 
 
-countWeight <- function(enterData, countThis){
-  if(countThis == "SEX") {
-  enterData %>% count(SEX, wt = PWGTP)}
-  else if(countThis == "AGE") {
-    enterData %>% count(AGEP, wt = PWGTP)
-  }
-  else if(countThis == "DIS") {
-    enterData %>% count(DIS, wt = PWGTP)
-  }
-}
-
-percentFunction <- function(enterData){
-  enterData$percent <- enterData %>% dplyr::mutate(percent = ((enterData$n)/sum(enterData$n)))}
+## COUNT PERCENTAGES
 
 age = "AGE"
 dis = "DIS"
@@ -79,14 +93,14 @@ whiteMastersSex   <- percentFunction(countWeight(whiteMasters,   sex))
 blackBachelorsSex <- percentFunction(countWeight(blackBachelors, sex))
 whiteBachelorsSex <- percentFunction(countWeight(whiteBachelors, sex))
 
-addColumns <- function(enterData, race, education) {
-                  enterData <- enterData %>% dplyr::mutate(race = race) %>% dplyr::mutate(education = education)
-}
 
 black <- "black"
 white <- "white"
 masters <- "masters"
 bachelors <- "bachelors"
+sex <- "sex"
+dis <- "disability"
+age <- "age"
 
 blackMastersSex <- addColumns(blackMastersSex, black, masters)
 whiteMastersSex <- addColumns(whiteMastersSex, white, masters)
