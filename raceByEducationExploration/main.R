@@ -3,6 +3,7 @@ library(dplyr)
 library(plotrix)
 library(scales)
 library(plotly)
+library(ggplot2)
 
 ## ADD DATA
 indianaHousing  <- read.csv("ss15hin.csv")
@@ -17,6 +18,7 @@ pumas          <- read.csv(textConnection(dataConnection))
 rm(dataConnection)
 
 
+
 ## FUNCTIONS
 pumaFilter <- function(enterData, enterPUMASList) {
    dataSave <- enterData %>% filter(PUMA %in% pumas[, enterPUMASList])
@@ -24,12 +26,25 @@ pumaFilter <- function(enterData, enterPUMASList) {
 
 countWeight <- function(enterData, countThis){
   if(countThis == "SEX") {
-    enterData %>% count(SEX, wt = PWGTP)}
+    enterData %>% count(maleFemale, wt = PWGTP)}
   else if(countThis == "AGE") {
     enterData %>% count(AGEP, wt = PWGTP)
   }
   else if(countThis == "DIS") {
-    enterData %>% count(DIS, wt = PWGTP)
+    enterData %>% count(disability, wt = PWGTP)
+  }
+  else if(countThis == "ageMajor") {
+    enterData %>% count(ageGroup, wt = PWGTP)
+  }
+  else if(countThis == "insurance") {
+    enterData %>% count(healthInsurance, wt = PWGTP)
+  }
+  else if(countThis == "married") {
+    enterData %>% count(married, wt = PWGTP)
+  }
+  
+  else if(countThis == "children") {
+    enterData %>% count(children, wt = PWGTP)
   }
 }
 
@@ -37,11 +52,22 @@ percentFunction <- function(enterData){
   enterData$percent <- enterData %>% dplyr::mutate(percent = ((enterData$n)/sum(enterData$n)))
 }
 
-addColumns <- function(enterData, race, education, dataPoint) {
+addColumnsDataPoint <- function(enterData, dataPoint) {
+  enterData <- enterData %>% 
+    dplyr::mutate(DataPoint = dataPoint)  
+}
+
+addColumns <- function(enterData, race, education) {
   enterData <- enterData %>% 
     dplyr::mutate(race = race) %>% 
-    dplyr::mutate(education = education) %>%
-    dplyr::mutate(datapoint = dataPoint)
+    dplyr::mutate(education = education)
+}
+
+weightPercent <- function(enterData, dataPoint) {
+  newData <- percentFunction(countWeight(enterData, dataPoint))
+  newData <- addColumnsDataPoint(newData, dataPoint)
+  colnames(newData)[1] <- "Type"
+  newData
 }
 
 
@@ -61,6 +87,25 @@ allData <- rbind(indiana, kentucky)
 rm(indiana, indianaHousing, indianaPopulation, kentucky, kentuckyHousing, kentuckyPopulation, pumas, pumaFilter)
 
 
+## CREATE AGE GROUPS
+# 25 - 54, 55 +
+allData <- allData %>% mutate(ageGroup = ifelse(AGEP >= 25 & AGEP <= 54, "25 - 54", 
+                                          ifelse(AGEP >= 55, "55 + ", "Other"))) %>% 
+                      mutate(disability = ifelse(DIS == 1, "With Disability", 
+                                                 ifelse(DIS == 2, "Without Disability", "Other"))) %>%
+                      mutate(maleFemale = ifelse(SEX == 1, "Male", 
+                                                 ifelse(SEX == 2, "Female", "Other"))) %>% 
+                      mutate(healthInsurance = ifelse(PRIVCOV == 1, "Private Health Insurance", 
+                                                      ifelse(PUBCOV == 1, "Public Health Insurance", 
+                                                             ifelse(HICOV == 2, "No Insurance", "Other")))) %>%
+                      mutate(married = ifelse(MAR == 1, "Married", "Other")) %>% 
+                      mutate(children = ifelse(NRC == 0, "Children (None)", 
+                                               ifelse(NRC == 1, "Children (1 - 3)", 
+                                                      ifelse(NRC == 2, "Children (1 - 3)", 
+                                                             ifelse(NRC == 3, "Children (1 - 3)", 
+                                                                    ifelse(NRC > 3, "Children (4 or more)", "Other"))))))
+
+
 #seperate into groups by race and education 
 bachelors <- allData %>% filter(SCHL == 21)
 masters   <- allData %>% filter(SCHL == 22)
@@ -72,45 +117,117 @@ blackMasters   <- masters %>% filter(RAC1P == 2)
 whiteMasters   <- masters %>% filter(RAC1P == 1)
 
 
-## COUNT PERCENTAGES
-
-age = "AGE"
-dis = "DIS"
-sex = "SEX"
-
-blackMastersAge   <- countWeight(blackMasters,   age)
-whiteMastersAge   <- countWeight(whiteMasters,   age)
-blackBachelorsAge <- countWeight(blackBachelors, age)
-whiteBachelorsAge <- countWeight(whiteBachelors, age)
-
-blackMastersDis   <- percentFunction(countWeight(blackMasters,   dis))
-whiteMastersDis   <- percentFunction(countWeight(whiteMasters,   dis))
-blackBachelorsDis <- percentFunction(countWeight(blackBachelors, dis))
-whiteBachelorsDis <- percentFunction(countWeight(whiteBachelors, dis))
-
-blackMastersSex   <- percentFunction(countWeight(blackMasters,   sex))
-whiteMastersSex   <- percentFunction(countWeight(whiteMasters,   sex))
-blackBachelorsSex <- percentFunction(countWeight(blackBachelors, sex))
-whiteBachelorsSex <- percentFunction(countWeight(whiteBachelors, sex))
-
-
+## Variables
+age <-  "AGE"
+dis <-  "DIS"
+sex <-  "SEX"
 black <- "black"
 white <- "white"
 masters <- "masters"
 bachelors <- "bachelors"
-sex <- "sex"
-dis <- "disability"
-age <- "age"
-
-blackMastersSex <- addColumns(blackMastersSex, black, masters)
-whiteMastersSex <- addColumns(whiteMastersSex, white, masters)
-
-blackBachelorsSex <- addColumns(blackMastersSex, black, bachelors)
-whiteBachelorsSex <- addColumns(whiteMastersSex, white, bachelors)
+ageMajor  <- "ageMajor"
+insurance <- "insurance"
+married   <- "married"
+children <- "children"
 
 
+## COUNT PERCENTAGES, Add columns, change column 1 name to Type
+blackMastersAgeMajor   <- weightPercent(blackMasters, ageMajor)
+whiteMastersAgeMajor   <- weightPercent(whiteMasters, ageMajor)
+blackBachelorsAgeMajor <- weightPercent(blackBachelors, ageMajor)
+whiteBachelorsAgeMajor <- weightPercent(whiteBachelors, ageMajor)
 
 
+blackMastersDis   <- weightPercent(blackMasters,   dis)
+whiteMastersDis   <- weightPercent(whiteMasters,   dis)
+blackBachelorsDis <- weightPercent(blackBachelors, dis)
+whiteBachelorsDis <- weightPercent(whiteBachelors, dis)
+
+blackMastersSex   <- weightPercent(blackMasters, sex)
+whiteMastersSex   <- weightPercent(whiteMasters, sex)
+blackBachelorsSex <- weightPercent(blackBachelors, sex)
+whiteBachelorsSex <- weightPercent(whiteBachelors, sex)
+
+blackMastersInsurance <- weightPercent(blackMasters, insurance)
+whiteMastersInsurance <- weightPercent(whiteMasters, insurance)
+blackBachelorsInsurance <- weightPercent(blackBachelors, insurance)
+whiteBachelorsInsurance <- weightPercent(whiteBachelors, insurance)
+
+blackMastersMarried <- weightPercent(blackMasters, married)
+whiteMastersMarried <- weightPercent(whiteMasters, married)
+blackBachelorsMarried <- weightPercent(blackBachelors, married)
+whiteBachelorsMarried <- weightPercent(whiteBachelors, married)
+
+blackMastersChildren <- weightPercent(blackMasters, children)
+whiteMastersChildren <- weightPercent(whiteMasters, children)
+blackBachelorsChildren <- weightPercent(blackBachelors, children)
+whiteBachelorsChildren <- weightPercent(whiteBachelors, children)
+
+
+
+
+### BIND DATA SETS TOGETHER
+blackMasters <- rbind(blackMastersSex, blackMastersAgeMajor, blackMastersDis, blackMastersInsurance, 
+                      blackMastersMarried, blackMastersChildren)
+whiteMasters <- rbind(whiteMastersSex, whiteMastersAgeMajor, whiteMastersDis, whiteMastersInsurance, 
+                      whiteMastersMarried, whiteMastersChildren)
+blackBachelors <- rbind(blackBachelorsSex, blackBachelorsAgeMajor, blackBachelorsDis, blackBachelorsInsurance, 
+                        blackBachelorsMarried, blackBachelorsChildren)
+whiteBachelors <- rbind(whiteBachelorsSex, whiteBachelorsAgeMajor, whiteBachelorsDis, whiteBachelorsInsurance, 
+                        whiteBachelorsMarried, whiteBachelorsChildren)
+
+blackMasters <- addColumns(blackMasters, black, masters)
+whiteMasters <- addColumns(whiteMasters, white, masters)
+blackBachelors <- addColumns(blackBachelors, black, bachelors)
+whiteBachelors <- addColumns(whiteBachelors, white, bachelors)
+
+allDataFinal <- as.data.frame(rbind(blackMasters, whiteMasters, blackBachelors, whiteBachelors))
+allDataFinal <- allDataFinal %>% filter(Type != "Other")
+
+cbPalette <- c(
+  '#9C0059',
+  '#A4D7F4',
+  '#8DC63F',
+  '#F8971D',
+  '#D31245',
+  '#A4D7F4',
+  '#00853F',
+  '#767662'
+)
+
+p <- ggplot(allDataFinal, aes(x = Type, y = percent, fill = race)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + facet_grid(~ education)
+
+
+
+highDemand <- p                                  + 
+  coord_flip()                       + 
+  facet_grid(education ~ ., switch = 'y') + 
+  #theme_minimal()                    +
+  theme(strip.text.y = element_text(#angle = 180, 
+                                    # hjust = 1, 
+                                    size = 9, 
+                                    face = 'bold'),
+        # strip.background  = element_rect(fill   = 'white'),
+        # color  = 'grey'),
+        # panel.background  = element_rect(fill   = 'white'),
+        # color  = 'grey'),
+        # axis.text.y       = element_blank(), 
+        axis.ticks.y      = element_blank(), 
+        axis.text.x       = element_text(size = 9), 
+        legend.title      = element_blank(), 
+        legend.text       = element_text(size = 14),
+        # face = 'bold'), 
+        legend.position   = c(.9, .6), 
+        legend.background = element_blank(),
+        # legend.key        = element_rect(color = 'white', 
+        #                                  size = 3),
+        legend.key.size   = unit(1, 'lines'),
+        axis.title        = element_blank()) +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 1.1), labels = percent) + 
+  scale_fill_manual(values = cbPalette)
+
+highDemand
 
 ## VISUALIZATIONS
 # sexLabels <- c("Male", "Female")
