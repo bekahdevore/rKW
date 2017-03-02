@@ -18,7 +18,6 @@ pumas          <- read.csv(textConnection(dataConnection))
 rm(dataConnection)
 
 
-
 ## FUNCTIONS
 pumaFilter <- function(enterData, enterPUMASList) {
    dataSave <- enterData %>% filter(PUMA %in% pumas[, enterPUMASList])
@@ -45,6 +44,27 @@ countWeight <- function(enterData, countThis){
   
   else if(countThis == "children") {
     enterData %>% count(children, wt = PWGTP)
+  }
+  else if(countThis == "income") {
+    enterData %>% count(householdIncome, wt = PWGTP)
+  }
+  else if(countThis == "singleMoms") {
+    enterData %>% count(singleMoms, wt = PWGTP)
+  }
+  else if(countThis == "poverty") {
+    enterData %>% count(poverty, wt = PWGTP)
+  }
+  else if(countThis == "homeValue") {
+    enterData %>% count(homeValue, wt = PWGTP)
+  }
+  else if(countThis == "rentOwn") {
+    enterData %>% count(rentOwn, wt = PWGTP)
+  }
+  else if(countThis == "householdSize") {
+    enterData %>% count(householdSize, wt = WGTP)
+  }
+  else if(countThis == "childrenUnder6") {
+    enterData %>% count(childrenUnder6, wt = PWGTP)
   }
 }
 
@@ -103,7 +123,17 @@ allData <- allData %>% mutate(ageGroup = ifelse(AGEP >= 25 & AGEP <= 54, "25 - 5
                                                ifelse(NRC == 1, "Children (1 - 3)", 
                                                       ifelse(NRC == 2, "Children (1 - 3)", 
                                                              ifelse(NRC == 3, "Children (1 - 3)", 
-                                                                    ifelse(NRC > 3, "Children (4 or more)", "Other"))))))
+                                                                    ifelse(NRC > 3, "Children (4 or more)", "Other")))))) %>% 
+                      mutate(householdIncome = ifelse(HINCP >= 47273, "Household Income above family-supporting wage", 
+                                                      "Household Income less than family-supporting wage")) %>% 
+                      mutate(singleMoms = ifelse((HHT == 3 | HHT == 6 | HHT == 7) & (HUPAOC == 1 | HUPAOC == 2 | HUPAOC == 3), "Single Mom", "Other")) %>% 
+                      mutate(poverty = ifelse(POVPIP <= 100, "In Poverty", "Other")) %>% 
+                      mutate(homeValue = ifelse(VALP <= 155700, "Home value less than median value ($155,700)", "Other")) %>% 
+                      mutate(rentOwn = ifelse((TEN == 1 | TEN == 2), "Own home", 
+                                              ifelse(TEN == 3, "Rent home", "Other"))) %>% 
+                      mutate(householdSize = ifelse(NP >= 5, "Household Size (5 or more)", "Other")) %>% 
+                      mutate(childrenUnder6 = ifelse((HUPAOC == 1 | HUPAOC == 3), "Children under 6", "Other"))
+
 
 
 #seperate into groups by race and education 
@@ -129,6 +159,13 @@ ageMajor  <- "ageMajor"
 insurance <- "insurance"
 married   <- "married"
 children <- "children"
+income <- "income"
+singleMoms <- "singleMoms"
+poverty <- "poverty"
+homeValue <- "homeValue"
+rentOwn <- "rentOwn"
+householdSize <- "householdSize"
+childrenUnder6 <- "childrenUnder6"
 
 
 ## COUNT PERCENTAGES, Add columns, change column 1 name to Type
@@ -163,18 +200,65 @@ whiteMastersChildren <- weightPercent(whiteMasters, children)
 blackBachelorsChildren <- weightPercent(blackBachelors, children)
 whiteBachelorsChildren <- weightPercent(whiteBachelors, children)
 
+blackMastersIncome <- weightPercent(blackMasters, income)
+whiteMastersIncome <- weightPercent(whiteMasters, income)
+blackBachelorsIncome <- weightPercent(blackBachelors, income)
+whiteBachelorsIncome <- weightPercent(whiteBachelors, income)
+
+blackMastersSingleMoms <- weightPercent(blackMasters, singleMoms)
+whiteMastersSingleMoms <- weightPercent(whiteMasters, singleMoms)
+blackBachelorsSingleMoms <- weightPercent(blackBachelors, singleMoms)
+whiteBachelorsSingleMoms <- weightPercent(whiteBachelors, singleMoms)
+
+blackMastersPoverty <- weightPercent(blackMasters, poverty)
+whiteMastersPoverty <- weightPercent(whiteMasters, poverty)
+blackBachelorsPoverty <- weightPercent(blackBachelors, poverty)
+whiteBachelorsPoverty <- weightPercent(whiteBachelors, poverty)
+
+blackMastersHomeValue <- weightPercent(blackMasters, homeValue)
+whiteMastersHomeValue <- weightPercent(whiteMasters, homeValue)
+blackBachelorsHomeValue <- weightPercent(blackBachelors, homeValue)
+whiteBachelorsHomeValue <- weightPercent(whiteBachelors, homeValue)
+
+blackMastersRentOwn <- weightPercent(blackMasters, rentOwn)
+whiteMastersRentOwn <- weightPercent(whiteMasters, rentOwn)
+blackBachelorsRentOwn <- weightPercent(blackBachelors, rentOwn)
+whiteBachelorsRentOwn <- weightPercent(whiteBachelors, rentOwn)
+
+blackMastersHouseholdSize <- weightPercent(blackMasters, householdSize)
+whiteMastersHouseholdSize <- weightPercent(whiteMasters, householdSize)
+blackBachelorsHouseholdSize <- weightPercent(blackBachelors, householdSize)
+whiteBachelorsHouseholdSize <- weightPercent(whiteBachelors, householdSize)
+
+blackMastersChildrenUnder6 <- weightPercent(blackMasters, childrenUnder6)
+whiteMastersChildrenUnder6 <- weightPercent(whiteMasters, childrenUnder6)
+blackBachelorsChildrenUnder6 <- weightPercent(blackBachelors, childrenUnder6)
+whiteBachelorsChildrenUnder6 <- weightPercent(whiteBachelors, childrenUnder6)
+
+
+
+
+
 
 
 
 ### BIND DATA SETS TOGETHER
 blackMasters <- rbind(blackMastersSex, blackMastersAgeMajor, blackMastersDis, blackMastersInsurance, 
-                      blackMastersMarried, blackMastersChildren)
+                      blackMastersMarried, blackMastersChildren, blackMastersIncome, blackMastersSingleMoms, 
+                      blackMastersPoverty, blackMastersHomeValue, blackMastersRentOwn, blackMastersHouseholdSize, 
+                      blackMastersChildrenUnder6)
 whiteMasters <- rbind(whiteMastersSex, whiteMastersAgeMajor, whiteMastersDis, whiteMastersInsurance, 
-                      whiteMastersMarried, whiteMastersChildren)
+                      whiteMastersMarried, whiteMastersChildren, whiteMastersIncome, whiteMastersSingleMoms, 
+                      whiteMastersPoverty, whiteMastersHomeValue, whiteMastersRentOwn, whiteMastersHouseholdSize, 
+                      whiteMastersChildrenUnder6)
 blackBachelors <- rbind(blackBachelorsSex, blackBachelorsAgeMajor, blackBachelorsDis, blackBachelorsInsurance, 
-                        blackBachelorsMarried, blackBachelorsChildren)
+                        blackBachelorsMarried, blackBachelorsChildren, blackBachelorsIncome, blackBachelorsSingleMoms, 
+                        blackBachelorsPoverty, blackBachelorsHomeValue, blackBachelorsRentOwn, blackBachelorsHouseholdSize, 
+                        blackBachelorsChildrenUnder6)
 whiteBachelors <- rbind(whiteBachelorsSex, whiteBachelorsAgeMajor, whiteBachelorsDis, whiteBachelorsInsurance, 
-                        whiteBachelorsMarried, whiteBachelorsChildren)
+                        whiteBachelorsMarried, whiteBachelorsChildren, whiteBachelorsIncome, whiteBachelorsSingleMoms, 
+                        whiteBachelorsPoverty, whiteBachelorsHomeValue, whiteBachelorsRentOwn, whiteBachelorsHouseholdSize, 
+                        whiteBachelorsChildrenUnder6)
 
 blackMasters <- addColumns(blackMasters, black, masters)
 whiteMasters <- addColumns(whiteMasters, white, masters)
@@ -182,7 +266,9 @@ blackBachelors <- addColumns(blackBachelors, black, bachelors)
 whiteBachelors <- addColumns(whiteBachelors, white, bachelors)
 
 allDataFinal <- as.data.frame(rbind(blackMasters, whiteMasters, blackBachelors, whiteBachelors))
-allDataFinal <- allDataFinal %>% filter(Type != "Other")
+allDataFinal <- allDataFinal %>% filter(Type != "Other" & Type != "Without Disability" & 
+                                          Type != "Household Income above family-supporting wage" & 
+                                          Type != "Male")
 
 cbPalette <- c(
   '#9C0059',
@@ -195,9 +281,16 @@ cbPalette <- c(
   '#767662'
 )
 
-p <- ggplot(allDataFinal, aes(x = Type, y = percent, fill = race)) + 
-  geom_bar(stat = 'identity', position = 'dodge') + facet_grid(~ education)
 
+allDataFinal$label <- percent(allDataFinal$percent)
+
+allDataFinal$Type <- factor(allDataFinal$Type, levels = allDataFinal$Type[order(allDataFinal$percent)])
+
+write.csv(allDataFinal, "allDataFinal.csv")
+
+p <- ggplot(allDataFinal, aes(x = Type, y = percent, fill = race, label = label)) + 
+  geom_bar(stat = 'identity', position = 'dodge') + facet_grid(~ education) + 
+  geom_text(position = position_dodge(width = 1), hjust = -.10)
 
 
 highDemand <- p                                  + 
@@ -261,4 +354,5 @@ highDemand
 # makePie(whiteMastersDis, "White with Master's Degree, Disability", disabilityLabels)
 # makePie(blackBachelorsDis, "Black with Bachelor's Degree, Disability", disabilityLabels)
 # makePie(whiteBachelorsDis, "White with Bachelor's Degree, Disability", disabilityLabels)
+
 

@@ -120,6 +120,8 @@ shinyUI(fluidPage(
         'Shiny App Links', 
         h1('Shiny Apps'),
         h4('Click on a link below to open Shiny App'),
+        h5(a('Race, Education, and Occupations', href = 'https://kwlmi.shinyapps.io/raceByEducationExploration/')),
+        br(),
         h5(a('Credentials Analysis', href = 'https://kwlmi.shinyapps.io/shinyCredentialsByEducation/')),
         p('In Progress:'),
         p('Adding bar chart with top 3 credentials by major'),
@@ -162,6 +164,16 @@ shinyUI(fluidPage(
         'About Datasets', 
         h1('The datasets...'), 
         h5('American Community Survey'),
+        p(a('American Fact Finder', 
+            href = "https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t"), 
+            'makes census data easier to find. We use the S2301 summary sheet for several labor force data. How to use 
+          American Fact Finder:',
+            tags$ol(
+              tags$li("1. Choose a dataset (usually 1 year estimates)"), 
+              tags$li("2. Choose a geography (usually Louisville MSA)"), 
+              tags$li("3. Choose topic, or search summary sheet key (ex. S2301, DP03)"), 
+              tags$li("4. From here you can open and download the data summary of interest")
+            )),
         h5('Public Use Microdatasets (PUMS)'),
         h5('Bureau of Labor Statistics'), 
         h5('EMSI Analyst'), 

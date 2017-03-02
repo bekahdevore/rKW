@@ -19,7 +19,7 @@ shinyServer(function(input, output) {
   sankeyData <- reactive({
     data <- skills %>%
           filter(Element.Name == input$skill)%>%
-          filter(Data.Value >=4)%>%
+          filter(Data.Value >= 4 )%>%
           as.data.frame()
   }) 
 

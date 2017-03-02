@@ -1,0 +1,11 @@
+name: raceByEducationExploration
+title: raceByEducationExploration
+account: kwlmi
+server: shinyapps.io
+appId: 160784
+bundleId: 731760
+url: https://kwlmi.shinyapps.io/raceByEducationExploration/
+when: 1488488241.73079
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: fourStateRegion.R|main.R|occupations.R|raceAndEducation.png|raceByEducation.pdf|raceByEducation.png|ss15hin.csv|ss15hky.csv|ss15pin.csv|ss15pky.csv
