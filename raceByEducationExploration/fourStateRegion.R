@@ -8,9 +8,13 @@ library(ggplot2)
 ## ADD DATA
 indianaHousing  <- read.csv("ss15hin.csv")
 kentuckyHousing <- read.csv("ss15hky.csv")
+ohioHousing <- read.csv("ss15hoh.csv")
+tennesseeHousing <- read.csv("ss15htn.csv")
 
 indianaPopulation  <- read.csv("ss15pin.csv")
 kentuckyPopulation <- read.csv("ss15pky.csv")
+ohioPopulation <- read.csv("ss15poh.csv")
+tennesseePopulation <- read.csv("ss15ptn.csv")
 
 # add PUMA list for filtering
 dataConnection <- getURL("https://docs.google.com/spreadsheets/d/1LlC-Nwa_ntWM0kE_vWcjtcNSS3Q9I2mBb-RvO_id614/pub?gid=0&single=true&output=csv")
@@ -19,9 +23,9 @@ rm(dataConnection)
 
 
 ## FUNCTIONS
-pumaFilter <- function(enterData, enterPUMASList) {
-  dataSave <- enterData %>% filter(PUMA %in% pumas[, enterPUMASList])
-}
+# pumaFilter <- function(enterData, enterPUMASList) {
+#   dataSave <- enterData %>% filter(PUMA %in% pumas[, enterPUMASList])
+# }
 
 countWeight <- function(enterData, countThis){
   if(countThis == "SEX") {
@@ -92,18 +96,20 @@ weightPercent <- function(enterData, dataPoint) {
 
 
 ## FILTER DATA
-indianaHousing     <- pumaFilter(indianaHousing, "inPUMA")
-kentuckyHousing    <- pumaFilter(kentuckyHousing, "kyPUMA")
-
-indianaPopulation  <- pumaFilter(indianaPopulation, "inPUMA")
-kentuckyPopulation <- pumaFilter(kentuckyPopulation, "kyPUMA")
+# indianaHousing     <- pumaFilter(indianaHousing, "inPUMA")
+# kentuckyHousing    <- pumaFilter(kentuckyHousing, "kyPUMA")
+# 
+# indianaPopulation  <- pumaFilter(indianaPopulation, "inPUMA")
+# kentuckyPopulation <- pumaFilter(kentuckyPopulation, "kyPUMA")
 
 # merge population and housing records
 indiana  <- left_join(indianaPopulation, indianaHousing, by = "SERIALNO")
 kentucky <- left_join(kentuckyPopulation, kentuckyHousing, by = "SERIALNO")
+ohio <- left_join(ohioPopulation, ohioHousing, by = "SERIALNO")
+tennessee <- left_join(tennesseePopulation, tennesseeHousing, by = "SERIALNO")
 
 # merge ky and in puma files 
-allData <- rbind(indiana, kentucky)
+allData <- rbind(indiana, kentucky, ohio, tennessee)
 rm(indiana, indianaHousing, indianaPopulation, kentucky, kentuckyHousing, kentuckyPopulation, pumas, pumaFilter)
 
 
