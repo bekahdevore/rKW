@@ -19,11 +19,11 @@ shinyUI(fluidPage(
     ),
     
     # Show a plot of the generated distribution
-    column(4, align = "left",
+    column(12, align = "center",
       htmlOutput("view") 
-      ), 
-    
-    column(4, offset = 3, align = "center",
+      )), 
+    fluidRow(
+    column(12, align = "center",
       plotOutput("allData", width = "100%")
       )
     

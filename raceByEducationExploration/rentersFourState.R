@@ -8,9 +8,13 @@ library(ggplot2)
 ## ADD DATA
 indianaHousing  <- read.csv("ss15hin.csv")
 kentuckyHousing <- read.csv("ss15hky.csv")
+ohioHousing <- read.csv("ss15hoh.csv")
+tennesseeHousing <- read.csv("ss15htn.csv")
 
 indianaPopulation  <- read.csv("ss15pin.csv")
 kentuckyPopulation <- read.csv("ss15pky.csv")
+ohioPopulation <- read.csv("ss15poh.csv")
+tennesseePopulation <- read.csv("ss15ptn.csv")
 
 # add PUMA list for filtering
 dataConnection <- getURL("https://docs.google.com/spreadsheets/d/1LlC-Nwa_ntWM0kE_vWcjtcNSS3Q9I2mBb-RvO_id614/pub?gid=0&single=true&output=csv")
@@ -19,9 +23,9 @@ rm(dataConnection)
 
 
 ## FUNCTIONS
-pumaFilter <- function(enterData, enterPUMASList) {
-   dataSave <- enterData %>% filter(PUMA %in% pumas[, enterPUMASList])
-}
+# pumaFilter <- function(enterData, enterPUMASList) {
+#   dataSave <- enterData %>% filter(PUMA %in% pumas[, enterPUMASList])
+# }
 
 countWeight <- function(enterData, countThis){
   if(countThis == "SEX") {
@@ -92,47 +96,52 @@ weightPercent <- function(enterData, dataPoint) {
 
 
 ## FILTER DATA
-indianaHousing     <- pumaFilter(indianaHousing, "inPUMA")
-kentuckyHousing    <- pumaFilter(kentuckyHousing, "kyPUMA")
-
-indianaPopulation  <- pumaFilter(indianaPopulation, "inPUMA")
-kentuckyPopulation <- pumaFilter(kentuckyPopulation, "kyPUMA")
+# indianaHousing     <- pumaFilter(indianaHousing, "inPUMA")
+# kentuckyHousing    <- pumaFilter(kentuckyHousing, "kyPUMA")
+# 
+# indianaPopulation  <- pumaFilter(indianaPopulation, "inPUMA")
+# kentuckyPopulation <- pumaFilter(kentuckyPopulation, "kyPUMA")
 
 # merge population and housing records
 indiana  <- left_join(indianaPopulation, indianaHousing, by = "SERIALNO")
 kentucky <- left_join(kentuckyPopulation, kentuckyHousing, by = "SERIALNO")
+ohio <- left_join(ohioPopulation, ohioHousing, by = "SERIALNO")
+tennessee <- left_join(tennesseePopulation, tennesseeHousing, by = "SERIALNO")
 
 # merge ky and in puma files 
-allData <- rbind(indiana, kentucky)
+allData <- rbind(indiana, kentucky, ohio, tennessee)
 rm(indiana, indianaHousing, indianaPopulation, kentucky, kentuckyHousing, kentuckyPopulation, pumas, pumaFilter)
 
 
 ## CREATE AGE GROUPS
 # 25 - 54, 55 +
 allData <- allData %>% mutate(ageGroup = ifelse(AGEP >= 25 & AGEP <= 54, "25 - 54", 
-                                          ifelse(AGEP >= 55, "55 + ", "Other"))) %>% 
-                      mutate(disability = ifelse(DIS == 1, "With Disability", 
-                                                 ifelse(DIS == 2, "Without Disability", "Other"))) %>%
-                      mutate(maleFemale = ifelse(SEX == 1, "Male", 
-                                                 ifelse(SEX == 2, "Female", "Other"))) %>% 
-                      mutate(healthInsurance = ifelse(PRIVCOV == 1, "Private Health Insurance", 
-                                                      ifelse(PUBCOV == 1, "Public Health Insurance", 
-                                                             ifelse(HICOV == 2, "No Insurance", "Other")))) %>%
-                      mutate(married = ifelse(MAR == 1, "Married", "Other")) %>% 
-                      mutate(children = ifelse(NRC == 0, "Children (None)", 
-                                               ifelse(NRC == 1, "Children (1 - 3)", 
-                                                      ifelse(NRC == 2, "Children (1 - 3)", 
-                                                             ifelse(NRC == 3, "Children (1 - 3)", 
-                                                                    ifelse(NRC > 3, "Children (4 or more)", "Other")))))) %>% 
-                      mutate(householdIncome = ifelse(HINCP >= 47273, "Household Income above family-supporting wage", 
-                                                      "Household Income less than family-supporting wage")) %>% 
-                      mutate(singleMoms = ifelse((HHT == 3 | HHT == 6 | HHT == 7) & (HUPAOC == 1 | HUPAOC == 2 | HUPAOC == 3), "Single Mom", "Other")) %>% 
-                      mutate(poverty = ifelse(POVPIP <= 100, "In Poverty", "Other")) %>% 
-                      mutate(homeValue = ifelse(VALP <= 155700, "Home value less than median value ($155,700)", "Other")) %>% 
-                      mutate(rentOwn = ifelse((TEN == 1 | TEN == 2), "Own home", 
-                                              ifelse(TEN == 3, "Rent home", "Other"))) %>% 
-                      mutate(householdSize = ifelse(NP >= 5, "Household Size (5 or more)", "Other")) %>% 
-                      mutate(childrenUnder6 = ifelse((HUPAOC == 1 | HUPAOC == 3), "Children under 6", "Other"))
+                                                ifelse(AGEP >= 55, "55 + ", "Other"))) %>% 
+  mutate(disability = ifelse(DIS == 1, "With Disability", 
+                             ifelse(DIS == 2, "Without Disability", "Other"))) %>%
+  mutate(maleFemale = ifelse(SEX == 1, "Male", 
+                             ifelse(SEX == 2, "Female", "Other"))) %>% 
+  mutate(healthInsurance = ifelse(PRIVCOV == 1, "Private Health Insurance", 
+                                  ifelse(PUBCOV == 1, "Public Health Insurance", 
+                                         ifelse(HICOV == 2, "No Insurance", "Other")))) %>%
+  mutate(married = ifelse(MAR == 1, "Married", "Other")) %>% 
+  mutate(children = ifelse(NRC == 0, "Children (None)", 
+                           ifelse(NRC == 1, "Children (1 - 3)", 
+                                  ifelse(NRC == 2, "Children (1 - 3)", 
+                                         ifelse(NRC == 3, "Children (1 - 3)", 
+                                                ifelse(NRC > 3, "Children (4 or more)", "Other")))))) %>% 
+  mutate(householdIncome = ifelse(HINCP >= 47273, "Household Income above family-supporting wage", 
+                                  "Household Income less than family-supporting wage")) %>% 
+  mutate(singleMoms = ifelse((HHT == 3 | HHT == 6 | HHT == 7) & (HUPAOC == 1 | HUPAOC == 2 | HUPAOC == 3), "Single Mom", "Other")) %>% 
+  mutate(poverty = ifelse(POVPIP <= 100, "In Poverty", "Other")) %>% 
+  mutate(homeValue = ifelse(VALP <= 155700, "Home value less than median value ($155,700)", "Other")) %>% 
+  mutate(rentOwn = ifelse((TEN == 1 | TEN == 2), "Own home", 
+                          ifelse(TEN == 3, "Rent home", "Other"))) %>% 
+  mutate(householdSize = ifelse(NP >= 5, "Household Size (5 or more)", "Other")) %>% 
+  mutate(childrenUnder6 = ifelse((HUPAOC == 1 | HUPAOC == 3), "Children under 6", "Other"))
+
+
+allData <- allData %>% filter(rentOwn == "Rent home")
 
 
 #seperate into groups by race and education 
@@ -218,11 +227,11 @@ blackMastersHomeValue <- weightPercent(blackMasters, homeValue)
 whiteMastersHomeValue <- weightPercent(whiteMasters, homeValue)
 blackBachelorsHomeValue <- weightPercent(blackBachelors, homeValue)
 whiteBachelorsHomeValue <- weightPercent(whiteBachelors, homeValue)
-
-blackMastersRentOwn <- weightPercent(blackMasters, rentOwn)
-whiteMastersRentOwn <- weightPercent(whiteMasters, rentOwn)
-blackBachelorsRentOwn <- weightPercent(blackBachelors, rentOwn)
-whiteBachelorsRentOwn <- weightPercent(whiteBachelors, rentOwn)
+ 
+# blackMastersRentOwn <- weightPercent(blackMasters, rentOwn)
+# whiteMastersRentOwn <- weightPercent(whiteMasters, rentOwn)
+# blackBachelorsRentOwn <- weightPercent(blackBachelors, rentOwn)
+# whiteBachelorsRentOwn <- weightPercent(whiteBachelors, rentOwn)
 
 blackMastersHouseholdSize <- weightPercent(blackMasters, householdSize)
 whiteMastersHouseholdSize <- weightPercent(whiteMasters, householdSize)
@@ -244,19 +253,19 @@ whiteBachelorsChildrenUnder6 <- weightPercent(whiteBachelors, childrenUnder6)
 ### BIND DATA SETS TOGETHER
 blackMasters <- rbind(blackMastersSex, blackMastersAgeMajor, blackMastersDis, blackMastersInsurance, 
                       blackMastersMarried, blackMastersChildren, blackMastersIncome, blackMastersSingleMoms, 
-                      blackMastersPoverty, blackMastersHomeValue, blackMastersRentOwn, blackMastersHouseholdSize, 
+                      blackMastersPoverty, blackMastersHomeValue, blackMastersHouseholdSize, 
                       blackMastersChildrenUnder6)
 whiteMasters <- rbind(whiteMastersSex, whiteMastersAgeMajor, whiteMastersDis, whiteMastersInsurance, 
                       whiteMastersMarried, whiteMastersChildren, whiteMastersIncome, whiteMastersSingleMoms, 
-                      whiteMastersPoverty, whiteMastersHomeValue, whiteMastersRentOwn, whiteMastersHouseholdSize, 
+                      whiteMastersPoverty, whiteMastersHomeValue, whiteMastersHouseholdSize, 
                       whiteMastersChildrenUnder6)
 blackBachelors <- rbind(blackBachelorsSex, blackBachelorsAgeMajor, blackBachelorsDis, blackBachelorsInsurance, 
                         blackBachelorsMarried, blackBachelorsChildren, blackBachelorsIncome, blackBachelorsSingleMoms, 
-                        blackBachelorsPoverty, blackBachelorsHomeValue, blackBachelorsRentOwn, blackBachelorsHouseholdSize, 
+                        blackBachelorsPoverty, blackBachelorsHomeValue, blackBachelorsHouseholdSize, 
                         blackBachelorsChildrenUnder6)
 whiteBachelors <- rbind(whiteBachelorsSex, whiteBachelorsAgeMajor, whiteBachelorsDis, whiteBachelorsInsurance, 
                         whiteBachelorsMarried, whiteBachelorsChildren, whiteBachelorsIncome, whiteBachelorsSingleMoms, 
-                        whiteBachelorsPoverty, whiteBachelorsHomeValue, whiteBachelorsRentOwn, whiteBachelorsHouseholdSize, 
+                        whiteBachelorsPoverty, whiteBachelorsHomeValue, whiteBachelorsHouseholdSize, 
                         whiteBachelorsChildrenUnder6)
 
 blackMasters <- addColumns(blackMasters, black, masters)
@@ -285,8 +294,6 @@ allDataFinal$label <- percent(allDataFinal$percent)
 
 allDataFinal$Type <- factor(allDataFinal$Type, levels = allDataFinal$Type[order(allDataFinal$percent)])
 
-# write.csv(allDataFinal, "allDataFinal.csv")
-
 p <- ggplot(allDataFinal, aes(x = Type, y = percent, fill = race, label = label)) + 
   geom_bar(stat = 'identity', position = 'dodge') + facet_grid(~ education) + 
   geom_text(position = position_dodge(width = 1), hjust = -.10)
@@ -297,30 +304,32 @@ highDemand <- p                                  +
   facet_grid(education ~ ., switch = 'y') + 
   #theme_minimal()                    +
   theme(strip.text.y = element_text(#angle = 180, 
-                                    # hjust = 1, 
-                                    size = 9, 
-                                    face = 'bold'),
-        # strip.background  = element_rect(fill   = 'white'),
-        # color  = 'grey'),
-        # panel.background  = element_rect(fill   = 'white'),
-        # color  = 'grey'),
-        # axis.text.y       = element_blank(), 
-        axis.ticks.y      = element_blank(), 
-        axis.text.x       = element_text(size = 9), 
-        legend.title      = element_blank(), 
-        legend.text       = element_text(size = 14),
-        # face = 'bold'), 
-        legend.position   = c(.9, .6), 
-        legend.background = element_blank(),
-        # legend.key        = element_rect(color = 'white', 
-        #                                  size = 3),
-        legend.key.size   = unit(1, 'lines'),
-        axis.title        = element_blank()) +
+    # hjust = 1, 
+    size = 9, 
+    face = 'bold'),
+    # strip.background  = element_rect(fill   = 'white'),
+    # color  = 'grey'),
+    # panel.background  = element_rect(fill   = 'white'),
+    # color  = 'grey'),
+    # axis.text.y       = element_blank(), 
+    axis.ticks.y      = element_blank(), 
+    axis.text.x       = element_text(size = 9), 
+    legend.title      = element_blank(), 
+    legend.text       = element_text(size = 14),
+    # face = 'bold'), 
+    legend.position   = c(.9, .6), 
+    legend.background = element_blank(),
+    # legend.key        = element_rect(color = 'white', 
+    #                                  size = 3),
+    legend.key.size   = unit(1, 'lines'),
+    axis.title        = element_blank()) +
   scale_y_continuous(expand = c(0,0), limits = c(0, 1.1), labels = percent) + 
   scale_fill_manual(values = cbPalette)
 
 highDemand
 
+
+# write.csv(allDataFinal, file = "allDataFinalFourState.csv")
 ## VISUALIZATIONS
 # sexLabels <- c("Male", "Female")
 # disabilityLabels <- c("Yes", "No")

@@ -7,9 +7,9 @@ library(ggplot2)
 library(scales)
 
 
-masters <- read.csv("mastersFinal.csv")
-bachelors <- read.csv("bachelorsFinal.csv")
-allDataFinal <- read.csv("allDataFinal.csv")
+masters <- read.csv("mastersFinalFourState.csv")
+bachelors <- read.csv("bachelorsFinalFourState.csv")
+allDataFinal <- read.csv("allDataFinalFourState.csv")
 
 masters   <- masters %>% select(2:4)
 bachelors <- bachelors %>% select(2:4)
@@ -58,7 +58,7 @@ shinyServer(function(input, output) {
       to="DataPoint",
       weight = "percent",
       options=list(height =1000,
-                   width = 1000, 
+                   width = 900, 
                    sankey = opts
                    # sankey = "{link:{
                    # color:{fill:'black'}

@@ -326,6 +326,8 @@ highDemand <- p                                  +
 
 highDemand
 
+
+write.csv(allDataFinal, file = "allDataFinalFourState.csv")
 ## VISUALIZATIONS
 # sexLabels <- c("Male", "Female")
 # disabilityLabels <- c("Yes", "No")
