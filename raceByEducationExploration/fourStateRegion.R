@@ -22,6 +22,7 @@ pumas          <- read.csv(textConnection(dataConnection))
 rm(dataConnection)
 
 
+
 ## FUNCTIONS
 # pumaFilter <- function(enterData, enterPUMASList) {
 #   dataSave <- enterData %>% filter(PUMA %in% pumas[, enterPUMASList])
@@ -111,6 +112,7 @@ tennessee <- left_join(tennesseePopulation, tennesseeHousing, by = "SERIALNO")
 # merge ky and in puma files 
 allData <- rbind(indiana, kentucky, ohio, tennessee)
 rm(indiana, indianaHousing, indianaPopulation, kentucky, kentuckyHousing, kentuckyPopulation, pumas, pumaFilter)
+
 
 
 ## CREATE AGE GROUPS

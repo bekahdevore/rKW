@@ -141,7 +141,9 @@ allData <- allData %>% mutate(ageGroup = ifelse(AGEP >= 25 & AGEP <= 54, "25 - 5
   mutate(childrenUnder6 = ifelse((HUPAOC == 1 | HUPAOC == 3), "Children under 6", "Other"))
 
 
-allData <- allData %>% filter(rentOwn == "Rent home")
+allData <- allData %>% filter(rentOwn == "Own home")
+
+write.csv(allData, file = "homeOwners.csv")
 
 
 #seperate into groups by race and education 
