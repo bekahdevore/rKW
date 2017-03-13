@@ -44,7 +44,7 @@ countWeight <- function(enterData, countThis){
   
   else if(countThis == "children") {
     enterData %>% count(children, wt = PWGTP)
-  }
+  } 
   else if(countThis == "income") {
     enterData %>% count(householdIncome, wt = PWGTP)
   }
@@ -284,6 +284,17 @@ cbPalette <- c(
 allDataFinal$label <- percent(allDataFinal$percent)
 
 allDataFinal$Type <- factor(allDataFinal$Type, levels = allDataFinal$Type[order(allDataFinal$percent)])
+
+cbPalette <- c(
+  '#A4D7F4',
+  '#9C0059',
+  '#8DC63F',
+  '#F8971D',
+  '#D31245',
+  '#A4D7F4',
+  '#00853F',
+  '#767662'
+)
 
 # write.csv(allDataFinal, "allDataFinal.csv")
 
