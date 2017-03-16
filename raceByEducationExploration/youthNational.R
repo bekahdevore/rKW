@@ -31,12 +31,23 @@ youthHousehold <- youth %>% mutate(householdIncome = ifelse(HINCP < 30000, "< 30
                                                                                         ifelse((HINCP >= 150000 & HINCP < 180000), "150k - 180k",
                                                                                                ifelse((HINCP >= 180000 & HINCP < 210000), "180k - 210k",
                                                                                                       ifelse(HINCP >= 210000, "> 210k", "Other"))))))))) %>% 
-  mutate(employment = ifelse((ESR == 1 | ESR == 2), "Employed", 
-                             ifelse(ESR == 3, "Unemployed", "Other")))
+                            mutate(employment = ifelse((ESR == 1 | ESR == 2), "Employed", 
+                                                     ifelse(ESR == 3, "Unemployed", "Other")))
 
-youthHousehold <- youthHousehold %>% filter(RAC1P == 2)
 
-unemploymentAndLaborForce <- function(householdGroup) {
+
+
+
+unemploymentAndLaborForce <- function(householdGroup, raceCategory, dataToReturn) {
+  if(raceCategory == "black") {
+    youthHousehold <- youthHousehold %>% filter(RAC1P == 2)
+  }
+  else if(raceCategory == "white") {
+    youthHousehold <- youthHousehold %>% filter(RAC1P == 1)
+  }
+  else {
+    youthHousehold
+  }
   
   youthHousehold <- youthHousehold %>% filter(householdIncome == householdGroup)
   unemployed      <- youthHousehold %>% filter(employment == "Unemployed")
@@ -51,18 +62,50 @@ unemploymentAndLaborForce <- function(householdGroup) {
   laborForceParticipationRate <- laborForceNumber/all
   unemploymentRate <- unemployedNumber/laborForceNumber
   
-  #percent(laborForceParticipationRate)
-  percent(unemploymentRate)
-  
+  if(dataToReturn == "laborForce") {
+    dataOutput <- percent(laborForceParticipationRate)
+  }
+  else if(dataToReturn == "unemployment") {
+    dataOutput <- percent(unemploymentRate)  
+  }
+  dataOutput
 }
 
 
-unemploymentAndLaborForce("< 30k")
-unemploymentAndLaborForce("30k - 60k")
-unemploymentAndLaborForce("60k - 90k")
-unemploymentAndLaborForce("90k - 120k")
-unemploymentAndLaborForce("120k - 150k")
-unemploymentAndLaborForce("150k - 180k")
-unemploymentAndLaborForce("180k - 210k")
-unemploymentAndLaborForce("> 210k")
+unemploymentAndLaborForce("< 30k", "black", "laborForce")
+unemploymentAndLaborForce("30k - 60k", "black", "laborForce")
+unemploymentAndLaborForce("60k - 90k", "black", "laborForce")
+unemploymentAndLaborForce("90k - 120k", "black", "laborForce")
+unemploymentAndLaborForce("120k - 150k", "black", "laborForce")
+unemploymentAndLaborForce("150k - 180k", "black", "laborForce")
+unemploymentAndLaborForce("180k - 210k", "black", "laborForce")
+unemploymentAndLaborForce("> 210k", "black", "laborForce")
+
+unemploymentAndLaborForce("< 30k", "black", "unemployment")
+unemploymentAndLaborForce("30k - 60k", "black", "unemployment")
+unemploymentAndLaborForce("60k - 90k", "black", "unemployment")
+unemploymentAndLaborForce("90k - 120k", "black", "unemployment")
+unemploymentAndLaborForce("120k - 150k", "black", "unemployment")
+unemploymentAndLaborForce("150k - 180k", "black", "unemployment")
+unemploymentAndLaborForce("180k - 210k", "black", "unemployment")
+unemploymentAndLaborForce("> 210k", "black", "unemployment")
+
+unemploymentAndLaborForce("< 30k", "white", "laborForce")
+unemploymentAndLaborForce("30k - 60k", "white", "laborForce")
+unemploymentAndLaborForce("60k - 90k", "white", "laborForce")
+unemploymentAndLaborForce("90k - 120k", "white", "laborForce")
+unemploymentAndLaborForce("120k - 150k", "white", "laborForce")
+unemploymentAndLaborForce("150k - 180k", "white", "laborForce")
+unemploymentAndLaborForce("180k - 210k", "white", "laborForce")
+unemploymentAndLaborForce("> 210k", "white", "laborForce")
+
+unemploymentAndLaborForce("< 30k", "white", "unemployment")
+unemploymentAndLaborForce("30k - 60k", "white", "unemployment")
+unemploymentAndLaborForce("60k - 90k", "white", "unemployment")
+unemploymentAndLaborForce("90k - 120k", "white", "unemployment")
+unemploymentAndLaborForce("120k - 150k", "white", "unemployment")
+unemploymentAndLaborForce("150k - 180k", "white", "unemployment")
+unemploymentAndLaborForce("180k - 210k", "white", "unemployment")
+unemploymentAndLaborForce("> 210k", "white", "unemployment")
+
 
