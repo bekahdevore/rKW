@@ -95,17 +95,14 @@ shinyUI(fluidPage(
         h6('Schedule of updates can be found here:',
            a('BLS MSA Release Schedule', href = 'http://www.bls.gov/schedule/news_release/metro.htm')), 
         h5('To update the data and visualizations follow these steps:'), 
-        p('Find the rScript on the shared drive following this path:'), 
-        p('admin_shared$/Bekah.Data/rProjects/shinyBlsUpdates/'), 
-        p('Open the .Rproj document in the folder to open the entire project in rStudio (you will need R and rStudio downloaded on your 
-          computer. If this is you first time in R, make sure to 1st run the, "Package Script for 1st Time User" found here: insertPathHere'), 
-        p('Once you have the shinyBlsUpdates.rProj opened navigate to server.r'), 
-        p('In server.r change the month variable at the top to the new reference month, check the BLS update calendar for the most recent months data'), 
-        p('Navigate to ui.r'), 
+        p('Find the shinyBlsUpdates file and open shinyBlsUpdates.Rproj to open project'),
+        p('In the file ui.r update lines , use BurningGlass to pull the latest job posting numbers (saved 
+          reports on Burning Glass, "monthlyUpdateJobPostings", and "bachelorPlus" will give you the numbers you need, make sure to update the months you
+          want to see the numbers for on Burning Glass'),
         p('In ui.r update lines 13 - 19'), 
-        p('Next run lines 1 - 24 to calculate the percent of bachelors degrees (remember this for the next step)'), 
         p('Almost finished ....'), 
-        p('Next open piktochart, find the login credentials here: ')
+        p('Next update piktochart numbers to match new job posting numbers, find the login credentials', 
+           a('here.', href = "https://docs.google.com/a/kentuckianaworks.org/spreadsheets/d/1sRv2w05D_-Nosft1l4ZH6x_B4SpSwRJJ-Ax8vHG0zyo/edit?usp=sharing"))
       ),
       
       tabPanel(
