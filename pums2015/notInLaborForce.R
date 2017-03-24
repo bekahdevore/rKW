@@ -56,11 +56,11 @@ kentucky <- left_join(kentuckyPopulation, kentuckyHousing, by = "SERIALNO")
 allData <- rbind(indiana, kentucky)
 rm(indiana, indianaHousing, indianaPopulation, kentucky, kentuckyHousing, kentuckyPopulation, pumas, pumaFilter)
 
-notInLaborForce <- allData %>% filter(ESR == 6) %>% 
-                            mutate(race = 
-                                        ifelse(RAC1P == 1 & HISP == 01, "Non-Hispanic white",
-                                        ifelse(RAC1P == 2, "Black", 
-                                        ifelse(HISP > 1, "Hispanic", "Other")))) %>% 
+notInLaborForce <- allData %>% filter(ESR == 3 & RAC1P == 2) %>% 
+                            # mutate(race = 
+                            #             ifelse(RAC1P == 1 & HISP == 01, "Non-Hispanic white",
+                            #             ifelse(RAC1P == 2, "Black", 
+                            #             ifelse(HISP > 1, "Hispanic", "Other")))) %>% 
                             mutate(education = 
                                         ifelse(SCHL < 16, "Less than high school", 
                                         ifelse(SCHL == 16 | SCHL == 17 , "High school diploma or equivalent", 
@@ -144,7 +144,8 @@ treemap(householdIncome, "label", "n", title = "")
 
 
 
-
+sum(notInLaborForce$PWGTP)
+summary(notInLaborForce$ESR)
 
 
 
