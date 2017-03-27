@@ -22,6 +22,7 @@ library(plotrix)
 library(scales)
 library(plotly)
 library(ggplot2)
+library(tidyr)
 
 ## ADD DATA
 indianaHousing  <- read.csv("ss15hin.csv")
@@ -56,11 +57,18 @@ kentucky <- left_join(kentuckyPopulation, kentuckyHousing, by = "SERIALNO")
 allData <- rbind(indiana, kentucky)
 rm(indiana, indianaHousing, indianaPopulation, kentucky, kentuckyHousing, kentuckyPopulation, pumas, pumaFilter)
 
-notInLaborForce <- allData %>% filter(ESR == 3 & RAC1P == 2) %>% 
-                            # mutate(race = 
-                            #             ifelse(RAC1P == 1 & HISP == 01, "Non-Hispanic white",
-                            #             ifelse(RAC1P == 2, "Black", 
-                            #             ifelse(HISP > 1, "Hispanic", "Other")))) %>% 
+blackUnemployed <- allData %>% filter(ESR == 3 & RAC1P == 2)
+sixteenPlus <- allData %>% filter(AGEP >= 16)
+notInLaborForce <- allData %>% filter(ESR == 6)
+unemployed <- allData %>% filter(ESR == 3)
+
+
+cleanData <- function(enterDataHere) {
+  dataOutput <- enterDataHere %>% 
+                            mutate(race =
+                                        ifelse(RAC1P == 1 & HISP == 01, "Non-Hispanic white",
+                                        ifelse(RAC1P == 2, "Black",
+                                        ifelse(HISP > 1, "Hispanic", "Other")))) %>%
                             mutate(education = 
                                         ifelse(SCHL < 16, "Less than high school", 
                                         ifelse(SCHL == 16 | SCHL == 17 , "High school diploma or equivalent", 
@@ -78,6 +86,11 @@ notInLaborForce <- allData %>% filter(ESR == 3 & RAC1P == 2) %>%
                                         ifelse((HINCP >= 150000 & HINCP < 180000), "$150k - $180k",
                                         ifelse((HINCP >= 180000 & HINCP < 210000), "$180k - $210k",
                                         ifelse(HINCP >= 210000, "> 210k", "Other")))))))))
+}
+
+unemployedClean <- cleanData(unemployed)
+notInLaborForceClean <- cleanData(notInLaborForce)
+sixteenPlusClean <- cleanData(sixteenPlus)
 
 ## Disability data
 disability <- notInLaborForce %>% 
@@ -101,11 +114,29 @@ disabilityData <- disability %>% mutate(disability =
 
 
 ## By race
-race <- count(notInLaborForce, race, wt = PWGTP)
-race$percent <-  percent(race$n/sum(race$n))
-race$label <- paste(race$race, "\n", race$percent)
+unemployedRace <- count(unemployedClean, race, wt = PWGTP)
+  unemployedRace$percent <-  (unemployedRace$n/sum(unemployedRace$n))
+  #unemployedRace$label <- paste(unemployedRace$race, "\n", unemployedRace$percent)
+  unemployedRace$State <- "Unemployed"
 
-treemap(race, "label", "n", title = "")
+notInLaborForceRace <- dplyr::count(notInLaborForceClean, race, wt = PWGTP)
+  notInLaborForceRace$percent <-  notInLaborForceRace$n/sum(notInLaborForceRace$n)
+  #notInLaborForceRace$label <- paste(notInLaborForceRace$race, "\n", notInLaborForceRace$percent)
+  notInLaborForceRace$State <- "Not in Labor Force"
+  
+sixteenPlusRace <- dplyr::count(sixteenPlusClean, race, wt = PWGTP)
+  sixteenPlusRace$percent <-  (sixteenPlusRace$n/sum(sixteenPlusRace$n))
+  #sixteenPlusRace$label <- paste(sixteenPlusRace$race, "\n", sixteenPlusRace$percent)
+  sixteenPlusRace$State <- "Population"
+
+sixteenPlusRaceSpread <- sixteenPlusRace %>% select(State, race, percent) %>% spread(race, percent)
+notInLaborForceRaceSpread <- notInLaborForceRace %>% select(State, race, percent) %>% spread(race, percent)
+unemployedRaceSpread <- unemployedRace %>% select(State, race, percent) %>% spread(race, percent)
+
+raceData <- rbind(sixteenPlusRaceSpread, unemployedRaceSpread, notInLaborForceRaceSpread)
+write.csv(raceData, file = "raceData.csv")
+
+# treemap(race, "label", "n", title = "")
 
 
 ## householdIncome level
@@ -113,7 +144,7 @@ education <- count(notInLaborForce, education, wt = PWGTP)
 education$percent <- percent(education$n/sum(education$n))
 education$label <- paste(education$education, "\n", education$percent)
 
-treemap(education, "label", "n", title = "")
+#treemap(education, "label", "n", title = "")
 
 
 ## Sex
@@ -141,11 +172,16 @@ householdIncome$label <- paste(householdIncome$householdIncome, "\n", householdI
 
 treemap(householdIncome, "label", "n", title = "")
 
+## AGE
+householdIncome <- count(notInLaborForce, householdIncome, wt = PWGTP)
+householdIncome <- na.omit(householdIncome)
+householdIncome$percent <- percent(householdIncome$n/sum(householdIncome$n))
+householdIncome$label <- paste(householdIncome$householdIncome, "\n", householdIncome$percent)
+
+treemap(householdIncome, "label", "n", title = "")
 
 
 
-sum(notInLaborForce$PWGTP)
-summary(notInLaborForce$ESR)
 
 
 
