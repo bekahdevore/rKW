@@ -271,7 +271,7 @@ unemployedAgeSpread <- unemployedAge %>% select(State, age, percent) %>% spread(
 notInLaborForceAgeSpread <- notInLaborForceAgeSpread %>% select(-Other)
 
 ageData <- rbind(sixteenPlusAgeSpread, unemployedAgeSpread, notInLaborForceAgeSpread)
-write.csv(ageData, file = "ageData.csv")
+# write.csv(ageData, file = "ageData.csv")
 ageData
 
 
