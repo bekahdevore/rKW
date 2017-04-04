@@ -110,7 +110,14 @@ shinyUI(fluidPage(
         h1("How to update the Quarterly Report"), 
         h4("The quarterly report runs off of three data sheets, by updating 
            the sheets the visualiations will automatically update when the scripts are run,
-           we will talk about how to do this is the following steps.")
+           we will talk about how to do this is the following steps."), 
+        p("You will need access to the following:"), 
+        tags$ul(
+          tags$li("quarterlyReportMainInput google sheet"), 
+          tags$li("R Scripts (quarterlyReportMainRs"), 
+          tags$li(""), 
+          tags$li("4. From here you can open and download the data summary of interest")
+        ))
       ),
       
       tabPanel(
