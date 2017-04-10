@@ -178,12 +178,18 @@ shinyUI(fluidPage(
               tags$li("4. From here you can open and download the data summary of interest")
             )),
         h5('Public Use Microdatasets (PUMS)'),
-        h5('Bureau of Labor Statistics'), 
-        h5('EMSI Analyst'), 
+        p("For the PUMS data we use 1 year estimates"),
+        h5('Bureau of Labor Statistics'),
+        p('Unemployment rates, median wages'),
+        h5('EMSI Analyst'),
+        p("EMSI aggregates public datasets and make them easier to access and filter by geo location, they also model
+          projections for jobs for up to ten years into the future"),
         h5('Burning Glass'), 
+        p('We use BG to look at local online job postings'), 
         h5('KCEWS'), 
-        br(), 
-        h3("More information coming soon ... ")
+        p('We use KCEWS for longitutinal data about college graduates by major'),
+        br(),
+        downloadLink('datasetInfo', 'Download Helpful Document about datasets')
       )
 
 
