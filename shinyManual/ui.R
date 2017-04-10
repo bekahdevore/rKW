@@ -55,11 +55,13 @@ shinyUI(fluidPage(
           the requester using the data and write a kind and succint email with some information about the data/visualization. If not, 
           proceed to Step Three.'), 
         h6('Step Three:'), 
-        p()
+        p('Ask questions! Make sure you understand what they want, it is better to clarify the question and parameters than have to repeat the data pull/visualization from scratch'), 
+        p('Give time estimate, and let requestor know if it changes for any reason'),
+        p('Fufill request and let requestor know to follow up with any questions or data moving forward :)')
       ),
       
       tabPanel(
-        'Cradle to Career Update',
+        'Cradle to Career',
         h1("Cradle to Career Update"), 
         h5('Reported once a year around Nov. - Dec.'), 
         h6('Measures to report:'), 
@@ -79,61 +81,58 @@ shinyUI(fluidPage(
       ),
       
       tabPanel(
-        'KentuckiAnalytics',
-        h1("KentuckiAnalytics"), 
-        h5('The LMI blog is housed at', a('KentuckiAnalytics.org', href = 'http://kentuckianalytics.org/'), 
-           'a wordpress.org based site.'),
-        h5('Goal: publish a new blog post once a month, and answer data questions from the public'),
+        'Blog',
+        h1("Blog"), 
+        h5('The LMI blog is housed at', a('KentuckiAnalytics.org', href = 'http://kentuckianalytics.org/')), 
+        p('The blog is a wordpress.org based site self-hosted on AWS.'),
+        h6('Goal: publish a new blog post once a month, and answer data questions from the public'),
         p('Questions from blog are sent to LMI@kentuckianaworks.org')
       ),
       
       tabPanel(
         'Monthly Newsletter', 
         h1("Monthly Newsletter"), 
-        p('Every 30 days we (in partnership with the KW communications department) 
+        p('Every month we (in partnership with the KW communications department) 
            release a newsletter with BLS updates for the Louisville MSA area'),
         h6('Schedule of updates can be found here:',
            a('BLS MSA Release Schedule', href = 'http://www.bls.gov/schedule/news_release/metro.htm')), 
         h5('To update the data and visualizations follow these steps:'), 
         p('Find the shinyBlsUpdates file and open shinyBlsUpdates.Rproj to open project'),
-        p('In the file ui.r update lines , use BurningGlass to pull the latest job posting numbers (saved 
-          reports on Burning Glass, "monthlyUpdateJobPostings", and "bachelorPlus" will give you the numbers you need, make sure to update the months you
-          want to see the numbers for on Burning Glass'),
-        p('In ui.r update lines 13 - 19'), 
-        p('Almost finished ....'), 
-        p('Next update piktochart numbers to match new job posting numbers, find the login credentials', 
-           a('here.', href = "https://docs.google.com/a/kentuckianaworks.org/spreadsheets/d/1sRv2w05D_-Nosft1l4ZH6x_B4SpSwRJJ-Ax8vHG0zyo/edit?usp=sharing"))
+        p('In the file ui.r update lines 13 - 19 (use BurningGlass to pull these numbers (saved 
+          reports, "monthlyUpdateJobPostings", "associatesPlus", and "bachelorPlus" will give
+          you the numbers you need, but make sure to change the time period to the current reference month'),
+        p('Run and republish app'), 
+        p("Send communication's department new numbers"),
+        p('Sweet, you did it :)')
       ),
       
       tabPanel(
         'Quarterly Report', 
-        h1("How to update the Quarterly Report"), 
-        h4("The quarterly report runs off of three data sheets, by updating 
-           the sheets the visualiations will automatically update when the scripts are run,
-           we will talk about how to do this is the following steps."), 
-        p("You will need access to the following:"), 
+        h1("Updating the Quarterly Report"), 
+        h4("You will need:"), 
         tags$ul(
-          tags$li("quarterlyReportMainInput google sheet"), 
-          tags$li("R Scripts (quarterlyReportMainRs"), 
-          tags$li(""), 
-          tags$li("4. From here you can open and download the data summary of interest")
-        ))
-      ),
+          tags$li("Burning Glass & EMSI login credentials"),
+          tags$li("access to quarterlyReportMainInput google sheet"), 
+          tags$li("quarterlyReport.rProj (Contains necessary rScripts)"),
+          tags$li("Quarterly Report InDesign File, and InDesign login credentials")),
+        h4("Outline:"), 
+        tags$ul(
+          tags$li("Pull New Data (Burnning Glass and EMSI)"),
+          tags$li("Update google sheet with new data (quarterlyReportMainInput google sheet)"), 
+          tags$li("Run R Scripts"),
+          tags$li("Drag and drop R script output visualizations into InDesign quarterly report template"))
+    ),        
+      
       
       tabPanel(
-        'Shiny App Links', 
+        'Shiny Apps', 
         h1('Shiny Apps'),
         h4('Click on a link below to open Shiny App'),
         h5(a('Race, Education, and Occupations', href = 'https://kwlmi.shinyapps.io/raceByEducationExploration/')),
         br(),
         h5(a('Credentials Analysis', href = 'https://kwlmi.shinyapps.io/shinyCredentialsByEducation/')),
-        p('In Progress:'),
-        p('Adding bar chart with top 3 credentials by major'),
-        p('Adding summary statistics'),
         br(),
         h5(a('Career Pathways',        href = 'https://kwlmi.shinyapps.io/careerpathways2/')), 
-        p('In progress:'), 
-        p('checking functions in HTML and rScipts'), 
         br(),
         h5(a('BLS Newsletter Update',   href = 'https://kwlmi.shinyapps.io/shinyBlsUpdates/')),
         br(),
@@ -165,7 +164,7 @@ shinyUI(fluidPage(
       ),
       
       tabPanel(
-        'About Datasets', 
+        'Datasets', 
         h1('The datasets...'), 
         h5('American Community Survey'),
         p(a('American Fact Finder', 
