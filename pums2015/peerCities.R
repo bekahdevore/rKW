@@ -48,17 +48,49 @@ pumaFilter <- function(enterData, enterPUMASList) {
 }
 
 ## FILTER DATA
-indianaHousing     <- pumaFilter(indianaHousing, "inPUMA")
-kentuckyHousing    <- pumaFilter(kentuckyHousing, "kyPUMA")
+alabamaPopulation <- pumaFilter(alabamaPopulation, "alabamaPumas")
+arkansasPopulation <- pumaFilter(arkansasPopulation, "arkansasPumas")
+indianaPopulation <- pumaFilter(indianaPopulation, "indianaPumas")
+iowaPopulation <- pumaFilter(iowaPopulation, "iowaPumas")
+kentuckyPopulation <- pumaFilter(kentuckyPopulation, "kentuckyPumas")
+mississippiPopulation <- pumaFilter(mississippiPopulation, "mississippiPumas")
+nebraskaPopulation <- pumaFilter(nebraskaPopulation, "nebraskaPumas")
+northCarolinaPopulation <- pumaFilter(northCarolinaPopulation, "northCarolinaPumas")
+ohioPopulation <- pumaFilter(ohioPopulation, "ohioPumas")
+southCarolinaPopulation <- pumaFilter(southCarolinaPopulation, "southCarolinaPumas")
+tennesseePopulation <- pumaFilter(tennesseePopulation, "tennesseePumas")
+virginiaPopulation <- pumaFilter(virginiaPopulation, "virginiaPumas")
 
-indianaPopulation  <- pumaFilter(indianaPopulation, "inPUMA")
-kentuckyPopulation <- pumaFilter(kentuckyPopulation, "kyPUMA")
+alabamaHousing <- pumaFilter(alabamaHousing, "alabamaPumas")
+arkansasHousing <- pumaFilter(arkansasHousing, "arkansasPumas")
+indianaHousing <- pumaFilter(indianaHousing, "indianaPumas")
+iowaHousing <- pumaFilter(iowaHousing, "iowaPumas")
+kentuckyHousing <- pumaFilter(kentuckyHousing, "kentuckyPumas")
+mississippiHousing <- pumaFilter(mississippiHousing, "mississippiPumas")
+nebraskaHousing <- pumaFilter(nebraskaHousing, "nebraskaPumas")
+northCarolinaHousing <- pumaFilter(northCarolinaHousing, "northCarolinaPumas")
+ohioHousing <- pumaFilter(ohioHousing, "ohioPumas")
+southCarolinaHousing <- pumaFilter(southCarolinaHousing, "southCarolinaPumas")
+tennesseeHousing <- pumaFilter(tennesseeHousing, "tennesseePumas")
+virginiaHousing <- pumaFilter(virginiaHousing, "virginiaPumas")
 
 # merge population and housing records
+alabama 
 indiana  <- left_join(indianaPopulation, indianaHousing, by = "SERIALNO")
 kentucky <- left_join(kentuckyPopulation, kentuckyHousing, by = "SERIALNO")
 
-
+alabamaHousing <- pumaFilter(alabamaHousing, "alabamaPumas")
+arkansasHousing <- pumaFilter(arkansasHousing, "arkansasPumas")
+indianaHousing <- pumaFilter(indianaHousing, "indianaPumas")
+iowaHousing <- pumaFilter(iowaHousing, "iowaPumas")
+kentuckyHousing <- pumaFilter(kentuckyHousing, "kentuckyPumas")
+mississippiHousing <- pumaFilter(mississippiHousing, "mississippiPumas")
+nebraskaHousing <- pumaFilter(nebraskaHousing, "nebraskaPumas")
+northCarolinaHousing <- pumaFilter(northCarolinaHousing, "northCarolinaPumas")
+ohioHousing <- pumaFilter(ohioHousing, "ohioPumas")
+southCarolinaHousing <- pumaFilter(southCarolinaHousing, "southCarolinaPumas")
+tennesseeHousing <- pumaFilter(tennesseeHousing, "tennesseePumas")
+virginiaHousing <- pumaFilter(virginiaHousing, "virginiaPumas")
 
 
 
