@@ -3,8 +3,8 @@ library(dplyr)
 library(shiny)
 library(stringr)
 
-dataConnectionBg <- getURL('https://docs.google.com/spreadsheets/d/1n0DVC8fBwTr6ne9Fw5dFaRtO3ka-Y2i8zweFGIzmVcQ/pub?gid=0&single=true&output=csv')
-dataConnectionEmsi <- getURL('https://docs.google.com/spreadsheets/d/1n0DVC8fBwTr6ne9Fw5dFaRtO3ka-Y2i8zweFGIzmVcQ/pub?gid=553292548&single=true&output=csv')
+dataConnectionBg <- getURL('https://docs.google.com/spreadsheets/d/1DjmOHHFiPAyCKXkze6e8EVHBSGv-N7qt5rX1KezQUx0/pub?gid=0&single=true&output=csv')
+dataConnectionEmsi <- getURL('https://docs.google.com/spreadsheets/d/1DjmOHHFiPAyCKXkze6e8EVHBSGv-N7qt5rX1KezQUx0/pub?gid=1224165436&single=true&output=csv')
 dataConnectionSectors <- getURL('https://docs.google.com/spreadsheets/d/1n0DVC8fBwTr6ne9Fw5dFaRtO3ka-Y2i8zweFGIzmVcQ/pub?gid=624724603&single=true&output=csv')
 
 burningGlass <- read.csv(textConnection(dataConnectionBg), check.names = FALSE)
@@ -26,6 +26,8 @@ allData <- left_join(allData, splitSOC, by = "SOC")
 allData <- left_join(allData, sectors, by = "socGroup")
 
 allData$`Number of Job Postings` <- str_replace_all(allData$`Number of Job Postings`, ",", "")
+allData$`Age 55-64` <- str_replace_all(allData$`Age 55-64`, ",", "")
+allData$`Age 65+` <- str_replace_all(allData$`Age 65+`, ",", "")
 allData$`Median Hourly Earnings` <- str_replace_all(allData$`Median Hourly Earnings`, "\\$", "")
 
 allData$`Number of Job Postings` <- as.numeric(allData$`Number of Job Postings`)

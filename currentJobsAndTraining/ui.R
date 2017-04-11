@@ -6,7 +6,7 @@ dataConnectionSectors <- getURL('https://docs.google.com/spreadsheets/d/1n0DVC8f
 sectors      <- read.csv(textConnection(dataConnectionSectors), check.names = FALSE)
 
 sectors <- sectors %>% select(3)
-
+updated <- "April 1st 2017"
 
 
 c <- as.data.frame("All")
@@ -22,7 +22,8 @@ library(shiny)
 shinyUI(
   fluidPage(
     titlePanel("Louisville MSA Jobs with Openings in the Last 90 days"),
-    p("Data Source: Burning Glass Labor Insights, Online Job Postings"), 
+    p("Data Source: Burning Glass Labor Insights, Online Job Postings"),
+    p("Updated:", updated),
     
     # Create a new Row in the UI for selectInputs
     fluidRow(
