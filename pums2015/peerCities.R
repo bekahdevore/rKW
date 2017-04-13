@@ -20,18 +20,18 @@ southCarolinaPopulation <- read.csv("ss15poh.csv")
 tennesseePopulation <- read.csv("ss15ptn.csv")
 virginiaPopulation <- read.csv("ss15pva.csv")
 
-alabamaHousing <- read.csv("ss15pal.csv") 
-arkansasHousing <- read.csv("ss15par.csv")
-indianaHousing <- read.csv("ss15pin.csv")
-iowaHousing <- read.csv("ss15pia.csv")
-kentuckyHousing <- read.csv("ss15pky.csv")
-mississippiHousing <- read.csv("ss15pms.csv")
-nebraskaHousing <- read.csv("ss15pne.csv")
-northCarolinaHousing <- read.csv("ss15pnc.csv")
-ohioHousing <- read.csv("ss15poh.csv")
-southCarolinaHousing <- read.csv("ss15psc.csv")
-tennesseeHousing <- read.csv("ss15ptn.csv")
-virginiaHousing <- read.csv("ss15pva.csv")
+alabamaHousing <- read.csv("ss15hal.csv") 
+arkansasHousing <- read.csv("ss15har.csv")
+indianaHousing <- read.csv("ss15hin.csv")
+iowaHousing <- read.csv("ss15hia.csv")
+kentuckyHousing <- read.csv("ss15hky.csv")
+mississippiHousing <- read.csv("ss15hms.csv")
+nebraskaHousing <- read.csv("ss15hne.csv")
+northCarolinaHousing <- read.csv("ss15hnc.csv")
+ohioHousing <- read.csv("ss15hoh.csv")
+southCarolinaHousing <- read.csv("ss15hsc.csv")
+tennesseeHousing <- read.csv("ss15htn.csv")
+virginiaHousing <- read.csv("ss15hva.csv")
 
 
 
@@ -104,5 +104,7 @@ allData <- rbind(
                   virginia
               )
 
-#write.csv(allData, file = "peerCityPUMS.csv" )
-save(allData, file = "peerCityPums.RData")
+
+
+write.csv(allData, file = "peerCityPUMS.csv" )
+#save(allData, file = "peerCityPums.RData")

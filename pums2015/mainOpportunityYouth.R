@@ -10,12 +10,16 @@ library(tidyr)
 library(treemap)
 
 # Add data
-youth16to19 <- read.csv("youth16to19.csv")
-youth16to21 <- read.csv("youth16to21.csv")
+# youth16to19 <- read.csv("youth16to19.csv")
+# youth16to21 <- read.csv("youth16to21.csv")
+#peerCityPums <- load("peerCityPums.RData")
+peerCityPums <- read.csv("peerCityPUMS.csv")
+# youth16to19Title <- "Youth 16 to 19"
+# youth16to21Title <- "Youth 16 to 21"
+#peerCityPums <- peerCityPums %>% filter(AGEP >= 16 & AGEP <= 21) %>% filter(ESR == 6 | ESR == 3) %>% 
+#  filter(SCH == 1)
 
-youth16to19Title <- "Youth 16 to 19"
-youth16to21Title <- "Youth 16 to 21"
-
+peerCityPums <- peerCityPums %>% filter(AGEP >= 16)
 
 cleanData <- function(enterDataHere) {
   dataOutput <- enterDataHere %>% 
@@ -40,6 +44,11 @@ cleanData <- function(enterDataHere) {
                                                 ifelse((HINCP >= 150000 & HINCP < 180000), "$150k - $180k",
                                                        ifelse((HINCP >= 180000 & HINCP < 210000), "$180k - $210k",
                                                               ifelse(HINCP >= 210000, "> 210k", "Other"))))))))) %>% 
+    mutate(age = 
+                    ifelse((AGEP >= 16 & AGEP <= 21), "Sixteen - Twenty-One", 
+                           ifelse((AGEP >= 22 & AGEP <= 35), "Twenty-Two - Thirty-Five",
+                                  ifelse((AGEP >= 36 & AGEP <= 54), "Thirty-Six - Fifty-Four",
+                                         ifelse((AGEP >= 55), "Fifty-Five or older", "Other"))))) %>% 
     mutate(sex = 
              ifelse(SEX == 1, "Male", 
                     ifelse(SEX == 2, "Female", "Other")))
@@ -68,25 +77,33 @@ disabilityClean <- function(enterDataHere) {
                                                                                              ifelse(DIS == 2, "Without disability", "Other")))))))))
 }
 
-youth16to19Disability <- disabilityClean(youth16to19)
-youth16to21Disability <- disabilityClean(youth16to21)
+# youth16to19Disability <- disabilityClean(youth16to19)
+# youth16to21Disability <- disabilityClean(youth16to21)
+peerCityPumsDisability <- disabilityClean(peerCityPums)
 
 ## Disability
 # 16 - 19
-youth16to19Disability <- dplyr::count(youth16to19Disability, disability, wt = PWGTP)
-youth16to19Disability$percent <- percent(youth16to19Disability$n/sum(youth16to19Disability$n))
-youth16to19Disability$label <- paste(youth16to19Disability$disability, "\n", youth16to19Disability$percent)
-View(youth16to19Disability)
+# youth16to19Disability <- dplyr::count(youth16to19Disability, disability, wt = PWGTP)
+# youth16to19Disability$percent <- percent(youth16to19Disability$n/sum(youth16to19Disability$n))
+# youth16to19Disability$label <- paste(youth16to19Disability$disability, "\n", youth16to19Disability$percent)
+# View(youth16to19Disability)
+# 
+# treemap(youth16to19Disability, "label", "n", title = youth16to19Title)
+# 
+# # 16 - 21
+# youth16to21Disability <- count(youth16to21Disability, disability, wt = PWGTP)
+# youth16to21Disability$percent <- percent(youth16to21Disability$n/sum(youth16to21Disability$n))
+# youth16to21Disability$label <- paste(youth16to21Disability$disability, "\n", youth16to21Disability$percent)
+# View(youth16to21Disability)
+# 
+# treemap(youth16to21Disability, "label", "n", title = youth16to21Title)
 
-treemap(youth16to19Disability, "label", "n", title = youth16to19Title)
+# Peer City Pums
+peerCityPumsDisability <- count(peerCityPumsDisability, disability, wt = PWGTP)
+peerCityPumsDisability$percent <- percent(peerCityPumsDisability$n/sum(peerCityPumsDisability$n))
+peerCityPumsDisability$label <- paste(peerCityPumsDisability$disability, "\n", peerCityPumsDisability$percent)
 
-# 16 - 21
-youth16to21Disability <- count(youth16to21Disability, disability, wt = PWGTP)
-youth16to21Disability$percent <- percent(youth16to21Disability$n/sum(youth16to21Disability$n))
-youth16to21Disability$label <- paste(youth16to21Disability$disability, "\n", youth16to21Disability$percent)
-View(youth16to21Disability)
-
-treemap(youth16to21Disability, "label", "n", title = youth16to21Title)
+treemap(peerCityPumsDisability, "label", "n", title = "Peer City Population")
 
 # popluationDisabilitySpread <- populationDisability %>% select(State, disability, percent) %>% spread(disability, percent)
 # notInLaborForceDisabilitySpread <- notInLaborForceDisability %>% select(State, disability, percent) %>% spread(disability, percent)
@@ -97,24 +114,33 @@ treemap(youth16to21Disability, "label", "n", title = youth16to21Title)
 # 
 # # treemap(disabilityCount, "label", "n", title = "")
 
-youth16to19Clean <- cleanData(youth16to19)
-youth16to21Clean <- cleanData(youth16to21)
+# youth16to19Clean <- cleanData(youth16to19)
+# youth16to21Clean <- cleanData(youth16to21)
+peerCityPumsClean <- cleanData(peerCityPums)
+
 
 ## By race
 #16 - 19
-youth16to19Race <- count(youth16to19Clean, race, wt = PWGTP)
-youth16to19Race$percent <- percent(youth16to19Race$n/sum(youth16to19Race$n))
-youth16to19Race$label <- paste(youth16to19Race$race, "\n", youth16to19Race$percent)
+# youth16to19Race <- count(youth16to19Clean, race, wt = PWGTP)
+# youth16to19Race$percent <- percent(youth16to19Race$n/sum(youth16to19Race$n))
+# youth16to19Race$label <- paste(youth16to19Race$race, "\n", youth16to19Race$percent)
+# 
+# treemap(youth16to19Race, "label", "n", title = youth16to19Title)
+# 
+# 
+# #16 - 21
+# youth16to21Race <- dplyr::count(youth16to21Clean, race, wt = PWGTP)
+# youth16to21Race$percent <- percent(youth16to21Race$n/sum(youth16to21Race$n))
+# youth16to21Race$label <- paste(youth16to21Race$race, "\n", youth16to21Race$percent)
+# 
+# treemap(youth16to21Race, "label", "n", title = youth16to21Title)
 
-treemap(youth16to19Race, "label", "n", title = youth16to19Title)
+## Peer City Pums
+peerCityPumsRace <- count(peerCityPumsClean, race, wt = PWGTP)
+peerCityPumsRace$percent <- percent(peerCityPumsRace$n/sum(peerCityPumsRace$n))
+peerCityPumsRace$label <- paste(peerCityPumsRace$race, "\n", peerCityPumsRace$percent)
 
-
-#16 - 21
-youth16to21Race <- dplyr::count(youth16to21Clean, race, wt = PWGTP)
-youth16to21Race$percent <- percent(youth16to21Race$n/sum(youth16to21Race$n))
-youth16to21Race$label <- paste(youth16to21Race$race, "\n", youth16to21Race$percent)
-
-treemap(youth16to21Race, "label", "n", title = youth16to21Title)
+treemap(peerCityPumsRace, "label", "n", title = peerCityPumsTitle)
 
 
 # notInLaborForceRaceSpread <- notInLaborForceRace %>% select(State, race, percent) %>% spread(race, percent)
@@ -151,21 +177,33 @@ treemap(youth16to21Race, "label", "n", title = youth16to21Title)
 
 #treemap(education, "label", "n", title = "")
 
+peerCityPumsEducation <- count(peerCityPumsClean, education, wt = PWGTP)
+peerCityPumsEducation$percent <- percent(peerCityPumsEducation$n/sum(peerCityPumsEducation$n))
+peerCityPumsEducation$label <- paste(peerCityPumsEducation$education, "\n", peerCityPumsEducation$percent)
+treemap(peerCityPumsEducation, "label", "n", title = "")
+
+
 
 ## Sex
 
-youth16to19Sex <- count(youth16to19Clean, sex, wt = PWGTP)
-youth16to19Sex$percent <-  percent(youth16to19Sex$n/sum(youth16to19Sex$n))
-youth16to19Sex$label <- paste(youth16to19Sex$sex, "\n", youth16to19Sex$percent)
+# youth16to19Sex <- count(youth16to19Clean, sex, wt = PWGTP)
+# youth16to19Sex$percent <-  percent(youth16to19Sex$n/sum(youth16to19Sex$n))
+# youth16to19Sex$label <- paste(youth16to19Sex$sex, "\n", youth16to19Sex$percent)
+# 
+# treemap(youth16to19Sex, "label", "n", title = youth16to19Title)
+# 
+# 
+# youth16to21Sex <- dplyr::count(youth16to21Clean, sex, wt = PWGTP)
+# youth16to21Sex$percent <-  percent(youth16to21Sex$n/sum(youth16to21Sex$n))
+# youth16to21Sex$label <- paste(youth16to21Sex$sex, "\n", youth16to21Sex$percent)
+# 
+# treemap(youth16to21Sex, "label", "n", title = youth16to21Title)
 
-treemap(youth16to19Sex, "label", "n", title = youth16to19Title)
+peerCityPumsSex <- dplyr::count(peerCityPumsClean, sex, wt = PWGTP)
+peerCityPumsSex$percent <-  percent(peerCityPumsSex$n/sum(peerCityPumsSex$n))
+peerCityPumsSex$label <- paste(peerCityPumsSex$sex, "\n", peerCityPumsSex$percent)
 
-
-youth16to21Sex <- dplyr::count(youth16to21Clean, sex, wt = PWGTP)
-youth16to21Sex$percent <-  percent(youth16to21Sex$n/sum(youth16to21Sex$n))
-youth16to21Sex$label <- paste(youth16to21Sex$sex, "\n", youth16to21Sex$percent)
-
-treemap(youth16to21Sex, "label", "n", title = youth16to21Title)
+treemap(peerCityPumsSex, "label", "n", title = peerCityPumsTitle)
 
 
 # sixteenPlusSexSpread <- sixteenPlusSex %>% select(State, SEX, percent) %>% spread(SEX, percent)
@@ -179,42 +217,57 @@ treemap(youth16to21Sex, "label", "n", title = youth16to21Title)
 
 
 ## Household Age
-#16-19
-youth16to19Income <- count(youth16to19Clean, householdIncome, wt = PWGTP)
-youth16to19Income <- na.omit(youth16to19Income)
-youth16to19Income$percent <- percent(youth16to19Income$n/sum(youth16to19Income$n))
-youth16to19Income$label <- paste(youth16to19Income$householdIncome, "\n", youth16to19Income$percent)
+# #16-19
+# youth16to19Income <- count(youth16to19Clean, householdIncome, wt = PWGTP)
+# youth16to19Income <- na.omit(youth16to19Income)
+# youth16to19Income$percent <- percent(youth16to19Income$n/sum(youth16to19Income$n))
+# youth16to19Income$label <- paste(youth16to19Income$householdIncome, "\n", youth16to19Income$percent)
+# 
+# treemap(youth16to19Income, "label", "n", title = youth16to19Title)
+# 
+# #16-21
+# youth16to21Income <- count(youth16to21Clean, householdIncome, wt = PWGTP)
+# youth16to21Income <- na.omit(youth16to21Income)
+# youth16to21Income$percent <- percent(youth16to21Income$n/sum(youth16to21Income$n))
+# youth16to21Income$label <- paste(youth16to21Income$householdIncome, "\n", youth16to21Income$percent)
+# 
+# treemap(youth16to21Income, "label", "n", title = youth16to21Title)
 
-treemap(youth16to19Income, "label", "n", title = youth16to19Title)
+peerCityPumsIncome <- count(peerCityPumsClean, householdIncome, wt = PWGTP)
+peerCityPumsIncome <- na.omit(peerCityPumsIncome)
+peerCityPumsIncome$percent <- percent(peerCityPumsIncome$n/sum(peerCityPumsIncome$n))
+peerCityPumsIncome$label <- paste(peerCityPumsIncome$householdIncome, "\n", peerCityPumsIncome$percent)
 
-#16-21
-youth16to21Income <- count(youth16to21Clean, householdIncome, wt = PWGTP)
-youth16to21Income <- na.omit(youth16to21Income)
-youth16to21Income$percent <- percent(youth16to21Income$n/sum(youth16to21Income$n))
-youth16to21Income$label <- paste(youth16to21Income$householdIncome, "\n", youth16to21Income$percent)
-
-treemap(youth16to21Income, "label", "n", title = youth16to21Title)
+treemap(peerCityPumsIncome, "label", "n", title = "Peer City Pums")
 
 
 
 
 ## AGE
 
-#16-19
-youth16to19Age <- count(youth16to19Clean, AGEP, wt = PWGTP)
-youth16to19Age <- na.omit(youth16to19Age)
-youth16to19Age$percent <- percent(youth16to19Age$n/sum(youth16to19Age$n))
-youth16to19Age$label <- paste(youth16to19Age$AGEP, "\n", youth16to19Age$percent)
+# #16-19
+# youth16to19Age <- count(youth16to19Clean, AGEP, wt = PWGTP)
+# youth16to19Age <- na.omit(youth16to19Age)
+# youth16to19Age$percent <- percent(youth16to19Age$n/sum(youth16to19Age$n))
+# youth16to19Age$label <- paste(youth16to19Age$AGEP, "\n", youth16to19Age$percent)
+# 
+# treemap(youth16to19Age, "label", "n", title = youth16to19Title)
+# 
+# #16-21
+# youth16to21Age <- count(youth16to21Clean, AGEP, wt = PWGTP)
+# youth16to21Age <- na.omit(youth16to21Age)
+# youth16to21Age$percent <- percent(youth16to21Age$n/sum(youth16to21Age$n))
+# youth16to21Age$label <- paste(youth16to21Age$AGEP, "\n", youth16to21Age$percent)
+# 
+# treemap(youth16to21Age, "label", "n", title = youth16to21Title)
 
-treemap(youth16to19Age, "label", "n", title = youth16to19Title)
+peerCityPumsAge <- count(peerCityPumsClean, age, wt = PWGTP)
+peerCityPumsAge <- na.omit(peerCityPumsAge)
+peerCityPumsAge$percent <- percent(peerCityPumsAge$n/sum(peerCityPumsAge$n))
+peerCityPumsAge$label <- paste(peerCityPumsAge$age, "\n", peerCityPumsAge$percent)
 
-#16-21
-youth16to21Age <- count(youth16to21Clean, AGEP, wt = PWGTP)
-youth16to21Age <- na.omit(youth16to21Age)
-youth16to21Age$percent <- percent(youth16to21Age$n/sum(youth16to21Age$n))
-youth16to21Age$label <- paste(youth16to21Age$AGEP, "\n", youth16to21Age$percent)
+treemap(peerCityPumsAge, "label", "n", title = "")
 
-treemap(youth16to21Age, "label", "n", title = youth16to21Title)
 
 
 
