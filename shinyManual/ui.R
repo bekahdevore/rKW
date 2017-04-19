@@ -11,7 +11,7 @@ library(shinythemes)
 shinyUI(fluidPage(
   theme = shinytheme("cyborg"),
   # Application title
-  mainPanel(
+  mainPanel( width = 12,
     tabsetPanel(
       tabPanel(
         'Home',
@@ -165,6 +165,7 @@ shinyUI(fluidPage(
 
     tabPanel("Regional Plan Data",
              h3("Project timeframe: April 24th - 28th", align = "center"), 
+             p("All data points needed for both the total 40 county region and the four regions within (KentuckianaWorks, Bluegrass, Northern Kentucky, Lincoln Trail)"),
       sidebarPanel(
         h5("Counties:"),
              h6("KentuckianaWorks:"),
@@ -220,25 +221,46 @@ shinyUI(fluidPage(
       mainPanel(
         tabsetPanel(
           tabPanel('QCEW', 
-                       h5(a('QCEW Data Link', href = 'https://www.bls.gov/regions/southeast/news-release/countyemploymentandwages_kentucky.htm')), 
-                       h5("Helpful Information:"), 
-                       tags$ul(
-                         tags$li("Multiply wage by 52 to annualize data"),
-                         tags$li(""), 
-                         tags$li(""),
-                         tags$li(""))), 
+                       h5(a('QCEW Data', href = 'https://www.bls.gov/regions/southeast/news-release/countyemploymentandwages_kentucky.htm'), align = "center"), 
+                       h5("Tips:"), 
+                       p("multiply wage by 52 to annualize"),
+                       h5("Datapoints:"), 
+                      tags$ul(
+                        tags$li("Total Number of Jobs"),
+                        tags$li("Average annual wage"), 
+                        tags$li("Numer of jobs and average wage in certain industries (to the extent that these match up with the NAICS industry catagories)",
+                                tags$ul(
+                                  tags$li("Manufacturing"), 
+                                  tags$li("Construction"),
+                                  tags$li("Healthcare"),
+                                  tags$li("Logistics"),
+                                  tags$li("Finance"),
+                                  tags$li("Retail"),
+                                  tags$li("Food Service"),
+                                  tags$li("Hospitality"),
+                                  tags$li("Agriculture"), 
+                                  tags$li("Military")
+                                )))), 
         tabPanel("ACS",
-                 h5(a("ACS Data", href = "https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t")), 
+                 h5(a("ACS Data", href = "https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t"), align = "center"), 
+                 h5("Datapoints:"),
         tags$ul(
-          tags$li("Pull New Data (Burnning Glass and EMSI)"),
-          tags$li("Update google sheet with new data (quarterlyReportMainInput google sheet)"), 
-          tags$li("Run R Scripts"),
-          tags$li("Drag and drop R script output visualizations into InDesign quarterly report template"))),
+          tags$li("Unemployment Rates"),
+          tags$li("Labor Force Participation Rate"), 
+          tags$li("Educational Attainment"))),
         tabPanel("BLS LAUS", 
-                 h5(a("BLS LAUS Data", href = "https://www.bls.gov/web/metro/laucntycur14.txt")), 
-                 p(a("Zip file", href = "https://www.bls.gov/lau/#data"), "Download file under 'County Data/Table'")),
+                 h5(a("BLS LAUS Data", href = "https://www.bls.gov/web/metro/laucntycur14.txt"), align = "center"), 
+                 p(a("Zip file", href = "https://www.bls.gov/lau/#data"), "Download file under 'County Data/Table'", align = "center"),
+                 h5("Datapoints:"),
+                 tags$ul(
+                   tags$li("Labor Force Size"))),
         tabPanel("Burning Glass", 
-                 h5(a("Burning Glass Data", href = "http://laborinsight.burning-glass.com/jobs/us#"))))
+                 h5(a("Burning Glass Data", href = "http://laborinsight.burning-glass.com/jobs/us#"), align = "center"), 
+                 h5("Datapoints:"), 
+                 tags$ul(
+                   tags$li("Top Industries by Job Postings"),
+                   tags$li("Top 30 occupations + advertised education by job postings"), 
+                   tags$li("Educational Attainment"))))
     )),   
       
       tabPanel(
