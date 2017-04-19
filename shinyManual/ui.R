@@ -164,28 +164,81 @@ shinyUI(fluidPage(
       ),
 
     tabPanel("Regional Plan Data",
-      tabsetPanel(
-        tabPanel('QCEW', 
-                     h5(a('QCEW Data Link', href = 'https://www.bls.gov/regions/southeast/news-release/countyemploymentandwages_kentucky.htm')), 
-                     h5("Helpful Information:"), 
-                     tags$ul(
-                       tags$li("Multiply wage by 52 to annualize data"),
-                       tags$li(""), 
-                       tags$li(""),
-                       tags$li(""))), 
-      tabPanel("ACS", 
-      tags$ul(
-        tags$li("Pull New Data (Burnning Glass and EMSI)"),
-        tags$li("Update google sheet with new data (quarterlyReportMainInput google sheet)"), 
-        tags$li("Run R Scripts"),
-        tags$li("Drag and drop R script output visualizations into InDesign quarterly report template"))),
-      tabPanel("BLS LAUS", 
-               h5(a("BLS LAUS Data", href = "https://www.bls.gov/web/metro/laucntycur14.txt")), 
-               h5(a("Zip file", href = "https://www.bls.gov/lau/#data")), 
-               p("Download file under 'County Data/Table'")),
-      tabPanel("Burning Glass", 
-               h5(a("Burning Glass Data", href = "http://laborinsight.burning-glass.com/jobs/us#"))), 
-      tabPanel("Counties")
+             h3("Project timeframe: April 24th - 28th", align = "center"), 
+      sidebarPanel(
+        h5("Counties:"),
+             h6("KentuckianaWorks:"),
+               tags$ul(
+                 tags$li("Bullitt"),
+                 tags$li("Henry"), 
+                 tags$li("Jefferson"),
+                 tags$li("Oldham"), 
+                 tags$li("Shelby"), 
+                 tags$li("Spencer"), 
+                 tags$li("Trimble")), 
+            h6("Bluegrass"),
+              tags$ul(
+                tags$li("Anderson"),
+                tags$li("Bourbon"), 
+                tags$li("Boyle"),
+                tags$li("Clark"), 
+                tags$li("Estill"), 
+                tags$li("Fayette"),
+                tags$li("Franklin"),
+                tags$li("Garrard"), 
+                tags$li("Harrison"),
+                tags$li("Jessamine"), 
+                tags$li("Lincoln"), 
+                tags$li("Madison"),
+                tags$li("Mercer"),
+                tags$li("Nicholas"), 
+                tags$li("Powell"),
+                tags$li("Scott"), 
+                tags$li("Woodford")),
+            h6("Northern Kentucky:"),
+            tags$ul(
+              tags$li("Boone"),
+              tags$li("Campbell"), 
+              tags$li("Carroll"),
+              tags$li("Gallatin"), 
+              tags$li("Grant"), 
+              tags$li("Kenton"),
+              tags$li("Owen"),
+              tags$li("Pendleton")), 
+            h6("Lincoln Trail:"),
+            tags$ul(
+              tags$li("Breckinridge"),
+              tags$li("Grayson"), 
+              tags$li("Hardin"),
+              tags$li("Larue"), 
+              tags$li("Marion"), 
+              tags$li("Meade"),
+              tags$li("Nelson"),
+              tags$li("Washington"))), 
+
+      
+      mainPanel(
+        tabsetPanel(
+          tabPanel('QCEW', 
+                       h5(a('QCEW Data Link', href = 'https://www.bls.gov/regions/southeast/news-release/countyemploymentandwages_kentucky.htm')), 
+                       h5("Helpful Information:"), 
+                       tags$ul(
+                         tags$li("Multiply wage by 52 to annualize data"),
+                         tags$li(""), 
+                         tags$li(""),
+                         tags$li(""))), 
+        tabPanel("ACS",
+                 h5(a("ACS Data", href = "https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t")), 
+        tags$ul(
+          tags$li("Pull New Data (Burnning Glass and EMSI)"),
+          tags$li("Update google sheet with new data (quarterlyReportMainInput google sheet)"), 
+          tags$li("Run R Scripts"),
+          tags$li("Drag and drop R script output visualizations into InDesign quarterly report template"))),
+        tabPanel("BLS LAUS", 
+                 h5(a("BLS LAUS Data", href = "https://www.bls.gov/web/metro/laucntycur14.txt")), 
+                 p(a("Zip file", href = "https://www.bls.gov/lau/#data"), "Download file under 'County Data/Table'")),
+        tabPanel("Burning Glass", 
+                 h5(a("Burning Glass Data", href = "http://laborinsight.burning-glass.com/jobs/us#"))))
     )),   
       
       tabPanel(
