@@ -162,6 +162,31 @@ shinyUI(fluidPage(
                          href = 'http://livingwage.mit.edu/metros/31140'), 
            'we use the measure for a family of two with two children w/o childcare.')
       ),
+
+    tabPanel("Regional Plan Data",
+      tabsetPanel(
+        tabPanel('QCEW', 
+                     h5(a('QCEW Data Link', href = 'https://www.bls.gov/regions/southeast/news-release/countyemploymentandwages_kentucky.htm')), 
+                     h5("Helpful Information:"), 
+                     tags$ul(
+                       tags$li("Multiply wage by 52 to annualize data"),
+                       tags$li(""), 
+                       tags$li(""),
+                       tags$li(""))), 
+      tabPanel("ACS", 
+      tags$ul(
+        tags$li("Pull New Data (Burnning Glass and EMSI)"),
+        tags$li("Update google sheet with new data (quarterlyReportMainInput google sheet)"), 
+        tags$li("Run R Scripts"),
+        tags$li("Drag and drop R script output visualizations into InDesign quarterly report template"))),
+      tabPanel("BLS LAUS", 
+               h5(a("BLS LAUS Data", href = "https://www.bls.gov/web/metro/laucntycur14.txt")), 
+               h5(a("Zip file", href = "https://www.bls.gov/lau/#data")), 
+               p("Download file under 'County Data/Table'")),
+      tabPanel("Burning Glass", 
+               h5(a("Burning Glass Data", href = "http://laborinsight.burning-glass.com/jobs/us#"))), 
+      tabPanel("Counties")
+    )),   
       
       tabPanel(
         'Datasets', 
