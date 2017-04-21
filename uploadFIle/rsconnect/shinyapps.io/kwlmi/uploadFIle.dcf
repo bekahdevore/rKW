@@ -1,0 +1,10 @@
+name: uploadFIle
+title: uploadFIle
+account: kwlmi
+server: shinyapps.io
+appId: 174235
+bundleId: 798690
+url: https://kwlmi.shinyapps.io/uploadFIle/
+when: 1492795868.01461
+asMultiple: FALSE
+asStatic: FALSE

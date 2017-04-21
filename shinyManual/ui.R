@@ -221,7 +221,8 @@ shinyUI(fluidPage(
       mainPanel(
         tabsetPanel(
           tabPanel('QCEW', 
-                       h5(a('QCEW Data', href = 'https://www.bls.gov/regions/southeast/news-release/countyemploymentandwages_kentucky.htm'), align = "center"), 
+                       h5(a('QCEW County Data', href = 'https://www.bls.gov/regions/southeast/news-release/countyemploymentandwages_kentucky.htm'), align = "center"), 
+                       h5(a('QCEW County Data by Industry', href = 'https://data.bls.gov/cew/apps/data_views/data_views.htm#tab=Tables'), align = "center"), 
                        h5("Tips:"), 
                        p("multiply wage by 52 to annualize"),
                        h5("Datapoints:"), 
