@@ -165,7 +165,8 @@ shinyUI(fluidPage(
 
     tabPanel("Regional Plan Data",
              h3("Project timeframe: April 24th - 28th", align = "center"), 
-             p("All data points needed for both the total 40 county region and the four regions within (KentuckianaWorks, Bluegrass, Northern Kentucky, Lincoln Trail)"),
+             p("All data points needed for both the total 40 county region and the four regions within (KentuckianaWorks, Bluegrass, Northern Kentucky, Lincoln Trail)", 
+               align = "center"),
       sidebarPanel(
         h5("Counties:"),
              h6("KentuckianaWorks:"),
@@ -215,14 +216,26 @@ shinyUI(fluidPage(
               tags$li("Marion"), 
               tags$li("Meade"),
               tags$li("Nelson"),
-              tags$li("Washington"))), 
-
-      
+              tags$li("Washington")),
+          
+        br(),
+        br(),
+        br(),
+        br(),
+        
+        
+        fileInput('datafile', h6('Choose CSV file'),
+                  accept=c('text/csv', 'text/comma-separated-values,text/plain')),
+        
+        textInput("text", label = h6("Enter file name:"), value = ""),
+        actionButton("do", "Save"),
+        tableOutput("filetable")),
+    
       mainPanel(
         tabsetPanel(
           tabPanel('QCEW', 
-                       h5(a('QCEW County Data', href = 'https://www.bls.gov/regions/southeast/news-release/countyemploymentandwages_kentucky.htm'), align = "center"), 
-                       h5(a('QCEW County Data by Industry', href = 'https://data.bls.gov/cew/apps/data_views/data_views.htm#tab=Tables'), align = "center"), 
+                       h5(a('QCEW County Data', href = 'https://www.bls.gov/regions/southeast/news-release/countyemploymentandwages_kentucky.htm', target = "_blank"), align = "center"), 
+                       h5(a('QCEW County Data by Industry', href = 'https://data.bls.gov/cew/apps/data_views/data_views.htm#tab=Tables', target = "_blank"), align = "center"), 
                        h5("Tips:"), 
                        p("multiply wage by 52 to annualize"),
                        h5("Datapoints:"), 
@@ -243,20 +256,23 @@ shinyUI(fluidPage(
                                   tags$li("Military")
                                 )))), 
         tabPanel("ACS",
-                 h5(a("ACS Data", href = "https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t"), align = "center"), 
+                 h5(a("ACS Data", href = "https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t", target = "_blank"), align = "center"),
+                 p("Topics/Dataset/2015 ACS 1-year estimates"),
+                 p("Geographies/County/Select Counties "),
+                 p("Seach summary sheet code"),
                  h5("Datapoints:"),
         tags$ul(
-          tags$li("Unemployment Rates"),
-          tags$li("Labor Force Participation Rate"), 
-          tags$li("Educational Attainment"))),
+          tags$li("Unemployment Rates (S2301)"),
+          tags$li("Labor Force Participation Rate (S2301)"), 
+          tags$li("Educational Attainment (S1501)"))),
         tabPanel("BLS LAUS", 
-                 h5(a("BLS LAUS Data", href = "https://www.bls.gov/web/metro/laucntycur14.txt"), align = "center"), 
-                 p(a("Zip file", href = "https://www.bls.gov/lau/#data"), "Download file under 'County Data/Table'", align = "center"),
+                 h5(a("BLS LAUS Data", href = "https://www.bls.gov/web/metro/laucntycur14.txt", target = "_blank"), align = "center"), 
+                 p(a("Zip file", href = "https://www.bls.gov/lau/#data", target = "_blank"), "Download file under 'County Data/Table'", align = "center"),
                  h5("Datapoints:"),
                  tags$ul(
                    tags$li("Labor Force Size"))),
         tabPanel("Burning Glass", 
-                 h5(a("Burning Glass Data", href = "http://laborinsight.burning-glass.com/jobs/us#"), align = "center"), 
+                 h5(a("Burning Glass Data", href = "http://laborinsight.burning-glass.com/jobs/us#", target = "_blank"), align = "center"), 
                  h5("Datapoints:"), 
                  tags$ul(
                    tags$li("Top Industries by Job Postings"),
@@ -269,7 +285,7 @@ shinyUI(fluidPage(
         h1('The datasets...'), 
         h5('American Community Survey'),
         p(a('American Fact Finder', 
-            href = "https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t"), 
+            href = "https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t", target = "_blank"), 
             'makes census data easier to find. We use the S2301 summary sheet for several labor force data. How to use 
           American Fact Finder:',
             tags$ol(
