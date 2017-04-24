@@ -164,7 +164,7 @@ shinyUI(fluidPage(
       ),
 
     tabPanel("Regional Plan Data",
-             h3("Project timeframe: April 24th - 28th", align = "center"), 
+             h3("Project timeframe: April 24th - May 5th", align = "center"), 
              p("All data points needed for both the total 40 county region and the four regions within (KentuckianaWorks, Bluegrass, Northern Kentucky, Lincoln Trail)", 
                align = "center"),
       sidebarPanel(
@@ -257,20 +257,49 @@ shinyUI(fluidPage(
                                 )))), 
         tabPanel("ACS",
                  h5(a("ACS Data", href = "https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t", target = "_blank"), align = "center"),
-                 p("Topics/Dataset/2015 ACS 1-year estimates"),
+                 p("Topics/Dataset/2015 ACS 5-year estimates"),
                  p("Geographies/County/Select Counties "),
                  p("Seach summary sheet code"),
+                 h5("Formulas:"), 
+                 p("unemployment rate = unemployed/In labor force"), 
+                 p("labor force participation rate = In labor force/Total"),
+                 h5("Areas:"),
+                 tags$ul(
+                   tags$li("40 County Region"), 
+                   tags$li("Top 4"), 
+                   tags$li("Bottom 4"), 
+                   tags$li("4 Regions (KentuckianaWorks, Bluegrass, Northern Kentucky, Lincoln Trail")),
+                 tags$li(h6("Specific groups (40 county and 4 Regions):"), 
+                         tags$ul(
+                           tags$li("For 16 - 19 year olds"), 
+                           tags$li("For people with disabilities"), 
+                           tags$li("For African Americans"), 
+                           tags$li("For people with a HS education or less"), 
+                           tags$li("For people in poverty")
+                         )),
                  h5("Datapoints:"),
         tags$ul(
-          tags$li("Unemployment Rates (S2301)"),
-          tags$li("Labor Force Participation Rate (S2301)"), 
-          tags$li("Educational Attainment (S1501)"))),
+          tags$li(h6("Unemployment Rates (B23025)")),
+          tags$li(h6("Labor Force Participation Rates (B23025)")), 
+          tags$li(h6("Educational Attainment (S1501)"), 
+                  tags$ul(
+                    tags$li("Percent BA +"), 
+                    tags$li("Percent Associates +"), 
+                    tags$li("Percent High School + ")
+                  )))),
         tabPanel("BLS LAUS", 
                  h5(a("BLS LAUS Data", href = "https://www.bls.gov/web/metro/laucntycur14.txt", target = "_blank"), align = "center"), 
                  p(a("Zip file", href = "https://www.bls.gov/lau/#data", target = "_blank"), "Download file under 'County Data/Table'", align = "center"),
                  h5("Datapoints:"),
                  tags$ul(
-                   tags$li("Labor Force Size"))),
+                   tags$li("Labor Force Size", 
+                           tags$ul(
+                             tags$li("40 Counties"), 
+                             tags$li("Top 4 Counties"), 
+                             tags$li("Bottom 4 Counties"), 
+                             tags$li("4 Regions (KentuckianaWorks, Bluegrass, Northern Kentucky, Lincoln Trail")
+                           )))),
+                
         tabPanel("Burning Glass", 
                  h5(a("Burning Glass Data", href = "http://laborinsight.burning-glass.com/jobs/us#", target = "_blank"), align = "center"), 
                  h5("Datapoints:"), 
