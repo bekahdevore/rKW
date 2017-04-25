@@ -8,6 +8,8 @@ zipCodes <- read.csv(textConnection(zipCodeConnection))
 crimeType <- read.csv(textConnection(crimeTypeConnection))
 crimeData2016 <- read.csv("Crime_Data_2016_29.csv")
 
+
+#unique(sort(crimeData2016$ZIP_CODE))
 violentCrimesJeffesonCounty <- crimeData2016 %>% filter(ZIP_CODE %in% zipCodes$zip) %>% 
                               filter(CRIME_TYPE %in% crimeType$VIOLENT_CRIME)
 
