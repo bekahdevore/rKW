@@ -304,9 +304,9 @@ shinyUI(fluidPage(
                  h5(a("Burning Glass Data", href = "http://laborinsight.burning-glass.com/jobs/us#", target = "_blank"), align = "center"), 
                  h5("Datapoints:"), 
                  tags$ul(
-                   tags$li("Top Industries by Job Postings"),
-                   tags$li("Top 30 occupations + advertised education by job postings"), 
-                   tags$li("Educational Attainment"))))
+                   tags$li(tags$s("Top Industries by Job Postings"), "(Completed April 26th - BD, ~/Desktop/regionalPlan/topIndustries/)"),
+                   tags$li(tags$s("Top 30 occupations by Job Postings"), "(Completed April 26th - BD, ~/Desktop/regionalPlan/topOccupations/)"),
+                   tags$li("Top 30 occupations + advertised education by job postings (NEED CLARIFICATION FROM ERIC)"))))
     )),   
       
       tabPanel(
