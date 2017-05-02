@@ -12,7 +12,6 @@ qcewAllIndustriesData <- read.csv(textConnection(qcewAllIndustriesDataConnection
 specificIndustriesData <- read.csv(textConnection(specificIndustriesDataConnection))
 counties <- read.csv(textConnection(countiesDataConnection))
 
-
 #Remove data that is no longer needed
 rm(qcewAllIndustriesDataConnection, manufacturingDataConnection, countiesDataConnection)
 
@@ -27,16 +26,12 @@ removeDollarSigns <- function(data) {
                         }))
 }
 
-
-
-
 changeDataType <- function(data) {
   names <- c("July.Employment", "August.Employment", "September.Employment", "Average.Weekly.Wage")
   data[,names] <- lapply(data[,names] , as.character)
   data[,names] <- lapply(data[,names] , as.numeric)
   data
 }
-
 
 annualizeAndSelect <- function(data) {
   this <- data %>% mutate(annualizedWage = (Average.Weekly.Wage * 52)) %>% 
@@ -55,7 +50,6 @@ annualizeAndSelectIndustry <- function(data, insertIndustry) {
   output
 }
 
-
 fortyCountyFilter <- function(data) {
   data %>% filter(County %in% counties$allCounties)
 }
@@ -72,10 +66,11 @@ lincolnTrailFilter <- function(data) {
   data %>% filter(County %in% counties$lincolnTrail)
 }
 
-manipulateData <- function(insertData, insertFilter) {annualizeAndSelect(changeDataType(removeDollarSigns(removeCommas(insertFilter(insertData)))))}
+manipulateData <- function(insertData, insertFilter) {
+  annualizeAndSelect(changeDataType(removeDollarSigns(removeCommas(insertFilter(insertData)))))}
 
 manipulateIndustryData <- function(insertData, insertFilter, insertIndustry) {
-                          annualizeAndSelectIndustry(changeDataType(removeDollarSigns(removeCommas(insertFilter(insertData)))), insertIndustry)
+  annualizeAndSelectIndustry(changeDataType(removeDollarSigns(removeCommas(insertFilter(insertData)))), insertIndustry)
 }
 
 
@@ -93,15 +88,53 @@ healthcare <- manipulateIndustryData(specificIndustriesData, fortyCountyFilter, 
 logistics <- manipulateIndustryData(specificIndustriesData, fortyCountyFilter, "logistics")
 finance <- manipulateIndustryData(specificIndustriesData, fortyCountyFilter, "finance")
 retail <- manipulateIndustryData(specificIndustriesData, fortyCountyFilter, "retail")
-food <- manipulateIndustryData(specificIndustriesData, fortyCountyFilter, "food")
+food <- manipulateIndustryData(specificIndustriesData, fortyCountyFilter, "foodService")
 hospitality <- manipulateIndustryData(specificIndustriesData, fortyCountyFilter, "hospitality")
 agriculture <- manipulateIndustryData(specificIndustriesData, fortyCountyFilter, "agriculture")
 
 ## KENTUCKIANAWORKS DATA
-## BLUEGRASS DATA
-## NOTHERN KENTUCKY DATA
-## LINCOLN TRAIL DATA
+manufacturingKentuckianaWorks <- manipulateIndustryData(specificIndustriesData, kentuckianaWorksFilter, "manufacturing")
+constructionKentuckianaWorks <- manipulateIndustryData(specificIndustriesData, kentuckianaWorksFilter, "construction")
+healthcareKentuckianaWorks <- manipulateIndustryData(specificIndustriesData, kentuckianaWorksFilter, "healthcare")
+logisticsKentuckianaWorks <- manipulateIndustryData(specificIndustriesData, kentuckianaWorksFilter, "logistics")
+financeKentuckianaWorks <- manipulateIndustryData(specificIndustriesData, kentuckianaWorksFilter, "finance")
+retailKentuckianaWorks <- manipulateIndustryData(specificIndustriesData, kentuckianaWorksFilter, "retail")
+foodKentuckianaWorks <- manipulateIndustryData(specificIndustriesData, kentuckianaWorksFilter, "foodService")
+hospitalityKentuckianaWorks <- manipulateIndustryData(specificIndustriesData, kentuckianaWorksFilter, "hospitality")
+agricultureKentuckianaWorks <- manipulateIndustryData(specificIndustriesData, kentuckianaWorksFilter, "agriculture")
 
+## BLUEGRASS DATA
+manufacturingBluegrass <- manipulateIndustryData(specificIndustriesData, bluegrassFilter, "manufacturing")
+constructionBluegrass <- manipulateIndustryData(specificIndustriesData, bluegrassFilter, "construction")
+healthcareBluegrass <- manipulateIndustryData(specificIndustriesData, bluegrassFilter, "healthcare")
+logisticsBluegrass <- manipulateIndustryData(specificIndustriesData, bluegrassFilter, "logistics")
+financeBluegrass <- manipulateIndustryData(specificIndustriesData, bluegrassFilter, "finance")
+retailBluegrass <- manipulateIndustryData(specificIndustriesData, bluegrassFilter, "retail")
+foodBluegrass <- manipulateIndustryData(specificIndustriesData, bluegrassFilter, "foodService")
+hospitalityBluegrass <- manipulateIndustryData(specificIndustriesData, bluegrassFilter, "hospitality")
+agricultureBluegrass <- manipulateIndustryData(specificIndustriesData, bluegrassFilter, "agriculture")
+
+## NOTHERN KENTUCKY DATA
+manufacturingNorthernKentucky <- manipulateIndustryData(specificIndustriesData, northernKentuckyFilter, "manufacturing")
+constructionNorthernKentucky <- manipulateIndustryData(specificIndustriesData, northernKentuckyFilter, "construction")
+healthcareNorthernKentucky <- manipulateIndustryData(specificIndustriesData, northernKentuckyFilter, "healthcare")
+logisticsNorthernKentucky <- manipulateIndustryData(specificIndustriesData, northernKentuckyFilter, "logistics")
+financeNorthernKentucky <- manipulateIndustryData(specificIndustriesData, northernKentuckyFilter, "finance")
+retailNorthernKentucky <- manipulateIndustryData(specificIndustriesData, northernKentuckyFilter, "retail")
+foodNorthernKentucky <- manipulateIndustryData(specificIndustriesData, northernKentuckyFilter, "foodService")
+hospitalityNorthernKentucky <- manipulateIndustryData(specificIndustriesData, northernKentuckyFilter, "hospitality")
+agricultureNorthernKentucky <- manipulateIndustryData(specificIndustriesData, northernKentuckyFilter, "agriculture")
+
+## LINCOLN TRAIL DATA
+manufacturingLincolnTrail <- manipulateIndustryData(specificIndustriesData, lincolnTrailFilter, "manufacturing")
+constructionLincolnTrail <- manipulateIndustryData(specificIndustriesData, lincolnTrailFilter, "construction")
+healthcareLincolnTrail <- manipulateIndustryData(specificIndustriesData, lincolnTrailFilter, "healthcare")
+logisticsLincolnTrail <- manipulateIndustryData(specificIndustriesData, lincolnTrailFilter, "logistics")
+financeLincolnTrail <- manipulateIndustryData(specificIndustriesData, lincolnTrailFilter, "finance")
+retailLincolnTrail <- manipulateIndustryData(specificIndustriesData, lincolnTrailFilter, "retail")
+foodLincolnTrail <- manipulateIndustryData(specificIndustriesData, lincolnTrailFilter, "foodService")
+hospitalityLincolnTrail <- manipulateIndustryData(specificIndustriesData, lincolnTrailFilter, "hospitality")
+agricultureLincolnTrail <- manipulateIndustryData(specificIndustriesData, lincolnTrailFilter, "agriculture")
 
 
 
