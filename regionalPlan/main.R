@@ -136,5 +136,3 @@ foodLincolnTrail <- manipulateIndustryData(specificIndustriesData, lincolnTrailF
 hospitalityLincolnTrail <- manipulateIndustryData(specificIndustriesData, lincolnTrailFilter, "hospitality")
 agricultureLincolnTrail <- manipulateIndustryData(specificIndustriesData, lincolnTrailFilter, "agriculture")
 
-
-
