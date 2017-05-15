@@ -17,11 +17,31 @@ shinyUI(fluidPage(
         'Home',
         h1("Manual"),
         h3("Welcome!"),
-        h5("This is a guide."),
-        p("A process manual to help anyone replicate reports, data, and visualizations published the KentuckianaWorks Labor Market Intelligence Department."), 
-        p("An attempt will be made to make this as precise and painless as possible for all involved."),
+        h5(em("This is a guide.")),
+        p("A process manual to help anyone replicate the reports, data, and visualizations published the KentuckianaWorks 
+          Labor Market Intelligence Department."), 
+        p("An attempt will be made to make this process as precise and painless as possible for all involved."),
         p("Each tab contains processes for different projects"), 
-        h5("May the odds be ever in your favor :)")
+        h5("May the odds be ever in your favor :)"), 
+        img(src='http://www.laughspark.info/thumbfiles/705X705/cute-cat-with-beanie-and-glasses-635731307117442594-13752.jpg', 
+            width = 200, height = 200, align = "center")
+      ),
+      
+      tabPanel(
+        'Intro', 
+        h5('Hi :) Maybe you are new here?'),
+        h6('Excited to get started!'), 
+        img(src='http://www.marymarcusfiction.com/wp-content/uploads/2015/09/yay-54383329058.jpeg', 
+            width = 200, height = 200, align = "center"), 
+        br(),
+        br(),
+        h5('This guidebook assumes: '), 
+        tags$ul(
+          tags$li('You have R & RStudio downloaded on your machine and connected to the shinyApps.io account (for publishing)'), 
+          tags$li('You know how to open projects in R and run scripts'), 
+          tags$li('You have access to all of the R project files and credentials'), 
+          tags$li('You are generally familar with pulling data from Burning Glass, ACS, and EMSI')
+        )
       ),
       
       
@@ -34,7 +54,7 @@ shinyUI(fluidPage(
         h3('Updating the App'), 
         p('You need access to the login credentials for the AWS console found here:', 
            a('AWS credentials', 
-              href = 'https://docs.google.com/a/kentuckianaworks.org/spreadsheets/d/1Rv5j9HcVbbSdPOGJUeu4cSYID6AL6d2sDDBtbKmesuY/edit?usp=sharing')), 
+              href = 'https://docs.google.com/a/kentuckianaworks.org/spreadsheets/d/1cxUQCuoZ6PPvkXAyrGu3Gye1wWG4VRnCD-2Um4Ttecc/edit?usp=sharing')), 
         p('Once logged in navigate to "Services", then "S3"'), 
         p('This is where you will find a data "bucket", with downloadable and uploadable data connected to the app'), 
         p('To update a specific data point, download the datasheet, edit, save, then upload back into the same S3 bucket'), 
@@ -86,24 +106,43 @@ shinyUI(fluidPage(
         h5('The LMI blog is housed at', a('KentuckiAnalytics.org', href = 'http://kentuckianalytics.org/')), 
         p('The blog is a wordpress.org based site self-hosted on AWS.'),
         h6('Goal: publish a new blog post once a month, and answer data questions from the public'),
-        p('Questions from blog are sent to LMI@kentuckianaworks.org')
+        p('Questions from blog are sent to LMI@kentuckianaworks.org'), 
+        p('login credentials:')
       ),
       
       tabPanel(
         'Monthly Newsletter', 
         h1("Monthly Newsletter"), 
-        p('Every month we (in partnership with the KW communications department) 
+        p('Every month (in partnership with the KW communications department) we
            release a newsletter with BLS updates for the Louisville MSA area'),
         h6('Schedule of updates can be found here:',
-           a('BLS MSA Release Schedule', href = 'http://www.bls.gov/schedule/news_release/metro.htm')), 
+           a('BLS MSA Release Schedule', href = 'http://www.bls.gov/schedule/news_release/metro.htm')),
+        br(),
+        h5('Data you will need:'), 
+        tags$ul(
+          tags$li("Total # of job postings in reference month(Burning Glass (BG), saved report 'monthlyUpdateJobPostings')"), 
+          tags$li("# of total postings asking for an associate's degree or higher (BG, saved report 'associatesPlus'"),
+          tags$li("# of total postings asking for a bachelor's degree or higher (BG, saved report 'bachelorPlus'"), 
+          tags$li("BLS data release date (should be today, the day you are updating. Link to release schedule found above :)")
+        ),
+        br(),
         h5('To update the data and visualizations follow these steps:'), 
-        p('Find the shinyBlsUpdates file and open shinyBlsUpdates.Rproj to open project'),
-        p('In the file ui.r update lines 13 - 19 (use BurningGlass to pull these numbers (saved 
-          reports, "monthlyUpdateJobPostings", "associatesPlus", and "bachelorPlus" will give
-          you the numbers you need, but make sure to change the time period to the current reference month'),
-        p('Run and republish app'), 
-        p("Send communication's department new numbers"),
-        p('Sweet, you did it :)')
+        tags$ol(
+          tags$li('Open shinyBlsUpdates.Rproj'),
+          tags$li('In the project files open dataUpdate.R and RUN the script'),
+          tags$li('Next, open global.R and update lines 7 -10 with the data you pulled from Burning Glass, and the 
+          Data Release date.'),
+          tags$li('Run and republish app'), 
+          tags$li("Send communication's department new numbers")
+        ),
+        br(),
+        h5('Sweet, you did it :)'),
+        br(),
+        img(src='http://s2.quickmeme.com/img/37/374c8bc7e82177cc0d0a36c60ac42e2ae547d80ec7912ecf4c2cc0f895fde54e.jpg', 
+            width = 200, height = 200, align = "center"), 
+        br(),
+        br(),
+        br()
       ),
       
       tabPanel(
@@ -158,12 +197,14 @@ shinyUI(fluidPage(
       
       tabPanel(
         'Other', 
-        h5('Find the', a('MIT Living Wage here', 
-                         href = 'http://livingwage.mit.edu/metros/31140'), 
-           'we use the measure for a family of two with two children w/o childcare.')
+        h5('MIT Living Wage', a('here.', 
+                         href = 'http://livingwage.mit.edu/metros/31140')), 
+           p('(we use the measure for a family of two with two children w/o childcare).'),
+      br(),
+       h5('Login Credentials', a('here.', 
+                         href = 'https://docs.google.com/a/kentuckianaworks.org/spreadsheets/d/1cxUQCuoZ6PPvkXAyrGu3Gye1wWG4VRnCD-2Um4Ttecc/edit?usp=sharing'))
       ),
-
-    tabPanel("Regional Plan Data",
+      tabPanel("Regional Plan Data",
              h3("Project timeframe: April 24th - May 5th", align = "center"), 
              p("All data points needed for both the total 40 county region and the four regions within (KentuckianaWorks, Bluegrass, Northern Kentucky, Lincoln Trail)", 
                align = "center"),
@@ -321,8 +362,14 @@ shinyUI(fluidPage(
               tags$li("1. Choose a dataset (usually 1 year estimates)"), 
               tags$li("2. Choose a geography (usually Louisville MSA)"), 
               tags$li("3. Choose topic, or search summary sheet key (ex. S2301, DP03)"), 
-              tags$li("4. From here you can open and download the data summary of interest")
-            )),
+              tags$li("4. From here you can open and download the summary sheet of interest")
+            ), 
+          tags$ul(h5('Common summary sheets:'), 
+                  tags$li('S2301: EMPLOYMENT STATUS'), 
+                  tags$li('S0501: SELECTED CHARACTERISTICS OF THE NATIVE AND FOREIGN-BORN POPULATIONS'), 
+                  tags$li('DP03: SELECTED ECONOMIC CHARACTERISTICS'), 
+                  tags$li('S1501: EDUCATIONAL ATTAINMENT')
+                  )),
         h5('Public Use Microdatasets (PUMS)'),
         p("For the PUMS data we use 1 year estimates"),
         h5('Bureau of Labor Statistics'),
@@ -335,7 +382,11 @@ shinyUI(fluidPage(
         h5('KCEWS'), 
         p('We use KCEWS for longitutinal data about college graduates by major'),
         br(),
-        downloadLink('datasetInfo', 'Download Helpful Document about datasets')
+        downloadLink('datasetInfo', 'Download Helpful Document about datasets'), 
+        br(),
+        br(),
+        br(),
+        br()
       )
 
 
