@@ -9,7 +9,6 @@
 #           Black: 4687
 #   
 
-
 library(dplyr)
 
 ## GET PUMS
@@ -26,7 +25,7 @@ jeffersonCountyPumas <- c('1701',
 allData <- kentucky %>% filter(PUMA %in% jeffersonCountyPumas)
 
 ## FILTER YOUTH
-youth <- allData %>% filter(AGEP >= 16 & AGEP <= 21)
+youth <- allData %>% filter(AGEP >= 16 & AGEP <= 24)
 sum(youth$PWGTP)
 ## Make new variables to clarify questions
 
