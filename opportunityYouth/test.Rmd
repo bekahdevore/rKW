@@ -1,0 +1,117 @@
+---
+title: "Opportunity Youth"
+author: "Bekah"
+date: "May 22, 2017"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(scales)
+library(treemap)
+library(shiny)
+```
+  
+## Kentucky 
+###### Descriptive statistics for "Opportunity Youth in Kentucky.
+###### Opportunity youth: Not working, not in school in past 3 months, Age 16 - 24
+###### Data Source: PUMS 2015 1 yr 
+    
+```{r race, echo=FALSE}
+load("kentucky.RData")
+load("peerCities.RData")
+load("louisvilleMSA.RData")
+
+dataVisualization <- function(dataInput) {    
+    ## Run datapoints of interest
+    opportunityYouth <- dataInput
+    sum(opportunityYouth$PWGTP)
+    
+    race <- count(opportunityYouth, race, wt=PWGTP)
+    race <- na.omit(race)
+    race$percent <- scales::percent(race$n/sum(race$n))
+    race$label <- paste(race$race, "\n", race$percent)  
+    
+    disability <- count(opportunityYouth, disability, wt=PWGTP)
+    disability <- na.omit(disability)
+    disability$percent <- scales::percent(disability$n/sum(disability$n))
+    disability$label <- paste(disability$disability, "\n", disability$percent)  
+    
+    sex <- count(opportunityYouth, sex, wt=PWGTP)
+    sex <- na.omit(sex)
+    sex$percent <- scales::percent(sex$n/sum(sex$n))
+    sex$label <- paste(sex$sex, "\n", sex$percent)  
+    
+    workStatus <- count(opportunityYouth, employmentStatus, wt=PWGTP)
+    workStatus <- na.omit(workStatus)
+    workStatus$percent <- scales::percent(workStatus$n/sum(workStatus$n))
+    workStatus$label <- paste(workStatus$employmentStatus, "\n", workStatus$percent)  
+    
+    age <- count(opportunityYouth, age, wt=PWGTP)
+    age <- na.omit(age)
+    age$percent <- scales::percent(age$n/sum(age$n))
+    age$label <- paste(age$age, "\n", age$percent)    
+    
+    lastWorked <- count(opportunityYouth, lastWorked, wt=PWGTP)
+    lastWorked <- na.omit(lastWorked)
+    lastWorked$percent <- scales::percent(lastWorked$n/sum(lastWorked$n))
+    lastWorked$label <- paste(lastWorked$lastWorked, "\n", lastWorked$percent)   
+    
+    foodStamps <- count(opportunityYouth, foodStamps, wt=PWGTP)
+    foodStamps <- na.omit(foodStamps)
+    foodStamps$percent <- scales::percent(foodStamps$n/sum(foodStamps$n))
+    foodStamps$label <- paste(foodStamps$foodStamps, "\n", foodStamps$percent)  
+    
+    socialSecurity <- count(opportunityYouth, socialSecurity, wt=PWGTP)
+    socialSecurity <- na.omit(socialSecurity)
+    socialSecurity$percent <- scales::percent(socialSecurity$n/sum(socialSecurity$n))
+    socialSecurity$label <- paste(socialSecurity$socialSecurity, "\n", socialSecurity$percent)  
+    
+    supplementarySecurityIncome <- count(opportunityYouth, supplementarySecurityIncome, wt=PWGTP)
+    supplementarySecurityIncome <- na.omit(supplementarySecurityIncome)
+    supplementarySecurityIncome$percent <- scales::percent(supplementarySecurityIncome$n/sum(supplementarySecurityIncome$n))
+    supplementarySecurityIncome$label <- paste(supplementarySecurityIncome$supplementarySecurityIncome, "\n", supplementarySecurityIncome$percent)  
+    
+    children <- count(opportunityYouth, children, wt=PWGTP)
+    children <- na.omit(children)
+    children$percent <- scales::percent(children$n/sum(children$n))
+    children$label <- paste(children$children, "\n", children$percent)  
+     
+    
+    childWithin12Months <- count(opportunityYouth, childWithin12Months, wt=PWGTP)
+    childWithin12Months <- na.omit(childWithin12Months)
+    childWithin12Months$percent <- scales::percent(childWithin12Months$n/sum(childWithin12Months$n))
+    childWithin12Months$label <- paste(childWithin12Months$childWithin12Months, "\n", childWithin12Months$percent)  
+    
+    cognitiveDifficulty <- count(opportunityYouth, cognitiveDifficulty, wt=PWGTP)
+    cognitiveDifficulty <- na.omit(cognitiveDifficulty)
+    cognitiveDifficulty$percent <- scales::percent(cognitiveDifficulty$n/sum(cognitiveDifficulty$n))
+    cognitiveDifficulty$label <- paste(cognitiveDifficulty$cognitiveDifficulty, "\n", cognitiveDifficulty$percent)  
+    
+    school <- count(opportunityYouth, education, wt=PWGTP)
+    school <- na.omit(school)
+    school$percent <- scales::percent(school$n/sum(school$n))
+    school$label <- paste(school$education, "\n", school$percent)
+    
+    treemap(race, "label", "n", title = "race")
+treemap(disability, "label", "n", title = "disability")
+treemap(sex, "label", "n", title = "sex")
+treemap(workStatus, "label", "n", title = "workStatus")
+treemap(age, "label", "n", title = "age")
+treemap(lastWorked, "label", "n", title = "lastWorked")
+treemap(foodStamps, "label", "n", title = "foodStamps")
+treemap(socialSecurity, "label", "n", title = "socialSecurity")
+treemap(supplementarySecurityIncome, "label", "n", title = "supplementarySecurityIncome")
+treemap(children, "label", "n", title = "Children")
+treemap(childWithin12Months, "label", "n", title = "Child within 12 Months")
+treemap(cognitiveDifficulty, "label", "n", title = "Cognitive Difficulty")
+treemap(school, "label", "n", title = "Educational Attainment")
+}
+
+selectInput("dataset", "Choose Dataset:", c("Peer_Cities", "Kentucky", "Louisville_MSA"))
+
+  reactive({  
+    dataVisualization(input$dataset)
+  })
+```
+

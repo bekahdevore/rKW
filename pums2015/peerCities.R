@@ -5,6 +5,9 @@ library(scales)
 library(plotly)
 library(ggplot2)
 library(treemap)
+library(RMySQL)
+
+con <- dbConnect(MySQL(), group = "kwlmi", dbname = "kwlmi")
 
 ## Read pums data
 alabamaPopulation <- read.csv("ss15pal.csv")
@@ -105,6 +108,8 @@ allData <- rbind(
               )
 
 
+peerCityPums <- read.csv("peerCityPUMS.csv")
+#dbWriteTable(conn = con, name = 'fourStatePUMS', value = fourStateRegion)
 
 write.csv(allData, file = "peerCityPUMS.csv" )
 #save(allData, file = "peerCityPums.RData")

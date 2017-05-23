@@ -1,9 +1,14 @@
 library(dplyr)
+library(RMySQL)
 
 PopulationA <- read.csv("ss15pusa.csv")
 PopulationB <- read.csv("ss15pusb.csv")
 HousingA <- read.csv("ss15husa.csv")
 HousingB <- read.csv("ss15husb.csv")
+
+con <- dbConnect(MySQL(), group = "kwlmi", dbname = "kwlmi")
+# 
+# dbWriteTable(conn = con, name = 'ss15husb', value = HousingB)
 
 
 datasetA <- left_join(PopulationA, HousingA, by = "SERIALNO")
@@ -11,6 +16,7 @@ datasetB <- left_join(PopulationB, HousingB, by = "SERIALNO")
 
 allData <- rbind(datasetA, datasetB)
 rm(PopulationA, PopulationB, HousingA, HousingB, datasetA, datasetB)
+dbWriteTable(conn = con, name = 'usaPUMS', value = allData)
 
 youth <- allData %>% filter(AGEP >= 16 & AGEP <= 19)
 
