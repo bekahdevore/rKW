@@ -13,7 +13,6 @@ rm(demographics, manufacturing)
 allData <- left_join(manufacturingData, demographicsData, by = "SOC")
 allDataTrimmed <- allData %>% filter(allData$`Employed in Industry (2016)` != 0 & allData$`Employed in Industry (2026)` != 0)
 
-
 write.csv(allDataTrimmed, file = "manufacturingData.csv")
 allDataTrimmed_gs <- gs_new("manufacturingData", input = allDataTrimmed) 
 

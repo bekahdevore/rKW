@@ -30,7 +30,6 @@ shinyUI(fluidPage(
       tabPanel(
         'Intro', 
         h5('Hi :) Maybe you are new here?'),
-        h6('Excited to get started!'), 
         img(src='http://www.marymarcusfiction.com/wp-content/uploads/2015/09/yay-54383329058.jpeg', 
             width = 200, height = 200, align = "center"), 
         br(),
@@ -204,7 +203,7 @@ shinyUI(fluidPage(
        h5('Login Credentials', a('here.', 
                          href = 'https://docs.google.com/a/kentuckianaworks.org/spreadsheets/d/1cxUQCuoZ6PPvkXAyrGu3Gye1wWG4VRnCD-2Um4Ttecc/edit?usp=sharing'))
       ),
-      tabPanel("Regional Plan Data",
+      tabPanel("Regional Plan Project",
              h3("Project timeframe: April 24th - May 5th", align = "center"), 
              p("All data points needed for both the total 40 county region and the four regions within (KentuckianaWorks, Bluegrass, Northern Kentucky, Lincoln Trail)", 
                align = "center"),
@@ -349,7 +348,60 @@ shinyUI(fluidPage(
                    tags$li(tags$s("Top 30 occupations by Job Postings"), "(Completed April 26th - BD, ~/Desktop/regionalPlan/topOccupations/)"),
                    tags$li("Top 30 occupations + advertised education by job postings (NEED CLARIFICATION FROM ERIC)"))))
     )),   
-      
+    tabPanel("Data Updates",
+             h3("Various data updates that we do at least once a year", align = "center"), 
+             p("", 
+               align = "center"),
+               # fileInput('datafile', h6('Choose CSV file'),
+               #           accept=c('text/csv', 'text/comma-separated-values,text/plain')),
+               # 
+               # textInput("text", label = h6("Enter file name:"), value = ""),
+               # actionButton("do", "Save"),
+               # tableOutput("filetable")),
+             
+             mainPanel(
+               tabsetPanel(
+                 tabPanel('Median Wage Adjusted for Cost of Living (COL)', 
+                          h5(a('Data', href = 'https://www.bls.gov/oes/current/oessrcma.htm', target = "_blank"), align = "center") 
+                          ), 
+                 tabPanel("Cradle to Career",
+                          h5('Reported once a year around Nov. - Dec.'), 
+                          h6('Measures to report:'), 
+                          tags$ol(tags$li('Median Income adjusted for inflation'), 
+                                  tags$li('% of jobs paying a median wage above the family supporting wage'), 
+                                  tags$li('% of jobs with a typical entry-level education of a bachelor\'s degree or higher'), 
+                                  tags$li('Number of individuals active in labor force (16 +)'), 
+                                  tags$li('Labor Force Participation Rate'), 
+                                  tags$li('Youth Employment (16 -19)')), 
+                          h6('Data Sources and Processes'), 
+                          tags$ol(tags$li('Median annual wage (BLS OES) adjusted for COL (BEA RPP). 
+                                          Median divided by Louisville BEA RPP (move decimal over two places to the left).', 
+                                          br(), 'Ex. Median wage = 37,571, Louisville BEA RPP = 91.4. 
+                                          Median adjusted for COL = 37,571/.914 = 41,106'), 
+                                  tags$li('Use EMSI, naviagate to Occupations then Occupations Table, select Louisville MSA, custom add the following columns: Median Wage, 
+                                          Current (the year) Jobs, and Typical Entry Level Education, make sure the occupations are at the 5-digit level'))),
+                 tabPanel("Other update - PLACEHOLDER", 
+                          h5(a("BLS LAUS Data", href = "https://www.bls.gov/web/metro/laucntycur14.txt", target = "_blank"), align = "center"), 
+                          p(a("Zip file", href = "https://www.bls.gov/lau/#data", target = "_blank"), "Download file under 'County Data/Table'", align = "center"),
+                          h5("Datapoints:"),
+                          tags$ul(
+                            tags$li("Labor Force Size", 
+                                    tags$ul(
+                                      tags$li("40 Counties"), 
+                                      tags$li("Top 4 Counties"), 
+                                      tags$li("Bottom 4 Counties"), 
+                                      tags$li("4 Regions (KentuckianaWorks, Bluegrass, Northern Kentucky, Lincoln Trail")
+                                    )))),
+                 
+                 tabPanel("Other update - PLACEHOLDER", 
+                          h5(a("Burning Glass Data", href = "http://laborinsight.burning-glass.com/jobs/us#", target = "_blank"), align = "center"), 
+                          h5("Datapoints:"), 
+                          tags$ul(
+                            tags$li(tags$s("Top Industries by Job Postings"), "(Completed April 26th - BD, ~/Desktop/regionalPlan/topIndustries/)"),
+                            tags$li(tags$s("Top 30 occupations by Job Postings"), "(Completed April 26th - BD, ~/Desktop/regionalPlan/topOccupations/)"),
+                            tags$li("Top 30 occupations + advertised education by job postings (NEED CLARIFICATION FROM ERIC)"))))
+             )),   
+    
       tabPanel(
         'Datasets', 
         h1('The datasets...'), 
