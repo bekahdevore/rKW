@@ -41,3 +41,5 @@ import.from.bls("https://download.bls.gov/pub/time.series/oe/oe.area")
 
 allData <- left_join(data.0.Current, series, by = "series_id")
 allData <- left_join(allData, area, by = "area_code")
+
+save(allData, file = "allData.RData")

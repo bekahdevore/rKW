@@ -4,13 +4,25 @@ library(plotly)
 library(ggplot2)
 library(scales)
 
+
+## Load and read data
+load("allData.RData")
+
 msaCodesConnection <- getURL("https://docs.google.com/spreadsheets/d/1MIgcX_LQBF2J2pzevXRPJzy9UKjaVls9vNda3Pgay3Q/pub?gid=0&single=true&output=csv")
 rppConnection <- getURL("https://docs.google.com/spreadsheets/d/101D20GoMgT50II1U_fzS0Cc4uwrjxDvdoovbbi74gu0/pub?gid=0&single=true&output=csv")
 
 msaCodes <- read.csv(textConnection(msaCodesConnection))
 rpp <- read.csv(textConnection(rppConnection))
 
-msaData <- allData %>% filter(datatype_code == 13 & occupation_code == 0 & area_code %in% msaCodes$area_code) 
+## Filter to all occupations and annual median and mean wage
+allData <- allData %>% filter(datatype_code == 13 | datatype_code == 4 & occupation_code == 0) 
+
+## Filter to area
+msaData <- allData %>% filter(area_code %in% msaCodes$area_code) 
+kyData <- allData %>% filter(area_code == 21)
+
+
+## join with RPP cost of living index
 msaDataRPP <- left_join(msaData, rpp, by = "area_code")
 msaDataRPP <- msaDataRPP %>% filter(LineCode == 1)
 
