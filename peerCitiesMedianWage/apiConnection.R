@@ -39,6 +39,8 @@ import.from.bls("https://download.bls.gov/pub/time.series/oe/oe.series")
 import.from.bls("https://download.bls.gov/pub/time.series/oe/oe.data.0.Current")
 import.from.bls("https://download.bls.gov/pub/time.series/oe/oe.area")
 
+test <- read.csv("2000.q1-q4.by_industry/2000.q1-q4 10 Total, all industries.csv")
+
 allData <- left_join(data.0.Current, series, by = "series_id")
 allData <- left_join(allData, area, by = "area_code")
 

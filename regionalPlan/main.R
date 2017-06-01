@@ -1,11 +1,13 @@
 library(RCurl)
 library(dplyr)
 library(stringr)
+library(googlesheets)
 
 #Connect to data url's
 qcewAllIndustriesDataConnection <- getURL("https://docs.google.com/spreadsheets/d/1D4d6pTndk6CffoEnGr6DZn95Q7PVbQyCRHwEVLp2iGg/pub?gid=276897935&single=true&output=csv")
 specificIndustriesDataConnection <- getURL("https://docs.google.com/spreadsheets/d/1D4d6pTndk6CffoEnGr6DZn95Q7PVbQyCRHwEVLp2iGg/pub?gid=1004580518&single=true&output=csv")
 countiesDataConnection <- getURL("https://docs.google.com/spreadsheets/d/1D4d6pTndk6CffoEnGr6DZn95Q7PVbQyCRHwEVLp2iGg/pub?gid=468101338&single=true&output=csv")
+
 
 #Read data into R from URL's 
 qcewAllIndustriesData <- read.csv(textConnection(qcewAllIndustriesDataConnection)) #Make new column with annualized wage, filter to only columns that are needed
