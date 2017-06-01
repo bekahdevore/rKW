@@ -38,8 +38,8 @@ countyCodesList <- left_join(countyList, areaCodes, by = "Area.Title") %>% selec
 getData <- function(industryCode) {
   dataURL <- paste0("https://data.bls.gov/cew/data/api/2016/3/industry/", industryCode, ".csv")
   dataHere <- read.csv(textConnection(getURL(dataURL)))
-  dataHere <- dataHere %>% filter(area_fips %in% countyCodesList$Code)
-## add place to filter by fips codes
+  dataHere <- dataHere %>% filter(area_fips %in% countyCodesList$Code) %>% 
+    select(1, 3, 6, 10, 11, 12, 16)
 }
 
 getDataFile <- function(year, industryCode, industryTitle){
@@ -47,7 +47,7 @@ getDataFile <- function(year, industryCode, industryTitle){
   dataHere <- read.csv(readThisCsv)  
   dataHere <- dataHere %>% 
     filter(area_fips %in% countyCodesList$Code) %>% 
-    filter(qtr == 3)
+    filter(qtr == 3) %>% select(1, 3, 6, 15, 16, 17, 21)
 }
 
 ## Archived Data from files
@@ -88,4 +88,74 @@ retail2016 <- getData(retailApi)
 foodService2016 <- getData(foodService)
 hospitality2016 <- getData(hospitality)
 agriculture2016 <- getData(agriculture)
+business2016 <- getData(business)
 
+allData <- rbind(manufacturing2000,
+                 manufacturing2010, 
+                 manufacturing2016,
+                 construction2000,
+                 construction2010, 
+                 construction2016,
+                 healthcare2000,
+                 healthcare2010, 
+                 healthcare2016,
+                 logistics1_2000,
+                 logistics1_2010, 
+                 logistics1_2016,
+                 logistics2_2000,
+                 logistics2_2010, 
+                 logistics2_2016,
+                 finance2000,
+                 finance2010, 
+                 finance2016,
+                 retail2000,
+                 retail2010, 
+                 retail2016,
+                 foodService2000,
+                 foodService2010, 
+                 foodService2016,
+                 hospitality2000,
+                 hospitality2010, 
+                 hospitality2016,
+                 agriculture2000,
+                 agriculture2010, 
+                 agriculture2016,
+                 business2000,
+                 business2010, 
+                 business2016)
+
+rm(manufacturing2000,
+   manufacturing2010, 
+   manufacturing2016,
+   construction2000,
+   construction2010, 
+   construction2016,
+   healthcare2000,
+   healthcare2010, 
+   healthcare2016,
+   logistics1_2000,
+   logistics1_2010, 
+   logistics1_2016,
+   logistics2_2000,
+   logistics2_2010, 
+   logistics2_2016,
+   finance2000,
+   finance2010, 
+   finance2016,
+   retail2000,
+   retail2010, 
+   retail2016,
+   foodService2000,
+   foodService2010, 
+   foodService2016,
+   hospitality2000,
+   hospitality2010, 
+   hospitality2016,
+   agriculture2000,
+   agriculture2010, 
+   agriculture2016,
+   business2000,
+   business2010, 
+   business2016)
+
+write.csv(allData, file = "allIndustries40counties.csv")
