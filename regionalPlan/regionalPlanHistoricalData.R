@@ -1,7 +1,7 @@
 library(dplyr)
 library(googlesheets)
 
-allData <- read.csv("allIndustries40counties.csv")
+allData <- read.csv("allIndustries40countiesIncluding1990.csv")
 countyCodeList <- read.csv("countyCodeList.csv")
 colnames(countyCodeList)[3] <- "area_fips"
 
@@ -82,6 +82,12 @@ groupAndCalculate <- function(yearHere, areaGroup, areaName){
   combinedData
 }
 
+all1990 <- groupAndCalculate(1990, counties$allCounties, "All")
+kw1990 <- groupAndCalculate(1990, counties$kentuckianaWorks, "KentuckianaWorks")
+blue1990 <- groupAndCalculate(1990, counties$bluegrass, "Bluegrass")
+nKY1990 <- groupAndCalculate(1990, counties$northernKentucky, "Northern Kentucky")
+linc1990 <- groupAndCalculate(1990, counties$lincolnTrail, "LincolnTrail")
+
 all2000 <- groupAndCalculate(2000, counties$allCounties, "All")
 kw2000 <- groupAndCalculate(2000, counties$kentuckianaWorks, "KentuckianaWorks")
 blue2000 <- groupAndCalculate(2000, counties$bluegrass, "Bluegrass")
@@ -101,6 +107,11 @@ nKY2016 <- groupAndCalculate(2016, counties$northernKentucky, "Northern Kentucky
 linc2016 <- groupAndCalculate(2016, counties$lincolnTrail, "LincolnTrail")
 
 everythingIsHere <-  rbind( 
+  all1990,
+  kw1990,
+  blue1990,
+  nKY1990,
+  linc1990,
   all2000,
   kw2000,
   blue2000,
@@ -118,5 +129,5 @@ everythingIsHere <-  rbind(
   linc2016
  )
 
-#iris_ss <- gs_new("Area by Industry", input = everythingIsHere)
+iris_ss <- gs_new("Area by Industry, including 1990", input = everythingIsHere)
 #write.csv(everythingIsHere, file = "industryDataByArea.csv")

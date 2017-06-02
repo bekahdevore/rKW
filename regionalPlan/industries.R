@@ -51,6 +51,18 @@ getDataFile <- function(year, industryCode, industryTitle){
 }
 
 ## Archived Data from files
+manufacturing1990 <- getDataFile(1990, manufacturing, manufacturingTitle)
+construction1990 <- getDataFile(1990, construction, constructionTitle)
+healthcare1990 <- getDataFile(1990, healthcare, healthcareTitle)
+logistics1_1990 <- getDataFile(1990, logistics1, logistics1Title)
+logistics2_1990 <- getDataFile(1990, logistics2File, logistics2Title)
+finance1990 <- getDataFile(1990, finance, financeTitle)
+retail1990 <- getDataFile(1990, retailFile, retailTitle)
+foodService1990 <- getDataFile(1990, foodService, foodServiceTitle)
+hospitality1990 <- getDataFile(1990, hospitality, hospitalityTitle)
+agriculture1990 <- getDataFile(1990, agriculture, agricultureTitle)
+business1990 <- getDataFile(1990, business, businessTitle)
+
 #all2000 <- getDataFile(2000, 10, "Total, all industries") %>% filter(own_code == 0)
 manufacturing2000 <- getDataFile(2000, manufacturing, manufacturingTitle)
 construction2000 <- getDataFile(2000, construction, constructionTitle)
@@ -90,36 +102,47 @@ hospitality2016 <- getData(hospitality)
 agriculture2016 <- getData(agriculture)
 business2016 <- getData(business)
 
-allData <- rbind(manufacturing2000,
+allData <- rbind(manufacturing1990,
+                 manufacturing2000,
                  manufacturing2010, 
                  manufacturing2016,
+                 construction1990,
                  construction2000,
                  construction2010, 
                  construction2016,
+                 healthcare1990,
                  healthcare2000,
                  healthcare2010, 
                  healthcare2016,
+                 logistics1_1990,
                  logistics1_2000,
                  logistics1_2010, 
                  logistics1_2016,
+                 logistics2_1990,
                  logistics2_2000,
                  logistics2_2010, 
                  logistics2_2016,
+                 finance1990,
                  finance2000,
                  finance2010, 
                  finance2016,
+                 retail1990,
                  retail2000,
                  retail2010, 
                  retail2016,
+                 foodService1990,
                  foodService2000,
                  foodService2010, 
                  foodService2016,
+                 hospitality1990,
                  hospitality2000,
                  hospitality2010, 
                  hospitality2016,
+                 agriculture1990,
                  agriculture2000,
                  agriculture2010, 
                  agriculture2016,
+                 business1990,
                  business2000,
                  business2010, 
                  business2016)
@@ -158,4 +181,4 @@ rm(manufacturing2000,
    business2010, 
    business2016)
 
-write.csv(allData, file = "allIndustries40counties.csv")
+write.csv(allData, file = "allIndustries40countiesIncluding1990.csv")
