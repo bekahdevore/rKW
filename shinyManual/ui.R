@@ -44,23 +44,6 @@ shinyUI(fluidPage(
       ),
       
       
-      tabPanel(
-        'Career Calculator',
-        h1("Career Calculator"), 
-        h5('Data update schedule can be found here:', 
-           a('Career Calculator Update Schedule',
-              href = 'https://docs.google.com/document/d/1dXribqXG8DJbaM_NsCI20mfLfI73PB-c7805_O0dv_g/pub')), 
-        h3('Updating the App'), 
-        p('You need access to the login credentials for the AWS console found here:', 
-           a('AWS credentials', 
-              href = 'https://docs.google.com/a/kentuckianaworks.org/spreadsheets/d/1cxUQCuoZ6PPvkXAyrGu3Gye1wWG4VRnCD-2Um4Ttecc/edit?usp=sharing')), 
-        p('Once logged in navigate to "Services", then "S3"'), 
-        p('This is where you will find a data "bucket", with downloadable and uploadable data connected to the app'), 
-        p('To update a specific data point, download the datasheet, edit, save, then upload back into the same S3 bucket'), 
-        p('To upload an entire data set, just upload the data set into the bucket, the app is programmed to
-          automatically select and place the new data')
-        
-      ),
       
       tabPanel(
         'Data Requests',
@@ -80,26 +63,6 @@ shinyUI(fluidPage(
       ),
       
       tabPanel(
-        'Cradle to Career',
-        h1("Cradle to Career Update"), 
-        h5('Reported once a year around Nov. - Dec.'), 
-        h6('Measures to report:'), 
-        tags$ol(tags$li('Median Income adjusted for inflation'), 
-                tags$li('% of jobs paying a median wage above the family supporting wage'), 
-                tags$li('% of jobs with a typical entry-level education of a bachelor\'s degree or higher'), 
-                tags$li('Number of individuals active in labor force (16 +)'), 
-                tags$li('Labor Force Participation Rate'), 
-                tags$li('Youth Employment (16 -19)')), 
-        h6('Data Sources and Processes'), 
-        tags$ol(tags$li('Median annual wage (BLS OES) adjusted for COL (BEA RPP). 
-                        Median divided by Louisville BEA RPP (move decimal over two places to the left).', 
-                        br(), 'Ex. Median wage = 37,571, Louisville BEA RPP = 91.4. 
-                        Median adjusted for COL = 37,571/.914 = 41,106'), 
-                tags$li('Use EMSI, naviagate to Occupations then Occupations Table, select Louisville MSA, custom add the following columns: Median Wage, 
-                        Current (the year) Jobs, and Typical Entry Level Education, make sure the occupations are at the 5-digit level'))
-      ),
-      
-      tabPanel(
         'Blog',
         h1("Blog"), 
         h5('The LMI blog is housed at', a('KentuckiAnalytics.org', href = 'http://kentuckianalytics.org/')), 
@@ -107,41 +70,6 @@ shinyUI(fluidPage(
         h6('Goal: publish a new blog post once a month, and answer data questions from the public'),
         p('Questions from blog are sent to LMI@kentuckianaworks.org'), 
         p('login credentials:')
-      ),
-      
-      tabPanel(
-        'Monthly Newsletter', 
-        h1("Monthly Newsletter"), 
-        p('Every month (in partnership with the KW communications department) we
-           release a newsletter with BLS updates for the Louisville MSA area'),
-        h6('Schedule of updates can be found here:',
-           a('BLS MSA Release Schedule', href = 'http://www.bls.gov/schedule/news_release/metro.htm')),
-        br(),
-        h5('Data you will need:'), 
-        tags$ul(
-          tags$li("Total # of job postings in reference month(Burning Glass (BG), saved report 'monthlyUpdateJobPostings')"), 
-          tags$li("# of total postings asking for an associate's degree or higher (BG, saved report 'associatesPlus'"),
-          tags$li("# of total postings asking for a bachelor's degree or higher (BG, saved report 'bachelorPlus'"), 
-          tags$li("BLS data release date (should be today, the day you are updating. Link to release schedule found above :)")
-        ),
-        br(),
-        h5('To update the data and visualizations follow these steps:'), 
-        tags$ol(
-          tags$li('Open shinyBlsUpdates.Rproj'),
-          tags$li('In the project files open dataUpdate.R and RUN the script'),
-          tags$li('Next, open global.R and update lines 7 -10 with the data you pulled from Burning Glass, and the 
-          Data Release date.'),
-          tags$li('Run and republish app'), 
-          tags$li("Send communication's department new numbers")
-        ),
-        br(),
-        h5('Sweet, you did it :)'),
-        br(),
-        img(src='http://s2.quickmeme.com/img/37/374c8bc7e82177cc0d0a36c60ac42e2ae547d80ec7912ecf4c2cc0f895fde54e.jpg', 
-            width = 200, height = 200, align = "center"), 
-        br(),
-        br(),
-        br()
       ),
       
       tabPanel(
@@ -194,15 +122,6 @@ shinyUI(fluidPage(
         br()
       ),
       
-      tabPanel(
-        'Other', 
-        h5('MIT Living Wage', a('here.', 
-                         href = 'http://livingwage.mit.edu/metros/31140')), 
-           p('(we use the measure for a family of two with two children w/o childcare).'),
-      br(),
-       h5('Login Credentials', a('here.', 
-                         href = 'https://docs.google.com/a/kentuckianaworks.org/spreadsheets/d/1cxUQCuoZ6PPvkXAyrGu3Gye1wWG4VRnCD-2Um4Ttecc/edit?usp=sharing'))
-      ),
       tabPanel("Regional Plan Project",
              h3("Project timeframe: April 24th - May 5th", align = "center"), 
              p("All data points needed for both the total 40 county region and the four regions within (KentuckianaWorks, Bluegrass, Northern Kentucky, Lincoln Trail)", 
@@ -349,7 +268,7 @@ shinyUI(fluidPage(
                    tags$li("Top 30 occupations + advertised education by job postings (NEED CLARIFICATION FROM ERIC)"))))
     )),   
     tabPanel("Data Updates",
-             h3("Various data updates that we do at least once a year", align = "center"), 
+             h3("Various data updates", align = "center"), 
              p("", 
                align = "center"),
                # fileInput('datafile', h6('Choose CSV file'),
@@ -380,26 +299,52 @@ shinyUI(fluidPage(
                                           Median adjusted for COL = 37,571/.914 = 41,106'), 
                                   tags$li('Use EMSI, naviagate to Occupations then Occupations Table, select Louisville MSA, custom add the following columns: Median Wage, 
                                           Current (the year) Jobs, and Typical Entry Level Education, make sure the occupations are at the 5-digit level'))),
-                 tabPanel("Other update - PLACEHOLDER", 
-                          h5(a("BLS LAUS Data", href = "https://www.bls.gov/web/metro/laucntycur14.txt", target = "_blank"), align = "center"), 
-                          p(a("Zip file", href = "https://www.bls.gov/lau/#data", target = "_blank"), "Download file under 'County Data/Table'", align = "center"),
-                          h5("Datapoints:"),
-                          tags$ul(
-                            tags$li("Labor Force Size", 
-                                    tags$ul(
-                                      tags$li("40 Counties"), 
-                                      tags$li("Top 4 Counties"), 
-                                      tags$li("Bottom 4 Counties"), 
-                                      tags$li("4 Regions (KentuckianaWorks, Bluegrass, Northern Kentucky, Lincoln Trail")
-                                    )))),
+                 tabPanel('Career Calculator',
+                          h5('Data update schedule can be found here:', 
+                             a('Career Calculator Update Schedule',
+                               href = 'https://docs.google.com/document/d/1dXribqXG8DJbaM_NsCI20mfLfI73PB-c7805_O0dv_g/pub')), 
+                          h3('Updating the App'), 
+                          p('You need access to the login credentials for the AWS console found here:', 
+                            a('AWS credentials', 
+                              href = 'https://docs.google.com/a/kentuckianaworks.org/spreadsheets/d/1cxUQCuoZ6PPvkXAyrGu3Gye1wWG4VRnCD-2Um4Ttecc/edit?usp=sharing')), 
+                          p('Once logged in navigate to "Services", then "S3"'), 
+                          p('This is where you will find a data "bucket", with downloadable and uploadable data connected to the app'), 
+                          p('To update a specific data point, download the datasheet, edit, save, then upload back into the same S3 bucket'), 
+                          p('To upload an entire data set, just upload the data set into the bucket, the app is programmed to
+                            automatically select and place the new data')),
                  
-                 tabPanel("Other update - PLACEHOLDER", 
-                          h5(a("Burning Glass Data", href = "http://laborinsight.burning-glass.com/jobs/us#", target = "_blank"), align = "center"), 
-                          h5("Datapoints:"), 
-                          tags$ul(
-                            tags$li(tags$s("Top Industries by Job Postings"), "(Completed April 26th - BD, ~/Desktop/regionalPlan/topIndustries/)"),
-                            tags$li(tags$s("Top 30 occupations by Job Postings"), "(Completed April 26th - BD, ~/Desktop/regionalPlan/topOccupations/)"),
-                            tags$li("Top 30 occupations + advertised education by job postings (NEED CLARIFICATION FROM ERIC)"))))
+                tabPanel('Monthly Newsletter', 
+                      p('Every month (in partnership with the KW communications department) we
+                        release a newsletter with BLS updates for the Louisville MSA area'),
+                      h6('Schedule of updates can be found here:',
+                         a('BLS MSA Release Schedule', href = 'http://www.bls.gov/schedule/news_release/metro.htm')),
+                      br(),
+                      h5('Data you will need:'), 
+                      tags$ul(
+                        tags$li("Total # of job postings in reference month(Burning Glass (BG), saved report 'monthlyUpdateJobPostings')"), 
+                        tags$li("# of total postings asking for an associate's degree or higher (BG, saved report 'associatesPlus'"),
+                        tags$li("# of total postings asking for a bachelor's degree or higher (BG, saved report 'bachelorPlus'"), 
+                        tags$li("BLS data release date (should be today, the day you are updating. Link to release schedule found above :)")
+                      ),
+                      br(),
+                      h5('To update the data and visualizations follow these steps:'), 
+                      tags$ol(
+                        tags$li('Open shinyBlsUpdates.Rproj'),
+                        tags$li('In the project files open dataUpdate.R and RUN the script'),
+                        tags$li('Next, open global.R and update lines 7 -10 with the data you pulled from Burning Glass, and the 
+                                Data Release date.'),
+                        tags$li('Run and republish app'), 
+                        tags$li("Send communication's department new numbers")
+                        ),
+                      br(),
+                      h5('Sweet, you did it :)'),
+                      br(),
+                      img(src='http://s2.quickmeme.com/img/37/374c8bc7e82177cc0d0a36c60ac42e2ae547d80ec7912ecf4c2cc0f895fde54e.jpg', 
+                          width = 200, height = 200, align = "center"), 
+                      br(),
+                      br(),
+                      br()
+                 ))
              )),   
     
       tabPanel(
@@ -439,7 +384,16 @@ shinyUI(fluidPage(
         br(),
         br(),
         br()
-      )
+      ), 
+    tabPanel(
+      'Other', 
+      h5('MIT Living Wage', a('here.', 
+                              href = 'http://livingwage.mit.edu/metros/31140')), 
+      p('(we use the measure for a family of two with two children w/o childcare).'),
+      br(),
+      h5('Login Credentials', a('here.', 
+                                href = 'https://docs.google.com/a/kentuckianaworks.org/spreadsheets/d/1cxUQCuoZ6PPvkXAyrGu3Gye1wWG4VRnCD-2Um4Ttecc/edit?usp=sharing'))
+    )
 
 
   ))))

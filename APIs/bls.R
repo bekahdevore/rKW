@@ -1,7 +1,7 @@
 library(dplyr)
 
-# list of everything in directory
-# http://download.bls.gov/pub/time.series/sm/
+# list of all datasets 
+# https://download.bls.gov/pub/time.series/overview.txt
 
 import.from.bls <- function(web.address) {
   
