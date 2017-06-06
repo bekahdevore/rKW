@@ -3,7 +3,10 @@ library(RCurl)
 library(stringr)
 library(googlesheets)
 
+#Adjust living wage here
 mitLivingWage <- 24.02
+
+save(mitLivingWage, file = "mitLivingWage.RData")
 # found here: http://livingwage.mit.edu/metros/31140
 
 #Import Data from google sheets 

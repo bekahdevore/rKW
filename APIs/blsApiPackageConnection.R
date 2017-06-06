@@ -41,6 +41,7 @@ apiDataConverter <- function(seriesId) {
 ###########################################################################################################
 
 #### Labor Force Series ID's ###
+
 JeffersonCountyLaborForce <- apiDataConverter("LAUCN211110000000006")
 KentuckyLaborForce        <- apiDataConverter("LAUST210000000000006")
 LouisvilleLaborForce      <- apiDataConverter("LAUMT213114000000006")

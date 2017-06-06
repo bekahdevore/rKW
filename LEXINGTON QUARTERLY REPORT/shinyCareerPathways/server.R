@@ -187,7 +187,7 @@ techJobs <- mainDataFile %>% filter(Sector == "IT")
                               Information Technology Support Technicians"
       
       itAssociatesProg   <- noJobsMessage
-      itAssociatesNet    <- " Computer Network Support Specialists"
+      itAssociatesNet    <- noJobsMessage
       itAssociatesWeb    <- " Web Developers"
       
       itCertificateInfo  <- noJobsMessage
@@ -210,7 +210,7 @@ techJobs <- mainDataFile %>% filter(Sector == "IT")
       itPostingsBaWeb       <-  sumDeduplicatedPostings(webBa)
       itPostingsAsInfo      <-  sumDeduplicatedPostings(infoAs)       ##### ASSOCIATES/SOME   
       itPostingsAsProg      <-  "" 
-      itPostingsAsNet       <-  sumDeduplicatedPostings(netAs)
+      itPostingsAsNet       <-  ""
       itPostingsAsWeb       <-  sumDeduplicatedPostings(webAs)
 
 ######################## WAGE RANGES
@@ -220,7 +220,7 @@ techJobs <- mainDataFile %>% filter(Sector == "IT")
       itWagesBaWebLOW  <- wages25(webBa)
       itWagesAsInfoLOW <- wages25(infoAs)
       itWagesAsProgLOW <- ""
-      itWagesAsNetLOW  <- wages25(netAs)
+      itWagesAsNetLOW  <- ""
       itWagesAsWebLOW  <- wages25(webAs)
                                               ## 75th Percentile      
       itWagesBaInfoHIGH <- wages75(infoBa)
@@ -229,7 +229,7 @@ techJobs <- mainDataFile %>% filter(Sector == "IT")
       itWagesBaWebHIGH  <- wages75(webBa)
       itWagesAsInfoHIGH <- wages75(infoAs)
       itWagesAsProgHIGH <- ""
-      itWagesAsNetHIGH  <- wages75(netAs)
+      itWagesAsNetHIGH  <- ""
       itWagesAsWebHIGH  <- wages75(webAs)
 
       
@@ -400,7 +400,7 @@ techJobs <- mainDataFile %>% filter(Sector == "IT")
       ####### EDUCATION LEVEL
       ## BACHELORS
       manBachelorsProd   <- "Manufacturing Engineers"
-      manBachelorsProc   <- "Estimators; Sales Engineers"
+      manBachelorsProc   <- noJobsMessage
       manBachelorsQual   <- "Quality Engineers; Production Mangers"
       manBachelorsMain   <- "Electrical and Mechanical Engineers" 
       
@@ -553,11 +553,11 @@ techJobs <- mainDataFile %>% filter(Sector == "IT")
       ## ASSOCIATES
       busAssociatesFin  <- noJobsMessage
       busAssociatesLeg  <- "Paralegals and Legal Assistants"
-      busAssociatesAdv  <- "Human Resource Assistants"
+      busAssociatesAdv  <- noJobsMessage
       ## CERTIFICATE
       busCertificateFin <- noJobsMessage
       busCertificateLeg <- noJobsMessage
-      busCertificateAdv <- "Audio and Video Equipment Technicians"
+      busCertificateAdv <- noJobsMessage
       ## HIGH SCHOOL
       busHighSchoolFin  <- "Collections and Billing Specialists; Bookkeepers; Correspondence Clerks; Credit Assistants"
       busHighSchoolLeg  <- "Legal Administrative Assistants; Receptionists"
@@ -676,7 +676,7 @@ techJobs <- mainDataFile %>% filter(Sector == "IT")
       ####### EDUCATION LEVEL
       ## CERTIFICATE
       conCertificateCons  <- "Electricians; Plumbers; HVAC & Refrigeration Mechanics"
-      conCertificateProp  <- "Electronic Equiptment Installers and Repairers"
+      conCertificateProp  <- noJobsMessage
       conCertificateReal  <- "Real Estate Agents and Brokers"
       ## HIGH SCHOOL
       conHighSchoolCons   <- "Supervisors; Inspectors; Helpers"

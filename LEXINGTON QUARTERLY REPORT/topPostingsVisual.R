@@ -2,9 +2,7 @@ library(ggplot2)
 library(scales)
 library(dplyr)
 
-
-## ADJUST LIVING WAGE HERE 
-mitLivingWage <- 22.73
+load("mitLivingWage.RData")
 
 ## ORIGINAL DATAFRAME
 originalData <- read.csv('topJobPostings.csv')
@@ -166,7 +164,7 @@ makePieChart <- function(dataToEnter, paletteToEnter){
   pie2(allPostings$n, 
        labels = paste(allPostings$Typical.Entry.Level.Education,
                       allPostings$percent, 
-                      sep = '\n'), 
+                      sep = ' '), 
        col = paletteToEnter, 
        radius = .3, cex = .8)
 }
