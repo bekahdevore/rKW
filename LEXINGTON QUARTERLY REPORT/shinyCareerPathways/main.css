@@ -1,0 +1,113 @@
+body{
+	line-height: 1.1;
+	font-weight: 500;
+	font-family: myriad-pro, sans-serif;
+}
+
+  table{
+    max-width: 2480px;
+    width:100%;
+  }
+  table td{
+    width: auto;
+    overflow: hidden;
+    word-wrap: break-word;
+  }
+
+h3{
+  font-size: 75%;
+}
+.column1{
+	background-color: #A4D7F4;
+}
+
+.column2{
+	background-color: #f9ab4a;
+}
+
+.column3{
+	background-color: #45abde;
+}
+
+.column4{
+	background-color: #46a674;
+}
+
+.column5{
+	background-color: #e988a2;
+}
+
+.mainTitle{
+	font-weight: bold; 
+}
+
+.edTitle{
+	font-size: 24px;
+}
+
+
+.itAssociates{
+	line-height: .8;
+}
+
+.specialBorder {
+	border-bottom: 3px solid white;
+}
+
+.allSectorJobPostings {
+	background-color: white;
+	color: black;
+}
+
+.jobPostingsTotal {
+	color: #0E6089;
+
+	font-weight: bold;
+}
+
+.jobPostingsRow {
+	color: white;
+}
+
+.wages {
+	font-weight: bold;
+}
+
+
+th {
+	font-size: 24px;
+	text-align: center;
+	vertical-align: middle;
+	color: white;
+	height: 50%;
+}
+
+/*tr:nth-child(3){
+	color: white;
+}*/
+
+tr:first-child{
+	border-bottom: 3px solid white;
+}
+/*tr:nth-child(4){
+	border-bottom: 3px solid white;
+}*/
+
+/*tr:nth-child(6){
+	color: white;
+}
+*/
+/*tr:nth-child(7){
+	border-bottom: 3px solid white;
+}*/
+
+table, th, td {
+	padding: 10px;
+	border-spacing: 5px; 
+	text-align: center;
+	vertical-align: middle;
+}
+
+#mainData th{
+	color: black;
+}

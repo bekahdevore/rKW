@@ -1,0 +1,11 @@
+name: careerpathways2016jan_nov
+title: careerPathways2016jan_nov
+account: kwlmi
+server: shinyapps.io
+appId: 147201
+bundleId: 664784
+url: https://kwlmi.shinyapps.io/careerpathways2016jan_nov/
+when: 1483119683.09072
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: mainData.R

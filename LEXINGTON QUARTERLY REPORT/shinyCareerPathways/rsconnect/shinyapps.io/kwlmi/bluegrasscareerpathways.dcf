@@ -1,0 +1,11 @@
+name: bluegrasscareerpathways
+title: bluegrassCareerPathways
+account: kwlmi
+server: shinyapps.io
+appId: 186437
+bundleId: 853931
+url: https://kwlmi.shinyapps.io/bluegrasscareerpathways/
+when: 1496683992.01258
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: mainData.R

@@ -78,13 +78,13 @@ shinyUI(fluidPage(
         h4("You will need:"), 
         tags$ul(
           tags$li("Burning Glass & EMSI login credentials"),
-          tags$li("access to quarterlyReportMainInput google sheet"), 
-          tags$li("quarterlyReport.rProj (Contains necessary rScripts)"),
+          tags$li("access to 'QUARTERLY REPORT MAIN INPUT' google sheet"), 
+          tags$li("'QUARTERLY REPORT.Rproj' (Contains necessary rScripts)"),
           tags$li("Quarterly Report InDesign File, and InDesign login credentials")),
         h4("Outline:"), 
         tags$ul(
           tags$li("Pull New Data (Burnning Glass and EMSI)"),
-          tags$li("Update google sheet with new data (quarterlyReportMainInput google sheet)"), 
+          tags$li("Update google sheet with new data ('QUARTERLY REPORT MAIN INPUT' google sheet)"), 
           tags$li("Run R Scripts"),
           tags$li("Drag and drop R script output visualizations into InDesign quarterly report template"))
     ),        

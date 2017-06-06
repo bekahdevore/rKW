@@ -1,0 +1,11 @@
+name: careerpathways2
+title: career pathways
+account: kwlmi
+server: shinyapps.io
+appId: 149216
+bundleId: 776482
+url: https://kwlmi.shinyapps.io/careerpathways2/
+when: 1491317829.27884
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: mainData.R

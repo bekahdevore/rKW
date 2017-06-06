@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- constructionTemplate.html -->
+<html>
+  <head>
+    {{ headContent() }}
+  </head>
+  <body>
+    <div>
+    	<TABLE>
+         <col class = 'column1'>
+         <col class = 'column2'>
+         <col class = 'column3'>
+         <col class = 'column4'>
+         <col class = 'column5'>
+    	   <TR>
+                <TH class = 'allSectorJobPostings'> {{ totalJobs }} <br> <h5>TOTAL JOB POSTINGS </h5> </TD>
+                <TH class = 'mainTitle'> <h3> CONSTRUCTION                                </h3> </TH>
+                <TH class = 'mainTitle'> <h3> PROPERTY MANAGEMENT                         </h3> </TH>
+                <TH class = 'mainTitle'> <h3> REAL ESTATE/LEASING                         </h3> </TH>
+    	   </TR>        
+            <TR> 
+                <TD class = "edTitle"> {{ degreeName2 }}          </TD>
+                <TD> {{ conCertificateCons  }} </TD>
+                <TD> {{ conCertificateProp }} </TD>
+                <TD> {{ conCertificateReal }} </TD>
+            </TR>
+            <TR class = "jobPostingsRow">
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsConCe  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ conPostingsCeCons      }} <br> JOB POSTINGS <br> in the last 3 months </TD>
+                <TD> {{ conPostingsCeProp      }} <br> JOB POSTINGS <br> in the last 3 months </TD>
+                <TD> {{ conPostingsCeReal      }} <br> JOB POSTINGS <br> in the last 3 months </TD>
+            </TR>
+            <TR class = "specialBorder wages">
+                <TD> </TD>
+                <TD> ${{ conWagesCeConsLOW  }} to ${{ conWagesCeConsHIGH  }} <br> HOURLY RATE </TD>
+                <TD> ${{ conWagesCePropLOW  }} to ${{ conWagesCePropHIGH  }} <br> HOURLY RATE </TD>
+                <TD> ${{ conWagesCeRealLOW  }} to ${{ conWagesCeRealHIGH  }} <br> HOURLY RATE </TD>
+            </TR>    
+            <TR >
+                <TD class = "edTitle"> {{ degreeName1 }}         </TD>
+                <TD> {{ conHighSchoolCons }}  </TD>
+                <TD> {{ conHighSchoolProp }} </TD>
+                <TD> {{ conHighSchoolReal }} </TD>
+            </TR>
+            <TR class = "jobPostingsRow">
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsConHi  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+
+                <TD> {{ conPostingsHiCons       }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ conPostingsHiProp      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ conPostingsHiReal      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+            </TR>
+            <TR class = "specialBorder wages">
+                <TD>  </TD>
+                <TD> ${{ conWagesHiConsLOW   }} to ${{ conWagesHiConsHIGH   }} <br> HOURLY RATE </TD>
+                <TD> ${{ conWagesHiPropLOW  }} to ${{ conWagesHiPropHIGH  }} <br> HOURLY RATE </TD>
+                <TD> ${{ conWagesHiRealLOW  }} to ${{ conWagesHiRealHIGH  }} <br> HOURLY RATE </TD>
+            </TR> 
+            <TR>
+                <TD class = "edTitle"> {{ degreeName0   }}      </TD>
+                <TD> {{ conNoSchoolCons     }} </TD>
+                <TD> {{ conNoSchoolProp     }} </TD>
+                <TD> {{ conNoSchoolReal     }} </TD>
+            </TR>
+            <TR class = "jobPostingsRow">
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsConNo  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+
+                <TD> {{ conPostingsNoCons      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ conPostingsNoProp      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> <!-- {{ conPostingsNoReal      }} <br> JOB POSTINGS <br> in the last 3 months --> </TD>
+            </TR>
+            <TR class = "specialBorder wages">
+                <TD>  </TD>
+                <TD> ${{ conWagesNoConsLOW  }} to ${{ conWagesNoConsHIGH  }} <br> HOURLY RATE </TD>
+                <TD> ${{ conWagesNoPropLOW  }} to ${{ conWagesNoPropHIGH  }} <br> HOURLY RATE </TD>
+                <TD> <!-- ${{ conWagesNoRealLOW  }} to ${{ conWagesNoRealHIGH  }} <br> HOURLY RATE --> </TD>
+            </TR>     
+    	</TABLE>
+	</div>
+  </body>
+</html>
+

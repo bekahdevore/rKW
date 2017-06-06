@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!-- businessTemplate.html -->
+<html>
+  <head>
+    {{ headContent() }}
+  </head>
+  <body>
+    <div>
+    	<TABLE>
+         <col class = 'column1'>
+         <col class = 'column2'>
+         <col class = 'column3'>
+         <col class = 'column4'>
+         <col class = 'column5'>
+    	   <TR>
+                <TH class = 'allSectorJobPostings'> {{ totalJobs }} <br> <h5> TOTAL JOB POSTINGS </h5> </TD>
+                <TH class = 'mainTitle'> <h3> FINANCIAL SERVICES/ <br> PAYMENT PROCESSING	     </h3> </TH>
+                <TH class = 'mainTitle'> <h3> LEGAL SERVICES/CONSULTING                    </h3> </TH>
+                <TH class = 'mainTitle'> <h3> ADVERTISING AND PR       						 </h3> </TH>
+    	   </TR>
+            <TR>
+                <TD class = "edTitle"> Professional Degree/PHD/ Master's Degree </TD>
+                <TD> {{ busMastersFin     }} </TD>
+                <TD> {{ busMastersLeg     }} </TD>
+                <TD> {{ busMastersAdv     }} </TD>
+                
+            </TR>
+            <TR class = "jobPostingsRow">
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsBusMa  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+
+                <TD> </TD>
+                <TD> {{ busPostingsMaLeg      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> </TD>    
+            </TR>
+            <TR class = " specialBorder wages">
+                <TD> </TD>
+                <TD> </TD>
+                <TD> ${{ busWagesMaLegLOW  }} to ${{ busWagesMaLegHIGH    }} <br> HOURLY RATE </TD>
+                <TD> </TD>
+            </TR>       
+            <TR>
+                <TD class = "edTitle"> {{ degreeName4   }}      </TD>
+                <TD> {{ busBachelorsFin     }} </TD>
+                <TD> {{ busBachelorsLeg     }} </TD>
+                <TD> {{ busBachelorsAdv     }} </TD>
+                
+            </TR>
+            <TR class = "jobPostingsRow">
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsBusBa  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+
+                <TD> {{ busPostingsBaFin      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ busPostingsBaLeg      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ busPostingsBaAdv      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+               
+            </TR>
+            <TR class = " specialBorder wages">
+                <TD>  </TD>
+                <TD> ${{ busWagesBaFinLOW  }} to ${{ busWagesBaFinHIGH    }} <br> HOURLY RATE </TD>
+                <TD> ${{ busWagesBaLegLOW  }} to ${{ busWagesBaLegHIGH    }} <br> HOURLY RATE </TD>
+                <TD> ${{ busWagesBaAdvLOW  }} to ${{ busWagesBaAdvHIGH    }} <br> HOURLY RATE </TD>
+            </TR>       
+            <TR>
+                <TD class = "edTitle"> {{ degreeName3}}  </TD>
+                <TD> {{ busAssociatesFin  }} </TD>
+                <TD> {{ busAssociatesLeg  }} </TD>
+                <TD> {{ busAssociatesAdv  }} </TD>
+            </TR>
+            <TR class = "jobPostingsRow">
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsBusAs }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> </TD>
+                <TD> {{ busPostingsAsLeg      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ busPostingsAsAdv      }} <br> JOB POSTINGS <br> in the last 3 months </TD>
+            </TR>
+            <TR class = "specialBorder wages">
+                <TD> </TD>
+                <TD> </TD>
+                <TD> ${{ busWagesAsLegLOW  }} to ${{ busWagesAsLegHIGH    }} <br> HOURLY RATE </TD>
+                <TD> ${{ busWagesAsAdvLOW  }} to ${{ busWagesAsAdvHIGH    }} <br> HOURLY RATE </TD>
+            </TR>    
+            <TR > 
+                <TD class = "edTitle"> {{ degreeName2 }}          </TD>
+                <TD> {{ busCertificateFin  }} </TD>
+                <TD> {{ busCertificateLeg  }} </TD>
+                <TD> {{ busCertificateAdv  }} </TD>
+            </TR>
+            <TR class = "jobPostingsRow">
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsBusCe }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> </TD>
+                <TD> </TD>
+                <TD> {{ busPostingsCeAdv      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+            </TR>
+            <TR class = "specialBorder wages">
+                <TD> </TD>
+                <TD> </TD>
+                <TD> </TD>
+                <TD> ${{ busWagesCeAdvLOW  }} to ${{ busWagesCeAdvHIGH  }} <br> HOURLY RATE </TD>
+            </TR>    
+            <TR >
+                <TD class = "edTitle"> {{ degreeName1 }}         </TD>
+                <TD> {{ busHighSchoolFin }} </TD>
+                <TD> {{ busHighSchoolLeg }} </TD>
+                <TD> {{ busHighSchoolAdv }} </TD>
+            </TR>
+            <TR class = "jobPostingsRow">
+                <TD class = "jobPostingsTotal"> {{ totalJobPostingsBusHi  }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+
+                <TD> {{ busPostingsHiFin      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ busPostingsHiLeg      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+                <TD> {{ busPostingsHiAdv      }} <br> JOB POSTINGS <br> in the last 3 months</TD>
+            </TR>
+            <TR class = "specialBorder wages">
+                <TD>  </TD>
+                <TD> ${{ busWagesHiFinLOW  }} to ${{ busWagesHiFinHIGH  }} <br> HOURLY RATE </TD>
+                <TD> ${{ busWagesHiLegLOW  }} to ${{ busWagesHiLegHIGH  }} <br> HOURLY RATE </TD>
+                <TD> ${{ busWagesHiAdvLOW  }} to ${{ busWagesHiAdvHIGH  }} <br> HOURLY RATE </TD>
+            </TR>    
+    	</TABLE>
+	</div>
+  </body>
+</html>
+
+
+

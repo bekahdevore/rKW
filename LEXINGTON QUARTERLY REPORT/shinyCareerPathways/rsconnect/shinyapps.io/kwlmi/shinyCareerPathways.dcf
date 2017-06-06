@@ -1,0 +1,10 @@
+name: shinyCareerPathways
+account: kwlmi
+server: shinyapps.io
+appId: 134979
+bundleId: 621006
+url: https://kwlmi.shinyapps.io/shinyCareerPathways/
+when: 1479740890.77705
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: mainData.R
