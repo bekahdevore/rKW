@@ -29,7 +29,9 @@ kentucky <- dbGetQuery(conn = con, statement = statement(kentucky))
 peerCities <- dbGetQuery(conn = con, statement = statement(peerCities))
 louisvilleMSA <- dbGetQuery(conn = con, statement = statement(louisville))
                             
-
+save(kentucky, file = "kentuckyAllData.RData")
+save(peerCities, file = "peerCitiesAllData.RData")
+save(louisvilleMSA, file = "louisvilleMsaAllData.RData")
 
 ## Filter and Make data more readable
 dataFilter <- function(dataInput) {

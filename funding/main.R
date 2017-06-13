@@ -7,9 +7,8 @@ library(scales)
 library(RColorBrewer)
 library(treemap)
 library(lattice)
-library(gridBase)
-library(gridExtra)
-library(grid)
+library(streamgraph)
+library(stringr)
 
 dataConnection <- getURL("https://docs.google.com/spreadsheets/d/1vbMB49xcHjPzApRaU8EWZJ6O1pDrPJikboTQkmLlo5w/pub?gid=0&single=true&output=csv")
 spendingConnection <- getURL("https://docs.google.com/spreadsheets/d/1vbMB49xcHjPzApRaU8EWZJ6O1pDrPJikboTQkmLlo5w/pub?gid=537181117&single=true&output=csv")
@@ -75,5 +74,14 @@ treemap(noTotalData2019, "label",  "AmountMillions", title = "", type = "color",
 spending$label <- paste0(spending$Expenditure, "\n", "$", spending$Amount, "M")
 treemap(spending, "label", "Amount")
 
-spending$Expenditure
 
+noTotalData$Source <-sub("WIA|WIOA", "WIA/WIOA", noTotalData$Source)
+
+streamgraph(noTotalData, key="Source", value="AmountMillions", date="Year") %>% 
+  sg_legend(show=TRUE, label="Source: ") %>% 
+  sg_fill_tableau() %>% 
+  sg_axis_x(1, "Year")
+
+
+cols <- c("8" = "red", "4" = "blue", "6" = "darkgreen", "10" = "orange")
+View(cols)

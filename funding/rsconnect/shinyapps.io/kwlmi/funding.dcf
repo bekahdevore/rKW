@@ -1,0 +1,11 @@
+name: funding
+title: funding
+account: kwlmi
+server: shinyapps.io
+appId: 187398
+bundleId: 858811
+url: https://kwlmi.shinyapps.io/funding/
+when: 1496950140.50677
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: funding2003_2007.pdf|funding2003_2011.pdf|funding2016_2019.pdf|fundingExample.pdf|main.R|test.pdf|test.png|test2.pdf|test3.pdf|testing.pdf|testtting.pdf|treemapify.R

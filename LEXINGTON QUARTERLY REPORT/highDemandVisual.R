@@ -61,7 +61,7 @@ highDemand <- p                                  +
         legend.title      = element_blank(), 
         legend.text       = element_text(size = 14),
         # face = 'bold'), 
-        legend.position   = c(.78, .7), 
+        legend.position   = c(.65, .7), 
         legend.background = element_blank(),
         legend.key        = element_rect(color = 'white', 
                                          size = 3),
@@ -73,6 +73,6 @@ highDemand <- p                                  +
 highDemand
 
 
-png(file="highDemand.png", width = 4000, height = 4000)
-highDemand
-dev.off()
+# png(file="highDemand.png", width = 4000, height = 4000)
+# highDemand
+# dev.off()
