@@ -21,7 +21,7 @@ dataTable <- dataTable %>% mutate(datatype_name = ifelse(datatype_code == 01, "E
   mutate(area = ifelse(area_code == 0031140, "Louisville", 
                        ifelse(area_code == 7200000, "Puerto Rico", "Other")))
 
-dataTable <- dataTable %>% mutate(datapoint = paste(area, ",", datatype_name)) %>% select(1, 8, 2)
+dataTable <- dataTable %>% mutate(datapoint = paste(area, "-", datatype_name)) %>% select(1, 8, 2)
 
 dataTable$series_title <- gsub(pattern = "Employment for","", dataTable$series_title, ignore.case=T)
 dataTable$series_title <- gsub(pattern = "in All Industries in Louisville/Jefferson County, KY-IN","", dataTable$series_title, ignore.case=T)
@@ -31,13 +31,17 @@ dataTable$series_title <- gsub(pattern = "Annual mean wage for","", dataTable$se
 dataTable$series_title <- gsub(pattern = "Annual median wage for" ,"", dataTable$series_title, ignore.case=T)
 
 
-test0 <- dataTable %>% spread(datapoint, value)
+AllDataToWrite <- dataTable %>% spread(datapoint, value)
+AllDataToWrite <- AllDataToWrite %>% select(1, 4,7,3,6,2,5)
+colnames(AllDataToWrite)[1] <- "Occupation"
+
+
 # puertoRicoData <- puertoRicoData %>% spread(datatype_code, value) %>% select(1, 4:6)
 # colnames(puertoRicoData)[2] <- "Employment"
 # colnames(puertoRicoData)[3] <- "Annual Mean Wage"
 # colnames(puertoRicoData)[4] <- "Annual Median Wage"
 
-write.csv(louisvilleData, file = "louisvilleData.csv")
+write.csv(AllDataToWrite, file = "oesData.csv")
 
 ## DATA FOR VISUALIZATION
 employment <- louisvilleAndPuertoRico %>% filter(datatype_code == 01)
