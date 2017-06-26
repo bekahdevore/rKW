@@ -146,9 +146,11 @@ head(percent(hht))
 left_partner <- count(leftover, PARTNER, wt = PWGTP, sort = TRUE)
 percent(left_partner)
 
+# WORKERS IN FAMILY
 wif <- count(leftover, WIF, wt = PWGTP, sort = TRUE)
 percent(wif)
 
+# work status
 workstat <- count(leftover, WORKSTAT, wt = PWGTP, sort = TRUE)
 head(percent(workstat))
 

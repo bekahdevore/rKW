@@ -6,5 +6,9 @@ con <- dbConnect(MySQL(), group = "kwlmi", dbname = "kwlmi")
 
 peerCities <- "peerCityPUMS"
 
+statement <- function(place) {
+  paste("SELECT *", "FROM", place, ";")
+}
+
 peerCities <- dbGetQuery(conn = con, statement = statement(peerCities))
 save(peerCities, file = "peerCities.RData")
