@@ -1,11 +1,10 @@
 library(dplyr)
 
-
 #### BLS OES MEDIAN WAGE DATA ####
 # list of all datasets 
 # https://download.bls.gov/pub/time.series/overview.txt
 
-import.from.bls <- function(web.address) {
+import.from.bls <- function(web.address, filenameInput) {
   
   # Import data
   temp <- tempfile()
@@ -31,15 +30,18 @@ import.from.bls <- function(web.address) {
   
   # This command plucks the text that appears after the pattern below,
   # and uses it to name the file.
-  filename <- gsub(pattern = "https://download.bls.gov/pub/time.series/oe/oe.","", x = web.address, ignore.case=T)
+  #filename <- gsub(pattern = "https://download.bls.gov/pub/time.series/","", x = web.address, ignore.case=T)
   
   # save the file to the global environment
-  assign(filename, data, envir = .GlobalEnv) 
+  assign(filenameInput, data, envir = .GlobalEnv) 
 }
 
 import.from.bls("https://download.bls.gov/pub/time.series/oe/oe.series")
 import.from.bls("https://download.bls.gov/pub/time.series/oe/oe.data.0.Current")
 import.from.bls("https://download.bls.gov/pub/time.series/oe/oe.area")
+
+import.from.bls("https://download.bls.gov/pub/time.series/la/la.data.60.Metro", "metros") # BLS LAUS METROPOLITAN DATA
+import.from.bls("https://download.bls.gov/pub/time.series/la/la.series", "lausSeries") # BLS LAUS METROPOLITAN DATA
 
 
 allData <- left_join(data.0.Current, series, by = "series_id")
