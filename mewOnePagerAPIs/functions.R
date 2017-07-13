@@ -81,13 +81,3 @@ cleanAcsData <- function(dataHere, dataPointName){
 
 
 
-
-
-### ACS TESTING
-# tableCode <- "DP04_0089E" 
-# area <- acsMetros
-# dataHere <- getURL(paste("http://api.census.gov/data/2015/acs1/profile?get=NAME,", tableCode, area, "&key=", apiKey))
-# dataHere <- read.csv(textConnection(dataHere))
-
-
-

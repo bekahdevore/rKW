@@ -6,13 +6,13 @@ x <- 1
 ## using variables
 x*2
 
-# lists
+# arrays
 words <- c("these", "are", "words")
 words <- as.data.frame(words)
 names(words)
 row.names(words)
 
-# Accessing variables
+# Accessing variables within dataframe
 words$newColumn <- "words"
 words$numbers <- 1:3
 

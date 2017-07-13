@@ -12,7 +12,8 @@ qcewDataLouisville <- getQcewData(quarter, currentYear)
 import.from.bls("https://download.bls.gov/pub/time.series/oe/oe.data.0.Current", "oesMainData")
 ## BLS LAUS imports
 import.from.bls("https://download.bls.gov/pub/time.series/la/la.data.60.Metro", "lausMetros") # BLS LAUS METROPOLITAN DATA
-import.from.bls("https://download.bls.gov/pub/time.series/la/la.series", "lausSeries") # BLS LAUS METROPOLITAN DATA
+import.from.bls("https://download.bls.gov/pub/time.series/la/la.period", "lausPeriod") # BLS LAUS METROPOLITAN DATA
+
 
 ## Grab  MSA area codes from google sheets
 areaCodeConnection <- getURL("https://docs.google.com/spreadsheets/d/1MIgcX_LQBF2J2pzevXRPJzy9UKjaVls9vNda3Pgay3Q/pub?gid=0&single=true&output=csv")
