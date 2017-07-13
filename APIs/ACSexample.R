@@ -4,7 +4,7 @@ library(dplyr)
 library(googlesheets)
 
 ##Info about ACS 1 yr API https://www.census.gov/data/developers/data-sets/acs-1year.html
-## variables https://api.census.gov/data/2015/acs1/cprofile/variables.html
+## variables https://api.census.gov/data/2015/acs1/subject/variables.json
 laborForce16plus <- "S2301_C02_001E"
 laborForce20to64 <- "S2301_C02_021E"
 apiKey <- "00b1974d78394a0f553ab06d7d20f58d9fee6e51"
@@ -12,6 +12,8 @@ apiKey <- "00b1974d78394a0f553ab06d7d20f58d9fee6e51"
 getDataMetros <- function(tableCode) {
   dataHere <- getURL(paste("http://api.census.gov/data/2015/acs1/subject?get=NAME,", tableCode, "&for=metropolitan+statistical+area/micropolitan+statistical+area:*&key=", apiKey))
 }
+
+test <- getDataMetros(medianHouseholdWage)
 
 getDataUS <- function(tableCode){
   dataHere <- getURL(paste("http://api.census.gov/data/2015/acs1/subject?get=NAME,", tableCode,"&for=us:*&key=", apiKey))
