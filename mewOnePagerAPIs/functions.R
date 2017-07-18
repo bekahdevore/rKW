@@ -72,10 +72,12 @@ getDataMetros <- function(tableCode, area, currentYear, dataPath) {
 cleanAcsData <- function(dataHere, dataPointName){
   dataHere[,"X..NAME"] <- str_replace_all(dataHere[,"X..NAME"], "\\[", "")
   dataHere[,"metropolitan.statistical.area.micropolitan.statistical.area."] <- str_replace_all(dataHere[,"metropolitan.statistical.area.micropolitan.statistical.area."], "\\]", "")
-  colnames(dataHere)[3] <- "msaCode"
+  colnames(dataHere)[3] <- "area_code"
   colnames(dataHere)[2] <- dataPointName
-  dataHere[,"msaCode"] <- as.numeric(as.character(dataHere[,"msaCode"])) 
-  dataHere <- dataHere %>% select(1:3)
+  dataHere[,dataPointName] <- as.numeric(as.character(dataHere[,dataPointName]))
+  dataHere[,"area_code"] <- as.numeric(as.character(dataHere[,"area_code"])) 
+  dataHere <- dataHere %>% select(2:3)
+  dataHere <- dataHere %>% filter(area_code %in% peerAreaCodes$area_code)
   return (dataHere)
 }
 

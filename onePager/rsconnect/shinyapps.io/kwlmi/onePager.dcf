@@ -1,0 +1,11 @@
+name: onePager
+title: onePager
+account: kwlmi
+server: shinyapps.io
+appId: 196665
+bundleId: 907549
+url: https://kwlmi.shinyapps.io/onePager/
+when: 1500389567.83296
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: dataUpdate.R|oesDataUpdate.R

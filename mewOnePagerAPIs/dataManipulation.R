@@ -9,11 +9,13 @@ oesMainData[,"area_code"] <- as.numeric(as.character(oesMainData[,"area_code"]))
 #oesMainData[,"datapoint"] <- as.numeric(as.character(oesMainData[,"datapoint"]))
 
 oesMainData <- oesMainData %>% 
-  filter((datapoint == "13" & area_code %in% peerAreaCodes$area_code & industry == "000000000")) %>% 
-  select(2, 4:5)
-colnames(oesMainData)[2] <- "Annual Median Wage"
-colnames(oesMainData)[1] <- "blsOesYear"
+  filter((datapoint == "13" & (area_code %in% peerAreaCodes$area_code) & industry == "000000000")) %>% 
+  select(4:5)
+oesMainData[,1] <- as.numeric(as.character(oesMainData[,1]))
+colnames(oesMainData)[1] <- "Annual Median Wage (USD)"
 
+
+oesReleaseDate <- paste(oesReleaseDate$description)
 
 ###### BLS LAUS  MANIPULTION ############
 latestYearBlsLaus <- as.numeric(max(lausMetros$year))
@@ -34,6 +36,7 @@ lausMetros <- lausMetros %>% filter(((area_code %in% peerAreaCodes$area_code) & 
                                        month == latestMonth & 
                                        type == "LAUMT"))  
 lausMetros <- left_join(lausMetros, lausPeriod, by = "period") %>% select(2, 4:6, 9)
+rm(lausPeriod)
 
 unemploymentRate <- lausMetros %>% filter(datapoint == "03") %>% select(2, 3)
 colnames(unemploymentRate)[1] <- "Unemployment Rate"
@@ -46,5 +49,15 @@ lausDate <- lausMetros %>% select(5, 1)
 lausDate <- lausDate[1,]
 lausData <- paste(lausDate[,1], lausDate[,2])
 
+joinAllDataByThisVariable <- "area_code"
+allData <- full_join(laborForceParticipationRate, laborForceSize, by = joinAllDataByThisVariable)
+allData <- full_join(allData, medianHomeValue, by = joinAllDataByThisVariable)
+allData <- full_join(allData, medianHouseholdWage, by = joinAllDataByThisVariable)
+allData <- full_join(allData, medianMonthlyRent, by = joinAllDataByThisVariable)
+allData <- full_join(allData, oesMainData, by = joinAllDataByThisVariable)
+allData <- full_join(allData, population, by = joinAllDataByThisVariable)
+allData <- full_join(allData, unemploymentRate, by = joinAllDataByThisVariable)
+allData <- full_join(allData, peerAreaCodes, by = joinAllDataByThisVariable)
 
-
+allData <- allData %>% select(10, 1, 3:9)
+allData <- format(allData, big.mark = ',')
