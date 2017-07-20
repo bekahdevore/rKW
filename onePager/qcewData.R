@@ -1,6 +1,6 @@
 ### BLS  QCEW DATA 
-qcewDataLouisville_2011 <- read.csv("2011_LouisvilleMSA.csv")
 qcewDataKentucky_2011 <- read.csv("2011_Kentucky.csv") 
+qcewDataLouisville_2011 <- read.csv("2011_LouisvilleMSA.csv")
 
 qcewDataKY_2011 <- qcewDataFilter2011(qcewDataKentucky_2011)
 qcewDataLouisville_2011 <- qcewDataFilter2011(qcewDataLouisville_2011)
@@ -35,10 +35,36 @@ allCurrentQcewData <- allCurrentQcewData %>% select(-1)
 privateQcewData <- allCurrentQcewData %>% filter(own_code == 5) %>% select(2:4)
 allQcewData <- allCurrentQcewData %>% filter(own_code == 0) %>% select(2:4)
 
-colnames(privateQcewData)[1] <- "Quarterly Establishments (private)"
-colnames(allQcewData)[1] <- "Quarterly Establishments (all)"
+establishmentsPrivate <- "Establishments (private)"
+establishmentsAll <- "Establishments (all)"
 
-colnames(privateQcewData)[2] <- "Employment (private)"
-colnames(allQcewData)[2] <- "Employment (all)"
+employmentPrivate <- "Employment (private)"
+employmentAll <- "Employment (all)"
+
+colnames(privateQcewData)[1] <- establishmentsPrivate
+colnames(allQcewData)[1] <- establishmentsAll
+
+colnames(privateQcewData)[2] <- 
+colnames(allQcewData)[2] <- establishmentsAll
 
 allCurrentQcewData <- left_join(privateQcewData, allQcewData, by = "MSA") %>% select(3, 1, 4, 2, 5)
+
+## GET GROWTH SINCE 2011 IN LOUISVILLE
+
+# Prepare data for merge
+qcewDataLouisville <- qcewDataLouisville %>% select(-1)
+colnames(qcewDataLouisville)[2] <- "Current Establishments"
+colnames(qcewDataLouisville)[3] <- "Current Employment"
+
+qcewGrowthLouisville <- qcewDataLouisville_2011 %>% select(2, 6:7) 
+colnames(qcewGrowthLouisville)[2] <- "2011 Establishments" 
+colnames(qcewGrowthLouisville)[3] <- "2011 Employment"
+
+qcewGrowthLouisville <- full_join(qcewGrowthLouisville, qcewDataLouisville, by = "own_code")
+
+qcewGrowthLouisville$`Establishment Growth since 2011` <- qcewGrowthLouisville$`Current Establishments`- qcewGrowthLouisville$`2011 Establishments`
+qcewGrowthLouisville$`Employment Growth since 2011` <- qcewGrowthLouisville$`Current Employment` - qcewGrowthLouisville$`2011 Employment`
+
+qcewGrowthLouisville <- qcewGrowthLouisville %>% mutate("Ownership type" = ifelse(own_code == 0, "All", "Private"))
+qcewGrowthLouisville <- qcewGrowthLouisville %>% select(9, 4:5, 7:8)
+

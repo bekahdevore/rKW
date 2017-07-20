@@ -19,14 +19,18 @@ allData$Population <- sort(allData$Population, decreasing = TRUE)
 mitLivingWageLouisvilleMSA <- read.csv("mitLivingWageData.csv", check.names = FALSE)
 mitLivingWageLouisvilleMSA <- mitLivingWageLouisvilleMSA %>% select(-1)
 
-mitLivingWageLouisvilleMSAFamilyOfFour <- mitLivingWageLouisvilleMSA %>% 
+mitLivingWageLouisvilleMSAFamilyOfFour <- mitLivingWageLouisvilleMSA %>%
+  filter(`Annual Expenses` == "Required annual income before taxes") %>% 
   select(1, 8)
+colnames(mitLivingWageLouisvilleMSAFamilyOfFour)[1] <- ""
 
 louisvilleRankings <- read.csv("louisvilleRankings.csv", check.names = FALSE) 
 louisvilleRankings <- louisvilleRankings %>% select(-1) 
 louisvilleRankings$Rank <- sort(louisvilleRankings$Rank) 
 louisvilleRankings <- louisvilleRankings %>% select(2, 1, 3)
 
+growthLouisville <- read.csv("growthLouisville.csv", check.names = FALSE)
+stateUsData <- read.csv("stateUsData.csv", check.names = FALSE)
 
 shinyServer(function(input, output) {
 
@@ -43,14 +47,32 @@ shinyServer(function(input, output) {
   )
   
   output$louisvilleRankings <- DT::renderDataTable(
-    louisvilleRankings, options = list(lengthChange = FALSE, pageLength = 15, paging = FALSE, autoWidth = FALSE,
+    louisvilleRankings, options = list(lengthChange = FALSE, pageLength = 15, paging = FALSE, ordering = F, autoWidth = FALSE,
                                        columnDefs = list(list(className = 'dt-center', targets = "_all" 
                                                               ))), 
     rownames = FALSE
   )
+  
+  output$stateUsData <- DT::renderDataTable(
+    stateUsData, options = list(lengthChange = FALSE, pageLength = 15, paging = FALSE, autoWidth = FALSE,
+                                     columnDefs = list(list(className = 'dt-center', targets = "_all" 
+                                     )), rowCallback = DT::JS(
+                                       'function(row, data) {
+                                       if (data[1] === "Louisville")
+                                       $("td", row).css("background", "#f76b6b");
+}')),  
+    rownames = FALSE
+  )
  
+  output$growthLouisville <- DT::renderDataTable(
+    growthLouisville, options = list(lengthChange = FALSE, pageLength = 15, paging = FALSE, ordering = F, autoWidth = FALSE,
+                                       columnDefs = list(list(className = 'dt-center', targets = "_all" 
+                                       ))), 
+    rownames = FALSE
+  )
+  
   output$mitLivingWageTableFamilyOfFour <-  DT::renderDataTable(
-    mitLivingWageLouisvilleMSAFamilyOfFour, options = list(pageLength = 3, searching = FALSE, paging = FALSE),
+    mitLivingWageLouisvilleMSAFamilyOfFour, options = list(pageLength = 3, searching = FALSE, ordering = F, paging = FALSE),
     rownames = FALSE
   )
   

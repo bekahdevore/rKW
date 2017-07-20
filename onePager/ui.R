@@ -22,11 +22,22 @@ shinyUI(fluidPage(
       ),
       br(), 
       br(), 
+      h2('State and US Data'),
+      DT::dataTableOutput("stateUsData"),
+      br(), 
+      br(), 
+      h2("Louisville, growth since 2011"), 
+      DT::dataTableOutput("growthLouisville"), 
+      br(), 
+      br(), 
       h2("MIT Living Wage, Louisville MSA"),
       tabsetPanel(
         tabPanel("Family of Four", DT::dataTableOutput("mitLivingWageTableFamilyOfFour")), 
-        tabPanel("All Family Sizes", DT::dataTableOutput("mitLivingWageTable"))
+        tabPanel("All Family Sizes/Expenses", DT::dataTableOutput("mitLivingWageTable"))
       ),
+      br(), 
+      br(), 
+      br(), 
       br(), 
       br(), 
       br(), 

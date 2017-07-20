@@ -18,6 +18,10 @@ acsMetros <- "metropolitan+statistical+area/micropolitan+statistical+area:*"
 acsKentucky <- "state:21"
 acsUS <- "us:*"
 
+## LAUS COLUMN NAMES
+unemploymentRateName <- "Unemployment Rate"
+laborForceSizeName <- "Labor Force Size"
+
 # BLS AREAS 
 blsUS <- "US000"
 blsKY <- "21000"

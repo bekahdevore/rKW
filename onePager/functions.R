@@ -26,6 +26,20 @@ getQcewData <- function(quarter, currentYear, blsAreaCode) {
   }
 }
 
+qcewDataFilter2011 <- function(dataHere) {
+  dataHere %>% 
+    filter((own_code == 0 | own_code == 5) & industry_code == 10) %>% 
+    select(1, 2, 9, 10, 11, 14, 15)
+}
+
+qcewDataFilter <- function(dataHere, enterMSA) {
+  dataHere %>% 
+    filter(industry_code == 10) %>% 
+    filter(own_code == 5 | own_code == 0) %>%
+    select(1, 2, 9, 12) %>% 
+    mutate(MSA = enterMSA)
+}
+
 ## BLS IMPORT
 ####  IMPORT FROM BLS FUNCTION ##
 # https://download.bls.gov/pub/time.series/overview.txt
@@ -60,6 +74,24 @@ import.from.bls <- function(web.address, filenameInput) {
   
   # save the file to the global environment
   assign(filenameInput, data, envir = .GlobalEnv) 
+}
+
+## LAUS DATA CLEAN/MANIPULATE
+lausDataManipulation <- function(lausMetros) {
+  lausMetros <- lausMetros %>% filter(year == latestYearBlsLaus)
+  lausMetros[,"area_code"] <- substr(lausMetros[,"series_id"], 8,12)
+  lausMetros[,"datapoint"] <- substr(lausMetros[,"series_id"], 19,20)
+  lausMetros[,"type"] <- substr(lausMetros[,"series_id"], 1,5)
+  lausMetros[,"month"] <- substr(lausMetros[,"period"], 2,3)
+  
+  lausMetros[,"area_code"] <- as.numeric(as.character(lausMetros[,"area_code"]))
+  lausMetros[,"month"] <- as.numeric(as.character(lausMetros[,"month"]))
+  
+  ## LATEST MONTH
+  latestMonth <- as.numeric(max(lausMetros$month))
+  
+  lausMetros <- lausMetros %>% filter((datapoint == "03" | datapoint == "06") & month == latestMonth )
+  lausMetros <- left_join(lausMetros, lausPeriod, by = "period") 
 }
 
 ## ACS DATA
@@ -104,16 +136,3 @@ cleanAcsDataStateUs <- function(dataHere, dataPointName) {
   return (dataHere)
 }
 
-qcewDataFilter2011 <- function(dataHere) {
-  dataHere %>% 
-    filter(own_code == 0 & industry_code == 10) %>% 
-    select(1, 9, 10, 11, 14, 15)
-}
-
-qcewDataFilter <- function(dataHere, enterMSA) {
-  dataHere %>% 
-    filter(industry_code == 10) %>% 
-    filter(own_code == 5 | own_code == 0) %>%
-    select(1, 2, 9, 12) %>% 
-    mutate(MSA = enterMSA)
-}

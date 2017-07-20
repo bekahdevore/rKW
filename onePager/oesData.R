@@ -27,3 +27,12 @@ colnames(oesMetrosData)[1] <- "Annual Median Wage (USD)"
 
 ## OES RELEASE DATA  
 oesReleaseDate <- paste(oesReleaseDate$description)
+
+## CLEAN OES NATION AND STATE DATA
+oesNationData <- oesNationData %>% select(value) 
+oesNationData$area_code <- 1
+colnames(oesNationData)[1] <- "Annual Median Wage (USD)"
+
+oesStateData <- oesStateData %>% select(value)
+oesStateData$area_code <- 21
+colnames(oesStateData)[1] <- "Annual Median Wage (USD)"
