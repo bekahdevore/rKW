@@ -1,4 +1,9 @@
 #### JOIN DATA TO MAKE MAIN DATA TABLE ########
+
+# populationMetros$Population <- as.numeric(populationMetros$Population) 
+# laborForceSizeMetros$`Labor Force Size` <- as.numeric(laborForceSizeMetros$`Labor Force Size`)
+oesMetrosData$`Annual Median Wage (USD)` <- as.numeric(oesMetrosData$`Annual Median Wage (USD)`)
+
 joinAllDataByThisVariable <- "area_code"
 allData <- full_join(laborForceParticipationRateMetros, laborForceSizeMetros, by = joinAllDataByThisVariable)
 allData <- full_join(allData, medianHomeValueMetros, by = joinAllDataByThisVariable)

@@ -44,8 +44,8 @@ employmentAll <- "Employment (all)"
 colnames(privateQcewData)[1] <- establishmentsPrivate
 colnames(allQcewData)[1] <- establishmentsAll
 
-colnames(privateQcewData)[2] <- 
-colnames(allQcewData)[2] <- establishmentsAll
+colnames(privateQcewData)[2] <- employmentPrivate
+colnames(allQcewData)[2] <- employmentAll
 
 allCurrentQcewData <- left_join(privateQcewData, allQcewData, by = "MSA") %>% select(3, 1, 4, 2, 5)
 

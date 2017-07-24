@@ -77,21 +77,36 @@ import.from.bls <- function(web.address, filenameInput) {
 }
 
 ## LAUS DATA CLEAN/MANIPULATE
-lausDataManipulation <- function(lausMetros) {
-  lausMetros <- lausMetros %>% filter(year == latestYearBlsLaus)
-  lausMetros[,"area_code"] <- substr(lausMetros[,"series_id"], 8,12)
-  lausMetros[,"datapoint"] <- substr(lausMetros[,"series_id"], 19,20)
-  lausMetros[,"type"] <- substr(lausMetros[,"series_id"], 1,5)
-  lausMetros[,"month"] <- substr(lausMetros[,"period"], 2,3)
+lausDataManipulation <- function(lausData, dataArea) {
+  lausData <- lausData
+  lausData[,"area_code"] <- substr(lausData[,"series_id"], 8,12)
+  lausData[,"datapoint"] <- substr(lausData[,"series_id"], 19,20)
+  lausData[,"type"] <- substr(lausData[,"series_id"], 1,5)
+  lausData[,"month"] <- substr(lausData[,"period"], 2,3)
   
-  lausMetros[,"area_code"] <- as.numeric(as.character(lausMetros[,"area_code"]))
-  lausMetros[,"month"] <- as.numeric(as.character(lausMetros[,"month"]))
+  lausData[,"area_code"] <- as.numeric(as.character(lausData[,"area_code"]))
+  lausData[,"month"] <- as.numeric(as.character(lausData[,"month"]))
+  lausData <- lausData %>% filter(month != 13)
+  
+  if (dataArea == "KY") {
+    lausData <- lausData %>% filter(area_code == 0 & type == "LASST") %>% select(-5)
+    lausData$area_code = 21
+    lausData
+  }
+  if (dataArea == "Metros") {
+    ## FILTER PEER CITIES WITHIN LAUS METROS AND SELECT NECESSARY VARIABLES
+    lausData <- lausData %>% filter(((area_code %in% peerAreaCodes$area_code) & type == "LAUMT"))  
+    #lausData <- lausData %>% select(2, 4:6, 9)
+    lausData
+  }
   
   ## LATEST MONTH
-  latestMonth <- as.numeric(max(lausMetros$month))
+  latestMonth <- as.numeric(max(lausData$month))
+  #latestYearBlsLaus <- as.numeric(max(lausData$year))
   
-  lausMetros <- lausMetros %>% filter((datapoint == "03" | datapoint == "06") & month == latestMonth )
-  lausMetros <- left_join(lausMetros, lausPeriod, by = "period") 
+  lausData <- lausData %>% filter((datapoint == "03" | datapoint == "06") & month == latestMonth )
+  lausData <- left_join(lausData, lausPeriod, by = "period") 
+  #lausData <- lausData %>% filter(year == latestYearBlsLaus)
 }
 
 ## ACS DATA

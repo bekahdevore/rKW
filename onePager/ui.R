@@ -17,8 +17,13 @@ shinyUI(fluidPage(
     mainPanel(
       h2("Louisville MSA and Peer Cities"),
       tabsetPanel(
-        tabPanel("Louisville Rankings", DT::dataTableOutput("louisvilleRankings")),
-        tabPanel("All Peer City Data", DT::dataTableOutput("allData"))
+        tabPanel("Louisville Rankings", 
+                 DT::dataTableOutput("louisvilleRankings")),
+        tabPanel("All Rankings", DT::dataTableOutput("allRankings")),
+        tabPanel("All Peer City Data",
+                 h1("Peer City Data"),
+                 p("Alphabetical order"),
+                 DT::dataTableOutput("allData"))
       ),
       br(), 
       br(), 
@@ -40,7 +45,9 @@ shinyUI(fluidPage(
       br(), 
       br(), 
       br(), 
-      br(), 
+      br(),
+      p("Source: Median Wage: BLS OES; Labor Force Size and Unemployment Rate: BLS LAUS; Establisments and Employment: QCEW;
+        Home Value, Household Income, Monthly Rent, and Population: ACS"),
       br()
     )
   )
