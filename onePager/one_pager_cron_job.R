@@ -170,13 +170,13 @@ lausDataManipulation <- function(lausData, dataArea) {
 ## Example URL
 #http://api.census.gov/data/2015/acs1/profile?get=NAME,DP04_0089E&for=state:021&key=00b1974d78394a0f553ab06d7d20f58d9fee6e51
 getDataAcs <- function(tableCode, areaHere, currentYear, dataPath) {
-  dataURL <- getURL(paste0("http://api.census.gov/data/", currentYear, "/acs1/", dataPath, "?get=NAME,", tableCode, "&for=", areaHere, "&key=", apiKey))
+  dataURL <- getURL(paste0("https://api.census.gov/data/", currentYear, "/acs1/", dataPath, "?get=NAME,", tableCode, "&for=", areaHere, "&key=", apiKey))
   dataConnection <- textConnection(dataURL)
   dataHere <- read.csv(dataConnection)
   close(dataConnection)
   if (nrow(dataHere) >= 1) return (dataHere)
   for (i in currentYear:2015) {
-    dataURL <- getURL(paste0("http://api.census.gov/data/", i, "/acs1/", dataPath, "?get=NAME,", tableCode, "&for=", areaHere, "&key=", apiKey))
+    dataURL <- getURL(paste0("https://api.census.gov/data/", i, "/acs1/", dataPath, "?get=NAME,", tableCode, "&for=", areaHere, "&key=", apiKey))
     dataConnection <- textConnection(dataURL)
     dataHere <- read.csv(dataConnection)
     close(dataConnection)
@@ -428,7 +428,7 @@ lfprRanking <- lfprRanking %>% select(1, 2, 14) %>%
   #filter(MSA == "Louisville") %>%
   mutate(Datapoint = "Labor Force Participation Rate")
 colnames(lfprRanking)[2] <- "Value"
-lfprRanking$Datapoint <- paste0("$", lfprRanking$Datapoint)
+#lfprRanking$Datapoint <- paste0("$", lfprRanking$Datapoint)
 
 lfSizeRanking <- allData %>% 
   mutate("Rank" = rank(-`Labor Force Size`)) %>% 

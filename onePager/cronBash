@@ -1,0 +1,2 @@
+#!/bin/bash
+Rscript ~/Desktop/rProjects/rstudioWork/onePager/one_pager_cron_job.R
